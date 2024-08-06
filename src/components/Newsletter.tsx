@@ -57,7 +57,7 @@ export default function Newsletter() {
       marginTop="40px" // Ensure there's space above the newsletter section
       marginBottom="40px" // Ensure there's space below the newsletter section
     >
-      <FormControl zIndex={-10} as="form" onSubmit={handleSubmit}>
+      <FormControl as="form" onSubmit={handleSubmit}>
         <FormLabel fontSize="20px" textAlign="center" marginBottom="10px">
           Subscribe to our Newsletter
         </FormLabel>

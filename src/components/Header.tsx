@@ -24,6 +24,7 @@ export default function Header() {
       style={{
         backgroundColor: "#59B9B7",
         boxShadow: "0 2px 4px rgba(0, 0, 0, 0.05)",
+        zIndex: 1000,
       }}
       className="px-4 lg:px-6 py-3 flex items-center justify-between fixed w-full"
     >

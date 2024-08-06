@@ -1,43 +1,32 @@
 import { Button } from "./ui/button";
 import Link from "next/link";
+import SHOP_DATA from "@/shop_data"; // Adjust the path according to your project structure
 
-const products = [
-  {
-    id: 1,
-    name: "Cozy Knit Sweater",
-    description: "Stay warm and stylish",
-    price: 49.99,
-    imageUrl: "/placeholder.svg",
-  },
-  {
-    id: 2,
-    name: "Ergonomic Office Chair",
-    description: "Comfortable and supportive",
-    price: 199.99,
-    imageUrl: "/placeholder.svg",
-  },
-  {
-    id: 3,
-    name: "Wireless Noise-Cancelling Headphones",
-    description: "Immersive audio experience",
-    price: 99.99,
-    imageUrl: "/placeholder.svg",
-  },
-  {
-    id: 4,
-    name: "Bamboo Cutting Board",
-    description: "Durable and eco-friendly",
-    price: 29.99,
-    imageUrl: "/placeholder.svg",
-  },
-  {
-    id: 5,
-    name: "Outdoor Camping Tent",
-    description: "Durable and weatherproof",
-    price: 99.99,
-    imageUrl: "/placeholder.svg",
-  },
-];
+// Define the type for product data
+interface Product {
+  id: number;
+  name: string;
+  imageUrl: string;
+  price: number;
+  description?: string;
+  category: string;
+}
+
+// Extract unique categories and pick one product per category
+const getTopProducts = (products: Product[]) => {
+  const categoryMap = new Map<string, Product>();
+
+  products.forEach((product) => {
+    if (!categoryMap.has(product.category)) {
+      categoryMap.set(product.category, product);
+    }
+  });
+
+  return Array.from(categoryMap.values());
+};
+
+// Get the top products
+const topProducts = getTopProducts(SHOP_DATA);
 
 export default function TopProducts() {
   return (
@@ -54,10 +43,10 @@ export default function TopProducts() {
           </Link>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-          {products.map((product) => (
-            <div className="flex flex-col justify-between " key={product.id}>
+          {topProducts.map((product) => (
+            <div className="flex flex-col justify-between" key={product.id}>
               <div className="bg-background rounded-lg shadow-sm overflow-hidden">
-                <Link href="#" className="block" prefetch={false}>
+                <Link href={`/products/${product.id}`} className="block" prefetch={false}>
                   <img
                     src={product.imageUrl}
                     alt={product.name}
@@ -75,7 +64,7 @@ export default function TopProducts() {
               </div>
               <div className="mt-auto mb-5 flex flex-col items-center">
                 <span className="font-semibold text-lg mb-2">
-                  {product.price}
+                  ${product.price}
                 </span>
                 <Button
                   size="sm"

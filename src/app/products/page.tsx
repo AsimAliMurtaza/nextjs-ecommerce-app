@@ -21,13 +21,69 @@ interface Product {
   name: string;
   imageUrl: string;
   price: number;
-  description?: string;
+  description?: string; // Optional if not every product has a description
   category: string;
+  date?: string; // Optional property for date
+  stock: number; // Number of items in stock
+  onSale: boolean; // Indicates if the product is on sale
+  featured: boolean; // Indicates if the product is featured
 }
 
 export default function ProductsPage() {
   // State for view mode
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  // State for filters
+  const [filters, setFilters] = useState({
+    featured: false,
+    onSale: false,
+    inStock: false,
+    priceLowToHigh: false,
+    priceHighToLow: false,
+    newest: false,
+    oldest: false,
+  });
+
+  // Function to apply filters
+  const applyFilters = (products: Product[]) => {
+    let filteredProducts = products;
+
+    // Filter logic
+    if (filters.featured) {
+      filteredProducts = filteredProducts.filter((product) => product.featured);
+    }
+    if (filters.onSale) {
+      filteredProducts = filteredProducts.filter((product) => product.onSale);
+    }
+    if (filters.inStock) {
+      filteredProducts = filteredProducts.filter(
+        (product) => product.stock > 0
+      );
+    }
+
+    // Sort logic
+    if (filters.priceLowToHigh) {
+      filteredProducts = filteredProducts.sort((a, b) => a.price - b.price);
+    } else if (filters.priceHighToLow) {
+      filteredProducts = filteredProducts.sort((a, b) => b.price - a.price);
+    }
+
+    if (filters.newest) {
+      filteredProducts = filteredProducts.sort(
+        (a, b) =>
+          new Date(b.date ?? "").getTime() - new Date(a.date ?? "").getTime()
+      );
+    } else if (filters.oldest) {
+      filteredProducts = filteredProducts.sort(
+        (a, b) =>
+          new Date(a.date ?? "").getTime() - new Date(b.date ?? "").getTime()
+      );
+    }
+
+    return filteredProducts;
+  };
+
+  // Get filtered and sorted products
+  const filteredProducts = applyFilters(SHOP_DATA);
 
   return (
     <Container maxW="container.xl">
@@ -47,23 +103,63 @@ export default function ProductsPage() {
                   <DropdownMenuContent align="end" className="w-56">
                     <DropdownMenuLabel>Filter by</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      onCheckedChange={(checked) =>
+                        setFilters((prev) => ({ ...prev, featured: checked }))
+                      }
+                    >
                       Featured
                     </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>On Sale</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      onCheckedChange={(checked) =>
+                        setFilters((prev) => ({ ...prev, onSale: checked }))
+                      }
+                    >
+                      On Sale
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      onCheckedChange={(checked) =>
+                        setFilters((prev) => ({ ...prev, inStock: checked }))
+                      }
+                    >
                       In Stock
                     </DropdownMenuCheckboxItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      onCheckedChange={(checked) =>
+                        setFilters((prev) => ({
+                          ...prev,
+                          priceLowToHigh: checked,
+                        }))
+                      }
+                    >
                       Price: Low to High
                     </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      onCheckedChange={(checked) =>
+                        setFilters((prev) => ({
+                          ...prev,
+                          priceHighToLow: checked,
+                        }))
+                      }
+                    >
                       Price: High to Low
                     </DropdownMenuCheckboxItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem>Newest</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>Oldest</DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      onCheckedChange={(checked) =>
+                        setFilters((prev) => ({ ...prev, newest: checked }))
+                      }
+                    >
+                      Newest
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      onCheckedChange={(checked) =>
+                        setFilters((prev) => ({ ...prev, oldest: checked }))
+                      }
+                    >
+                      Oldest
+                    </DropdownMenuCheckboxItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
                 <DropdownMenu>
@@ -101,84 +197,88 @@ export default function ProductsPage() {
                   : "flex flex-col gap-6"
               }`}
             >
-              {SHOP_DATA.map((product) => (
-                <div
-                  key={product.id}
-                  className={`${
-                    viewMode === "grid"
-                      ? "bg-background rounded-lg shadow-sm overflow-hidden flex flex-col"
-                      : "bg-background rounded-lg shadow-sm overflow-hidden flex md:flex-row"
-                  }`}
-                >
-                  <Link
-                    href={`/products/${product.id}`}
-                    className="block"
-                    prefetch={false}
+              {filteredProducts.length === 0 ? (
+                <p>No products found.</p>
+              ) : (
+                filteredProducts.map((product) => (
+                  <div
+                    key={product.id}
+                    className={`${
+                      viewMode === "grid"
+                        ? "bg-background rounded-lg shadow-sm overflow-hidden flex flex-col"
+                        : "bg-background rounded-lg shadow-sm overflow-hidden flex md:flex-row"
+                    }`}
                   >
-                    <div
-                      className={`${
-                        viewMode === "list" ? "flex flex-row" : ""
-                      }`}
+                    <Link
+                      href={`/products/${product.id}`}
+                      className="block"
+                      prefetch={false}
                     >
-                      {viewMode === "list" && (
-                        <div className="flex-shrink-0 mr-4">
-                          <img
-                            src={product.imageUrl}
-                            alt={product.name}
-                            width={150}
-                            height={150}
-                            className="w-48 h-48 object-cover"
-                          />
-                        </div>
-                      )}
                       <div
                         className={`${
-                          viewMode === "list"
-                            ? "flex-1 p-4 flex flex-col justify-between"
-                            : "p-4 space-y-2"
+                          viewMode === "list" ? "flex flex-row" : ""
                         }`}
                       >
-                        {viewMode === "grid" && (
-                          <img
-                            src={product.imageUrl}
-                            alt={product.name}
-                            width={300}
-                            height={300}
-                            className="w-full aspect-square object-cover"
-                          />
+                        {viewMode === "list" && (
+                          <div className="flex-shrink-0 mr-4">
+                            <img
+                              src={product.imageUrl}
+                              alt={product.name}
+                              width={150}
+                              height={150}
+                              className="w-48 h-48 object-cover"
+                            />
+                          </div>
                         )}
                         <div
                           className={`${
                             viewMode === "list"
-                              ? "flex-1 flex flex-col justify-between"
-                              : ""
+                              ? "flex-1 p-4 flex flex-col justify-between"
+                              : "p-4 space-y-2"
                           }`}
                         >
-                          <h3 className="font-semibold text-lg">
-                            {product.name}
-                          </h3>
-                          <p className="text-muted-foreground text-sm">
-                            {product.description}
-                          </p>
-                        </div>
-                        <div className="mt-4 flex flex-col items-start">
-                          <span className="font-semibold text-lg mb-2">
-                            ${product.price}
-                          </span>
-                          <Button
-                            size="sm"
-                            style={{
-                              backgroundColor: "#59B9B7",
-                            }}
+                          {viewMode === "grid" && (
+                            <img
+                              src={product.imageUrl}
+                              alt={product.name}
+                              width={300}
+                              height={300}
+                              className="w-full aspect-square object-cover"
+                            />
+                          )}
+                          <div
+                            className={`${
+                              viewMode === "list"
+                                ? "flex-1 flex flex-col justify-between"
+                                : ""
+                            }`}
                           >
-                            Add to Cart
-                          </Button>
+                            <h3 className="font-semibold text-lg">
+                              {product.name}
+                            </h3>
+                            <p className="text-muted-foreground text-sm">
+                              {product.description}
+                            </p>
+                          </div>
+                          <div className="mt-4 flex flex-col items-start">
+                            <span className="font-semibold text-lg mb-2">
+                              ${product.price}
+                            </span>
+                            <Button
+                              size="sm"
+                              style={{
+                                backgroundColor: "#59B9B7",
+                              }}
+                            >
+                              Add to Cart
+                            </Button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Link>
-                </div>
-              ))}
+                    </Link>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </section>

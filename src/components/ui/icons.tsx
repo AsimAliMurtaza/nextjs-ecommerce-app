@@ -285,6 +285,25 @@ export function XIcon(props) {
   );
 }
 
+export function StarIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M12 17.27L18.18 21 16.54 14.83 22 9.24l-6.18-.54L12 2 8.18 8.7 2 9.24l5.46 5.59L5.82 21z" />
+    </svg>
+  );
+}
+
 export function FilterIcon(props) {
   return (
     <svg

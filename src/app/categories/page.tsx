@@ -22,9 +22,14 @@ interface Product {
   name: string;
   imageUrl: string;
   price: number;
-  description?: string;
+  description?: string; // Optional if not every product has a description
   category: string;
+  date?: string; // Optional property for date
+  stock: number; // Number of items in stock
+  onSale: boolean; // Indicates if the product is on sale
+  featured: boolean; // Indicates if the product is featured
 }
+
 
 // Extract unique categories from SHOP_DATA
 const getUniqueCategories = (products: Product[]) => {
@@ -67,27 +72,6 @@ export default function CategoriesPage() {
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl md:text-3xl font-bold">Categories</h2>
               <div className="flex items-center gap-4">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm">
-                      <FilterIcon className="h-4 w-4 mr-2" />
-                      Filter
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem>Featured</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>On Sale</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>In Stock</DropdownMenuCheckboxItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem>Price: Low to High</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>Price: High to Low</DropdownMenuCheckboxItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem>Newest</DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem>Oldest</DropdownMenuCheckboxItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="sm">

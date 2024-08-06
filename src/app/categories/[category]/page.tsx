@@ -5,15 +5,28 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Container } from "@chakra-ui/react";
 import SHOP_DATA from "@/shop_data"; // Adjust the path according to your project structure
-
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuCheckboxItem,
+} from "@/components/ui/dropdown-menu";
+import { FilterIcon, LayoutGridIcon } from "@/components/ui/icons";
+import { LayoutListIcon } from "lucide-react";
 // Define the type for product data
 interface Product {
   id: number;
   name: string;
   imageUrl: string;
   price: number;
-  description?: string;
+  description?: string; // Optional if not every product has a description
   category: string;
+  date?: string; // Optional property for date
+  stock: number; // Number of items in stock
+  onSale: boolean; // Indicates if the product is on sale
+  featured: boolean; // Indicates if the product is featured
 }
 
 export default function CategoryPage() {
@@ -34,13 +47,32 @@ export default function CategoryPage() {
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl md:text-3xl font-bold">{category}</h2>
               <div className="flex items-center gap-4">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setViewMode(viewMode === "grid" ? "list" : "grid")}
-                >
-                  {viewMode === "grid" ? "List View" : "Grid View"}
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm">
+                      <LayoutGridIcon className="h-4 w-4 mr-2" />
+                      View
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-56">
+                    <DropdownMenuLabel>View as</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuCheckboxItem
+                      onClick={() => setViewMode("grid")}
+                      checked={viewMode === "grid"}
+                    >
+                      <LayoutGridIcon className="h-4 w-4 mr-2" />
+                      Grid
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      onClick={() => setViewMode("list")}
+                      checked={viewMode === "list"}
+                    >
+                      <LayoutListIcon className="h-4 w-4 mr-2" />
+                      List
+                    </DropdownMenuCheckboxItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
             <div
@@ -62,7 +94,11 @@ export default function CategoryPage() {
                         : "bg-background rounded-lg shadow-sm overflow-hidden flex flex-row"
                     }`}
                   >
-                    <Link href={`/products/${product.id}`} className="block" prefetch={false}>
+                    <Link
+                      href={`/products/${product.id}`}
+                      className="block"
+                      prefetch={false}
+                    >
                       {viewMode === "list" && (
                         <div className="flex-shrink-0">
                           <img
@@ -97,7 +133,9 @@ export default function CategoryPage() {
                               : ""
                           }`}
                         >
-                          <h3 className="font-semibold text-lg">{product.name}</h3>
+                          <h3 className="font-semibold text-lg">
+                            {product.name}
+                          </h3>
                           <p className="text-muted-foreground text-sm">
                             {product.description}
                           </p>
