@@ -41,20 +41,22 @@ export default function Discover() {
             </Button>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <Carousel autoplay>
+        <div className="w-full md:w-3/4 lg:w-1/2 mx-auto">
+          <Carousel
+            autoplay
+            style={{
+              borderRadius: "1rem",
+              overflow: "hidden",
+              margin: "10px auto",
+              maxWidth: "400px",
+              zIndex: -1,
+            }}
+          >
             {images.map((image, index) => (
-              <div
-                key={index}
-                className={`col-span-2 ${
-                  index === 0 ? "md:col-span-1" : "md:col-span-1"
-                }`}
-              >
+              <div key={index}>
                 <img
                   src={image.src}
                   alt={image.alt}
-                  width={image.width}
-                  height={image.height}
                   className="rounded-lg object-cover w-full aspect-square"
                 />
               </div>

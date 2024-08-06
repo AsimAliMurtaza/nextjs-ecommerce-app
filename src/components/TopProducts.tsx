@@ -46,7 +46,7 @@ export default function TopProducts() {
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl md:text-3xl font-bold">Top Products</h2>
           <Link
-            href="#"
+            href="/products"
             className="text-primary hover:underline"
             prefetch={false}
           >
@@ -56,9 +56,7 @@ export default function TopProducts() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
           {products.map((product) => (
             <div className="flex flex-col justify-between " key={product.id}>
-              <div
-                className="bg-background rounded-lg shadow-sm overflow-hidden"
-              >
+              <div className="bg-background rounded-lg shadow-sm overflow-hidden">
                 <Link href="#" className="block" prefetch={false}>
                   <img
                     src={product.imageUrl}

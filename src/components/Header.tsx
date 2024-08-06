@@ -1,3 +1,4 @@
+'use client';
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -14,18 +15,10 @@ import {
 
 import { useRouter } from "next/navigation";
 
-const categories = [
-  { name: 'Grocery & Staples', link: '/category/grocery-staples' },
-  { name: 'Biscuits & Snacks', link: '/category/biscuits-snacks' },
-  { name: 'Frozen Foods', link: '/category/frozen-foods' },
-  { name: 'Daily Breakfast', link: '/category/daily-breakfast' },
-  { name: 'Beverages', link: '/category/beverages' },
-  { name: 'Vegetables & Fruits', link: '/category/vegetables-fruits' },
-  // Add more categories as needed
-];
-
 
 export default function Header() {
+
+  const router = useRouter();
   return (
     <header
       style={{
@@ -42,17 +35,33 @@ export default function Header() {
         <Link href="/" className="font-medium hover:underline" prefetch={false}>
           Home
         </Link>
-        <Link href="/products" className="font-medium hover:underline" prefetch={false}>
+        <Link
+          href="/products"
+          className="font-medium hover:underline"
+          prefetch={false}
+        >
           Products
         </Link>
-        <Link href="/categories" className="font-medium hover:underline" prefetch={false}>
+        <Link
+          href="/categories"
+          className="font-medium hover:underline"
+          prefetch={false}
+        >
           Categories
         </Link>
 
-        <Link href="/cart" className="font-medium hover:underline" prefetch={false}>
+        <Link
+          href="/cart"
+          className="font-medium hover:underline"
+          prefetch={false}
+        >
           Cart
         </Link>
-        <Link href="#" className="font-medium hover:underline" prefetch={false}>
+        <Link
+          href="/account"
+          className="font-medium hover:underline"
+          prefetch={false}
+        >
           Account
         </Link>
       </nav>
@@ -85,6 +94,9 @@ export default function Header() {
           className="hidden lg:inline-flex"
           style={{
             color: "black",
+          }}
+          onClick={() => {
+            router.push("/account");
           }}
         >
           <UserIcon className="h-4 w-4 mr-2" />
@@ -132,7 +144,7 @@ export default function Header() {
                 Cart
               </Link>
               <Link
-                href="#"
+                href="/account"
                 className="flex items-center gap-4"
                 prefetch={false}
               >
