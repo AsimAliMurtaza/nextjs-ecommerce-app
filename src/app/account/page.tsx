@@ -37,7 +37,7 @@ export default function AccountPage() {
   };
 
   return (
-    <Container maxW="container.lg" py={8}>
+    <Container maxW="container.lg" py={20}>
       <Heading mb={6} textAlign="center">
         Account Settings
       </Heading>

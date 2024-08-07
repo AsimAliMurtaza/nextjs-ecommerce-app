@@ -27,6 +27,8 @@ import {
 import { useState } from "react";
 import SHOP_DATA from "@/shop_data"; // Adjust the path according to your project structure
 import { StarIcon } from "@/components/ui/icons"; // Use Chakra UI's built-in star icon
+import { useCart } from "@/contexts/cart-context"; // Import the custom hook
+
 interface Product {
   id: number;
   name: string;
@@ -62,6 +64,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
   const router = useRouter();
   const toast = useToast();
   const { id } = params;
+  const { addToCart } = useCart();
 
   const productId = parseInt(id, 10);
   const product = SHOP_DATA.find(
@@ -75,6 +78,10 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = () => {
+    addToCart(
+      { id: product.id, name: product.name, price: product.price, quantity },
+      quantity
+    );
     toast({
       title: "Added to cart",
       description: `${quantity} x ${product.name} added to your cart.`,
@@ -142,14 +149,17 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                 </Stack>
               </RadioGroup>
             </FormControl>
+            <Flex align="center" mb={4}>
+              <Text>Stock: {product.stock}</Text>
+            </Flex>
             <FormControl id="quantity" mb={4}>
               <FormLabel>Quantity</FormLabel>
               <Slider
                 defaultValue={1}
                 min={1}
-                max={5}
+                max={product.stock} // Limiting the max to available stock
                 step={1}
-                onChange={(value) => handleQuantityChange(value)}
+                onChangeEnd={handleQuantityChange} // Using onChangeEnd to ensure it updates once
               >
                 <SliderTrack>
                   <SliderFilledTrack />
@@ -274,6 +284,24 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                 </Flex>
               </Box>
             ))}
+          </Container>
+          <Container
+            maxW="container.xl"
+            display="flex"
+            flexDirection="column"
+            marginTop="40px" // Ensure there's space above the newsletter section
+          >
+            <Heading as="h3" size="lg" mb={6} color="gray.700">
+              Subscribe to Our Newsletter
+            </Heading>
+            <Box
+              borderWidth="1px"
+              borderRadius="md"
+              p={4}
+              bg="white"
+              shadow="sm"
+            >
+            </Box>
           </Container>
         </Box>
       </Grid>

@@ -41,23 +41,8 @@ export default function Footer() {
               <strong>Address:</strong> 1418 Riverwood Drive, CA 96052, US
             </Text>
             <Text color="gray.700">
-              <strong>Email:</strong> support@lmao.com
+              <strong>Email:</strong> support@lalala.com
             </Text>
-          </GridItem>
-
-          {/* Categories */}
-          <GridItem>
-            <Heading as="h4" size="lg" mb={4}>
-              Categories
-            </Heading>
-            <Box as="ul" color="gray.700" gap={2}>
-              <Text as="li">Grocery & Staples</Text>
-              <Text as="li">Biscuits & Snacks</Text>
-              <Text as="li">Frozen Foods</Text>
-              <Text as="li">Daily Breakfast</Text>
-              <Text as="li">Beverages</Text>
-              <Text as="li">Vegetables & Fruits</Text>
-            </Box>
           </GridItem>
 
           {/* Useful Links */}

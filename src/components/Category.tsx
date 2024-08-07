@@ -24,7 +24,7 @@ export default function Category() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
           <Link
-            href="#"
+            href="/categories/Clothing"
             className="bg-background rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors"
             prefetch={false}
           >
@@ -32,7 +32,7 @@ export default function Category() {
             <span className="font-medium text-sm">Clothing</span>
           </Link>
           <Link
-            href="#"
+            href="/categories/Electronics"
             className="bg-background rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors"
             prefetch={false}
           >
@@ -40,7 +40,7 @@ export default function Category() {
             <span className="font-medium text-sm">Electronics</span>
           </Link>
           <Link
-            href="#"
+            href="/categories/Home"
             className="bg-background rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors"
             prefetch={false}
           >
@@ -48,7 +48,7 @@ export default function Category() {
             <span className="font-medium text-sm">Home</span>
           </Link>
           <Link
-            href="#"
+            href="/categories/Beauty"
             className="bg-background rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors"
             prefetch={false}
           >
@@ -56,7 +56,7 @@ export default function Category() {
             <span className="font-medium text-sm">Beauty</span>
           </Link>
           <Link
-            href="#"
+            href="/categories/Sports"
             className="bg-background rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors"
             prefetch={false}
           >
@@ -64,7 +64,7 @@ export default function Category() {
             <span className="font-medium text-sm">Sports</span>
           </Link>
           <Link
-            href="#"
+            href="/categories/Outdoor"
             className="bg-background rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors"
             prefetch={false}
           >

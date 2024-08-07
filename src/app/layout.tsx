@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import { Providers } from "./providers";
 import Footer from "@/components/Footer";
 import Newsletter from "../components/Newsletter";
+import { CartProvider } from "@/contexts/cart-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,14 +23,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <Header />
-          {children}
-          <Newsletter />
-          <Footer />
+          <CartProvider>
+            <Header />
+            {children}
+            <Newsletter />
+            <Footer />
+          </CartProvider>
         </Providers>
       </body>
     </html>
   );
 }
-
-

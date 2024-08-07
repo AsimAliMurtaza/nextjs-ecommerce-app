@@ -29,7 +29,7 @@ const orderSummary = [
 export default function CheckoutPage() {
   return (
     <Container maxW="container.lg">
-      <section className="py-12 md:py-16 lg:py-20">
+      <section className="py-20 md:py-20 lg:py-22">
         <div className="container">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl md:text-3xl font-bold">Cart</h2>

@@ -17,7 +17,7 @@ export default function Discover() {
   };
 
   return (
-    <section className="py-20 md:py-16 lg:py-20">
+    <section className="py-20 md:py-16 lg:py-16">
       <div className="container grid md:grid-cols-2 gap-8 items-center">
         <div className="space-y-4">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
@@ -49,7 +49,6 @@ export default function Discover() {
               overflow: "hidden",
               margin: "10px auto",
               maxWidth: "400px",
-              zIndex: -1,
             }}
           >
             {images.map((image, index) => (

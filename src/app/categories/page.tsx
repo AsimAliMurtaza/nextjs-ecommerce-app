@@ -67,7 +67,7 @@ export default function CategoriesPage() {
   return (
     <Container maxW="container.xl">
       <main className="flex-1">
-        <section className="py-12 md:py-16 lg:py-20 bg-muted">
+        <section className="py-20 md:py-20 lg:py-22 bg-muted">
           <div className="container">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl md:text-3xl font-bold">Categories</h2>

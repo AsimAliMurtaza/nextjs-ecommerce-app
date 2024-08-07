@@ -88,7 +88,7 @@ export default function ProductsPage() {
   return (
     <Container maxW="container.xl">
       <main className="flex-1">
-        <section className="py-12 md:py-16 lg:py-20 bg-muted">
+        <section className="py-20 md:py-20 lg:py-22 bg-muted">
           <div className="container">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl md:text-3xl font-bold">All Products</h2>
@@ -270,7 +270,7 @@ export default function ProductsPage() {
                                 backgroundColor: "#59B9B7",
                               }}
                             >
-                              Add to Cart
+                              Buy
                             </Button>
                           </div>
                         </div>
