@@ -35,13 +35,15 @@ const CartButton: React.FC = () => {
       }}
     >
       <IconButton
-        icon={<ChevronDownIcon />}
+        icon={<ChevronDownIcon/>}
         aria-label="Cart"
         variant={"outline"}
         size="sm"
         className="hidden lg:inline-flex"
         style={{
-          color: "black",
+          height: "30px",
+          borderRadius: "5px",
+          border: "1px solid white",
         }}
       />
 
@@ -84,7 +86,13 @@ const CartButton: React.FC = () => {
                     </HStack>
                   </Box>
                 ))}
-                <Button variant="outline" size="sm" w="full" as={Link} href="/cart">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  w="full"
+                  as={Link}
+                  href="/cart"
+                >
                   View Cart
                 </Button>
               </Stack>

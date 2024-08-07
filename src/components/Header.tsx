@@ -15,6 +15,7 @@ import {
 
 import { useRouter } from "next/navigation";
 import CartButton from "./ui/cart-card";
+import SearchBar from "./ui/searchBar";
 
 export default function Header() {
   const router = useRouter();
@@ -57,28 +58,11 @@ export default function Header() {
         >
           Cart
         </Link>
-        <Link
-          href="/account"
-          className="font-medium hover:underline"
-          prefetch={false}
-        >
-          Account
-        </Link>
       </nav>
       <div className="flex items-center gap-4">
         <CartButton />
 
-        <Button
-          variant={"outline"}
-          size="sm"
-          className="hidden lg:inline-flex"
-          style={{
-            color: "black",
-          }}
-        >
-          <SearchIcon className="h-4 w-4 mr-2" />
-          Search
-        </Button>
+        <SearchBar/>
         <Button
           variant={"outline"}
           size="sm"
