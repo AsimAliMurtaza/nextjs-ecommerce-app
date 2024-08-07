@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "lucide-react";
 import { useCart } from "@/contexts/cart-context"; // Adjust the import path as needed
+import Link from "next/link";
 
 const CartButton: React.FC = () => {
   const { cart } = useCart();
@@ -37,11 +38,11 @@ const CartButton: React.FC = () => {
         icon={<ChevronDownIcon />}
         aria-label="Cart"
         variant={"outline"}
-          size="sm"
-          className="hidden lg:inline-flex"
-          style={{
-            color: "black",
-          }}
+        size="sm"
+        className="hidden lg:inline-flex"
+        style={{
+          color: "black",
+        }}
       />
 
       {isOpen && (
@@ -83,6 +84,9 @@ const CartButton: React.FC = () => {
                     </HStack>
                   </Box>
                 ))}
+                <Button variant="outline" size="sm" w="full" as={Link} href="/cart">
+                  View Cart
+                </Button>
               </Stack>
             )}
           </CardBody>

@@ -15,6 +15,9 @@ export default function Discover() {
   const handleClick = () => {
     router.push("/categories");
   };
+  const handleShopClick = () => {
+    router.push("/products");
+  };
 
   return (
     <section className="py-20 md:py-16 lg:py-16">
@@ -33,6 +36,7 @@ export default function Discover() {
               style={{
                 backgroundColor: "#59B9B7",
               }}
+              onClick={handleShopClick}
             >
               Shop Now
             </Button>

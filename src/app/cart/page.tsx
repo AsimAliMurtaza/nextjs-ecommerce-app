@@ -12,8 +12,11 @@ import {
   Text,
   Stack,
   Heading,
+  CardBody,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { MinusIcon, PlusIcon } from "@/components/ui/icons";
+import { Card } from "antd";
 
 // Define the type for products in the cart
 interface CartProduct {
@@ -29,12 +32,12 @@ const CheckoutPage: React.FC = () => {
   const { cart, addToCart, removeFromCart } = useCart();
 
   const increaseQuantity = (product: CartProduct) => {
-    addToCart(product, 1/2);
+    addToCart(product, 1 / 2);
   };
 
   const decreaseQuantity = (product: CartProduct) => {
     if (product.quantity > 1) {
-      addToCart(product, -1/2);
+      addToCart(product, -1 / 2);
     } else {
       removeFromCart(product.id);
     }
@@ -58,6 +61,7 @@ const CheckoutPage: React.FC = () => {
   };
 
   const orderSummary = calculateOrderSummary();
+  const cardWidth = useBreakpointValue({ base: "full", sm: "md" });
 
   return (
     <Container maxW="container.xl" py={20}>
@@ -65,93 +69,112 @@ const CheckoutPage: React.FC = () => {
         <Heading as="h2" size="xl" mb={4}>
           Cart
         </Heading>
-        <Stack spacing={4}>
-          {cart.map((product) => (
-            <Box
-              key={product.id}
-              display="grid"
-              gridTemplateColumns="80px 1fr 150px"
-              alignItems="center"
-              gap={4}
-              p={4}
-              borderWidth={1}
-              borderRadius="md"
-              shadow="md"
-              bg="white"
-            >
-              <Image
-                src={product.imageUrl}
-                alt={product.name}
-                boxSize="80px"
+        {cart.length === 0 ? (
+          <Box
+            width="full"
+            borderWidth={1}
+            borderRadius="md"
+            shadow="md"
+            p={10}
+            bg="white"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Text color="gray.500">
+              The cart is empty.
+            </Text>
+          </Box>
+        ) : (
+          <Stack spacing={4}>
+            {cart.map((product) => (
+              <Box
+                key={product.id}
+                display="grid"
+                gridTemplateColumns="80px 1fr 150px"
+                alignItems="center"
+                gap={4}
+                p={4}
+                borderWidth={1}
                 borderRadius="md"
-                objectFit="cover"
-              />
-              <Box>
-                <Heading as="h3" size="md">
-                  {product.name}
-                  <Text fontSize="lg" fontWeight="thin">
-                    ${product.price} x {product.quantity}
-                  </Text>
-                </Heading>
+                shadow="md"
+                bg="white"
+              >
+                <Image
+                  src={product.imageUrl}
+                  alt={product.name}
+                  boxSize="80px"
+                  borderRadius="md"
+                  objectFit="cover"
+                />
+                <Box>
+                  <Heading as="h3" size="md">
+                    {product.name}
+                    <Text fontSize="lg" fontWeight="thin">
+                      ${product.price} x {product.quantity}
+                    </Text>
+                  </Heading>
+                </Box>
+                <Flex alignItems="center" gap={4}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    borderRadius="40%"
+                    p={1}
+                    onClick={() => decreaseQuantity(product)}
+                  >
+                    <MinusIcon />
+                  </Button>
+                  <Text fontSize="lg">{product.quantity}</Text>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    borderRadius="40%"
+                    p={1}
+                    onClick={() => increaseQuantity(product)}
+                  >
+                    <PlusIcon />
+                  </Button>
+                </Flex>
               </Box>
-              <Flex alignItems="center" gap={4}>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  borderRadius="40%"
-                  p={1}
-                  onClick={() => decreaseQuantity(product)}
-                >
-                  <MinusIcon />
-                </Button>
-                <Text fontSize="lg">{product.quantity}</Text>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  borderRadius="40%"
-                  p={1}
-                  onClick={() => increaseQuantity(product)}
-                >
-                  <PlusIcon />
+            ))}
+            <Box bg="gray.50" borderRadius="lg" shadow="md" p={6}>
+              <Flex alignItems="center" justifyContent="space-between" mb={4}>
+                <Heading as="h3" size="md">
+                  Order Summary
+                </Heading>
+                <Button variant="outline">
+                  Edit
                 </Button>
               </Flex>
-            </Box>
-          ))}
-          <Box bg="gray.50" borderRadius="lg" shadow="md" p={6}>
-            <Flex alignItems="center" justifyContent="space-between" mb={4}>
-              <Heading as="h3" size="md">
-                Order Summary
-              </Heading>
-              <Button variant="outline" as={Link} href="/cart/edit">
-                Edit
+              <Stack spacing={2} mb={4}>
+                {orderSummary.map((item) => (
+                  <Flex
+                    key={item.label}
+                    alignItems="center"
+                    justifyContent="space-between"
+                    fontWeight={item.isTotal ? "bold" : "normal"}
+                  >
+                    <Text>{item.label}</Text>
+                    <Text>{item.value}</Text>
+                  </Flex>
+                ))}
+              </Stack>
+              <Separator my={4} />
+              <Button
+                bg="black"
+                color="white"
+                style={{
+                  width: "100%",
+                }}
+                _hover={{ bg: "gray.700" }}
+              >
+                Proceed to Checkout
               </Button>
-            </Flex>
-            <Stack spacing={2} mb={4}>
-              {orderSummary.map((item) => (
-                <Flex
-                  key={item.label}
-                  alignItems="center"
-                  justifyContent="space-between"
-                  fontWeight={item.isTotal ? "bold" : "normal"}
-                >
-                  <Text>{item.label}</Text>
-                  <Text>{item.value}</Text>
-                </Flex>
-              ))}
-            </Stack>
-            <Separator my={4} />
-            <Button
-              bg="black"
-              color="white"
-              style={{
-                width: "100%",
-              }}
-              _hover={{ bg: "gray.700" }}
-            >
-              Proceed to Checkout
-            </Button>
-          </Box>
-        </Stack>
+            </Box>
+          </Stack>
+        )}
       </Box>
     </Container>
   );

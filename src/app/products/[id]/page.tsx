@@ -79,7 +79,13 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
 
   const handleAddToCart = () => {
     addToCart(
-      { id: product.id, name: product.name, price: product.price, quantity, imageUrl: product.imageUrl },
+      {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity,
+        imageUrl: product.imageUrl,
+      },
       quantity
     );
     toast({
@@ -125,30 +131,34 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
             </Text>
           </Flex>
           <form>
-            <FormControl id="color" mb={4}>
-              <FormLabel>Color</FormLabel>
-              <RadioGroup defaultValue="black">
-                <Stack spacing={2} direction="row">
-                  {["black", "white", "blue"].map((color) => (
-                    <Radio key={color} value={color} colorScheme="blue">
-                      {color.charAt(0).toUpperCase() + color.slice(1)}
-                    </Radio>
-                  ))}
-                </Stack>
-              </RadioGroup>
-            </FormControl>
-            <FormControl id="size" mb={4}>
-              <FormLabel>Size</FormLabel>
-              <RadioGroup defaultValue="m">
-                <Stack spacing={2} direction="row">
-                  {["xs", "s", "m", "l", "xl"].map((size) => (
-                    <Radio key={size} value={size} colorScheme="blue">
-                      {size.toUpperCase()}
-                    </Radio>
-                  ))}
-                </Stack>
-              </RadioGroup>
-            </FormControl>
+            {product.category === "Clothing" && (
+              <>
+                <FormControl id="color" mb={4}>
+                  <FormLabel>Color</FormLabel>
+                  <RadioGroup defaultValue="black">
+                    <Stack spacing={2} direction="row">
+                      {["black", "white", "blue"].map((color) => (
+                        <Radio key={color} value={color} colorScheme="blue">
+                          {color.charAt(0).toUpperCase() + color.slice(1)}
+                        </Radio>
+                      ))}
+                    </Stack>
+                  </RadioGroup>
+                </FormControl>
+                <FormControl id="size" mb={4}>
+                  <FormLabel>Size</FormLabel>
+                  <RadioGroup defaultValue="m">
+                    <Stack spacing={2} direction="row">
+                      {["xs", "s", "m", "l", "xl"].map((size) => (
+                        <Radio key={size} value={size} colorScheme="blue">
+                          {size.toUpperCase()}
+                        </Radio>
+                      ))}
+                    </Stack>
+                  </RadioGroup>
+                </FormControl>
+              </>
+            )}
             <Flex align="center" mb={4}>
               <Text>Stock: {product.stock}</Text>
             </Flex>
@@ -159,7 +169,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                 min={1}
                 max={product.stock} // Limiting the max to available stock
                 step={1}
-                onChangeEnd={handleQuantityChange} // Using onChangeEnd to ensure it updates once
+                onChangeEnd={(val) => handleQuantityChange(val)}
               >
                 <SliderTrack>
                   <SliderFilledTrack />
@@ -284,24 +294,6 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                 </Flex>
               </Box>
             ))}
-          </Container>
-          <Container
-            maxW="container.xl"
-            display="flex"
-            flexDirection="column"
-            marginTop="40px" // Ensure there's space above the newsletter section
-          >
-            <Heading as="h3" size="lg" mb={6} color="gray.700">
-              Subscribe to Our Newsletter
-            </Heading>
-            <Box
-              borderWidth="1px"
-              borderRadius="md"
-              p={4}
-              bg="white"
-              shadow="sm"
-            >
-            </Box>
           </Container>
         </Box>
       </Grid>
