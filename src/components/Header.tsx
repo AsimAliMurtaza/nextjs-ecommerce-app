@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -14,10 +14,9 @@ import {
 } from "./ui/icons";
 
 import { useRouter } from "next/navigation";
-
+import CartButton from "./ui/cart-card";
 
 export default function Header() {
-
   const router = useRouter();
   return (
     <header
@@ -67,6 +66,8 @@ export default function Header() {
         </Link>
       </nav>
       <div className="flex items-center gap-4">
+        <CartButton />
+
         <Button
           variant={"outline"}
           size="sm"
@@ -77,17 +78,6 @@ export default function Header() {
         >
           <SearchIcon className="h-4 w-4 mr-2" />
           Search
-        </Button>
-        <Button
-          variant={"outline"}
-          size="sm"
-          className="hidden lg:inline-flex"
-          style={{
-            color: "black",
-          }}
-        >
-          <ShoppingCartIcon className="h-4 w-4 mr-2" />
-          Cart
         </Button>
         <Button
           variant={"outline"}

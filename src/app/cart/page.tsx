@@ -1,97 +1,160 @@
+"use client";
+import React, { useEffect } from "react";
+import { useCart } from "@/contexts/cart-context";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Container } from "@chakra-ui/react";
+import {
+  Container,
+  Box,
+  Image,
+  Flex,
+  Text,
+  Stack,
+  Heading,
+} from "@chakra-ui/react";
 import { MinusIcon, PlusIcon } from "@/components/ui/icons";
 
-const products = [
-  {
-    name: "Product Name",
-    description: "Product description goes here",
-    image: "/placeholder.svg",
-    quantity: 1,
-  },
-  {
-    name: "Another Product",
-    description: "Another product description",
-    image: "/placeholder.svg",
-    quantity: 2,
-  },
-];
+// Define the type for products in the cart
+interface CartProduct {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  imageUrl?: string;
+  description?: string;
+}
 
-const orderSummary = [
-  { label: "Subtotal", value: "$99.98" },
-  { label: "Shipping", value: "$5.00" },
-  { label: "Tax", value: "$8.00" },
-  { label: "Total", value: "$112.98", isTotal: true },
-];
+const CheckoutPage: React.FC = () => {
+  const { cart, addToCart, removeFromCart } = useCart();
 
-export default function CheckoutPage() {
+  const increaseQuantity = (product: CartProduct) => {
+    addToCart(product, 1/2);
+  };
+
+  const decreaseQuantity = (product: CartProduct) => {
+    if (product.quantity > 1) {
+      addToCart(product, -1/2);
+    } else {
+      removeFromCart(product.id);
+    }
+  };
+
+  const calculateOrderSummary = () => {
+    const subtotal = cart.reduce(
+      (acc, product) => acc + product.price * product.quantity,
+      0
+    );
+    const shipping = 5.0; // Example flat rate
+    const tax = subtotal * 0.08; // Example tax rate (8%)
+    const total = subtotal + shipping + tax;
+
+    return [
+      { label: "Subtotal", value: `$${subtotal.toFixed(2)}` },
+      { label: "Shipping", value: `$${shipping.toFixed(2)}` },
+      { label: "Tax", value: `$${tax.toFixed(2)}` },
+      { label: "Total", value: `$${total.toFixed(2)}`, isTotal: true },
+    ];
+  };
+
+  const orderSummary = calculateOrderSummary();
+
   return (
-    <Container maxW="container.lg">
-      <section className="py-20 md:py-20 lg:py-22">
-        <div className="container">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold">Cart</h2>
-          </div>
-          <div className="grid gap-8">
-            <div className="grid gap-4">
-              {products.map((product, index) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-[80px_1fr_80px] items-center gap-4"
+    <Container maxW="container.xl" py={20}>
+      <Box mb={8}>
+        <Heading as="h2" size="xl" mb={4}>
+          Cart
+        </Heading>
+        <Stack spacing={4}>
+          {cart.map((product) => (
+            <Box
+              key={product.id}
+              display="grid"
+              gridTemplateColumns="80px 1fr 150px"
+              alignItems="center"
+              gap={4}
+              p={4}
+              borderWidth={1}
+              borderRadius="md"
+              shadow="md"
+              bg="white"
+            >
+              <Image
+                src={product.imageUrl}
+                alt={product.name}
+                boxSize="80px"
+                borderRadius="md"
+                objectFit="cover"
+              />
+              <Box>
+                <Heading as="h3" size="md">
+                  {product.name}
+                  <Text fontSize="lg" fontWeight="thin">
+                    ${product.price} x {product.quantity}
+                  </Text>
+                </Heading>
+              </Box>
+              <Flex alignItems="center" gap={4}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  borderRadius="40%"
+                  p={1}
+                  onClick={() => decreaseQuantity(product)}
                 >
-                  <img
-                    src={product.image}
-                    alt="Product Image"
-                    width={80}
-                    height={80}
-                    className="rounded-md object-cover"
-                  />
-                  <div>
-                    <h3 className="font-semibold">{product.name}</h3>
-                    <p className="text-muted-foreground text-sm">
-                      {product.description}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="icon">
-                      <MinusIcon className="h-4 w-4" />
-                      <span className="sr-only">Decrease quantity</span>
-                    </Button>
-                    <span>{product.quantity}</span>
-                    <Button variant="outline" size="icon">
-                      <PlusIcon className="h-4 w-4" />
-                      <span className="sr-only">Increase quantity</span>
-                    </Button>
-                  </div>
-                </div>
+                  <MinusIcon />
+                </Button>
+                <Text fontSize="lg">{product.quantity}</Text>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  borderRadius="40%"
+                  p={1}
+                  onClick={() => increaseQuantity(product)}
+                >
+                  <PlusIcon />
+                </Button>
+              </Flex>
+            </Box>
+          ))}
+          <Box bg="gray.50" borderRadius="lg" shadow="md" p={6}>
+            <Flex alignItems="center" justifyContent="space-between" mb={4}>
+              <Heading as="h3" size="md">
+                Order Summary
+              </Heading>
+              <Button variant="outline" as={Link} href="/cart/edit">
+                Edit
+              </Button>
+            </Flex>
+            <Stack spacing={2} mb={4}>
+              {orderSummary.map((item) => (
+                <Flex
+                  key={item.label}
+                  alignItems="center"
+                  justifyContent="space-between"
+                  fontWeight={item.isTotal ? "bold" : "normal"}
+                >
+                  <Text>{item.label}</Text>
+                  <Text>{item.value}</Text>
+                </Flex>
               ))}
-            </div>
-            <div className="bg-background rounded-lg shadow-sm p-6 grid gap-4">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold">Order Summary</h3>
-                <Button variant="outline">Edit</Button>
-              </div>
-              <div className="grid gap-2">
-                {orderSummary.map((item, index) => (
-                  <div
-                    key={index}
-                    className={`flex items-center justify-between ${
-                      item.isTotal ? "font-semibold" : ""
-                    }`}
-                  >
-                    <span>{item.label}</span>
-                    <span>{item.value}</span>
-                  </div>
-                ))}
-              </div>
-              <Separator />
-              <Button className="w-full">Proceed to Checkout</Button>
-            </div>
-          </div>
-        </div>
-      </section>
+            </Stack>
+            <Separator my={4} />
+            <Button
+              bg="black"
+              color="white"
+              style={{
+                width: "100%",
+              }}
+              _hover={{ bg: "gray.700" }}
+            >
+              Proceed to Checkout
+            </Button>
+          </Box>
+        </Stack>
+      </Box>
     </Container>
   );
-}
+};
+
+export default CheckoutPage;

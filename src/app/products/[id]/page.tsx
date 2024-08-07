@@ -27,7 +27,7 @@ import {
 import { useState } from "react";
 import SHOP_DATA from "@/shop_data"; // Adjust the path according to your project structure
 import { StarIcon } from "@/components/ui/icons"; // Use Chakra UI's built-in star icon
-import { useCart } from "@/contexts/cart-context"; // Import the custom hook
+import { useCart } from "@/contexts/cart-context"; // Adjust the import path as needed
 
 interface Product {
   id: number;
@@ -79,7 +79,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
 
   const handleAddToCart = () => {
     addToCart(
-      { id: product.id, name: product.name, price: product.price, quantity },
+      { id: product.id, name: product.name, price: product.price, quantity, imageUrl: product.imageUrl },
       quantity
     );
     toast({

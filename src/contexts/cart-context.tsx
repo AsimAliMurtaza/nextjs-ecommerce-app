@@ -1,6 +1,11 @@
-'use client';
-// src/contexts/CartContext.tsx
-import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
+"use client";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 
 // Define the shape of the product in the cart
 interface CartProduct {
@@ -8,6 +13,7 @@ interface CartProduct {
   name: string;
   price: number;
   quantity: number;
+  imageUrl?: string;
 }
 
 // Define the shape of the context
@@ -31,13 +37,27 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
       const existingProductIndex = prevCart.findIndex(
         (p) => p.id === product.id
       );
+
       if (existingProductIndex > -1) {
         // Update quantity if product already exists
         const updatedCart = [...prevCart];
-        updatedCart[existingProductIndex].quantity += quantity;
+        const currentQuantity = updatedCart[existingProductIndex].quantity;
+        updatedCart[existingProductIndex].quantity = currentQuantity + quantity;
+
+        // Ensure quantity doesn't go below 0
+        if (updatedCart[existingProductIndex].quantity <= 0) {
+          return prevCart.filter((_, index) => index !== existingProductIndex);
+        }
+
         return updatedCart;
       }
-      return [...prevCart, { ...product, quantity }];
+
+      // If product doesn't exist, add it to the cart
+      if (quantity > 0) {
+        return [...prevCart, { ...product, quantity }];
+      }
+
+      return prevCart;
     });
   };
 
@@ -51,7 +71,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     console.log("Cart updated:", cart);
-  }, [cart])
+  }, [cart]);
 
   return (
     <CartContext.Provider
