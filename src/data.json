@@ -1,0 +1,546 @@
+[
+    {
+        "id": 1,
+        "name": "Brown Brim",
+        "imageUrl": "https://i.ibb.co/ZYW3VTp/brown-brim.png",
+        "price": 25,
+        "description": "A stylish brown brim hat.",
+        "category": "Clothing",
+        "date": "2024-01-05",
+        "stock": 20,
+        "onSale": false,
+        "featured": true,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Blue Beanie",
+        "imageUrl": "https://i.ibb.co/ypkgK0X/blue-beanie.png",
+        "price": 18,
+        "description": "A warm blue beanie.",
+        "category": "Clothing",
+        "date": "2024-01-10",
+        "stock": 50,
+        "onSale": true,
+        "featured": false,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Brown Cowboy",
+        "imageUrl": "https://i.ibb.co/QdJwgmp/brown-cowboy.png",
+        "price": 35,
+        "description": "A rugged brown cowboy hat.",
+        "category": "Clothing",
+        "date": "2024-01-20",
+        "stock": 15,
+        "onSale": false,
+        "featured": false,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "name": "Grey Brim",
+        "imageUrl": "https://i.ibb.co/RjBLWxB/grey-brim.png",
+        "price": 25,
+        "description": "A sleek grey brim hat.",
+        "category": "Clothing",
+        "date": "2024-01-18",
+        "stock": 30,
+        "onSale": true,
+        "featured": false,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "name": "Green Beanie",
+        "imageUrl": "https://i.ibb.co/YTjW3vF/green-beanie.png",
+        "price": 18,
+        "description": "A cozy green beanie.",
+        "category": "Clothing",
+        "date": "2024-01-25",
+        "stock": 40,
+        "onSale": false,
+        "featured": true,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "name": "Palm Tree Cap",
+        "imageUrl": "https://i.ibb.co/rKBDvJX/palm-tree-cap.png",
+        "price": 14,
+        "description": "A cool palm tree cap.",
+        "category": "Clothing",
+        "date": "2024-02-01",
+        "stock": 10,
+        "onSale": false,
+        "featured": false,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "name": "Red Beanie",
+        "imageUrl": "https://i.ibb.co/bLB646Z/red-beanie.png",
+        "price": 18,
+        "description": "A vibrant red beanie.",
+        "category": "Clothing",
+        "date": "2024-01-30",
+        "stock": 25,
+        "onSale": true,
+        "featured": false,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "name": "Wolf Cap",
+        "imageUrl": "https://i.ibb.co/1f2nWMM/wolf-cap.png",
+        "price": 14,
+        "description": "A fierce wolf cap.",
+        "category": "Clothing",
+        "date": "2024-02-05",
+        "stock": 20,
+        "onSale": false,
+        "featured": true,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "name": "Blue Snapback",
+        "imageUrl": "https://i.ibb.co/X2VJP2W/blue-snapback.png",
+        "price": 16,
+        "description": "A trendy blue snapback.",
+        "category": "Clothing",
+        "date": "2024-02-10",
+        "stock": 35,
+        "onSale": false,
+        "featured": false,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "name": "Adidas NMD",
+        "imageUrl": "https://i.ibb.co/0s3pdnc/adidas-nmd.png",
+        "price": 220,
+        "description": "Comfortable and stylish Adidas NMD.",
+        "category": "Clothing",
+        "date": "2024-01-15",
+        "stock": 12,
+        "onSale": false,
+        "featured": true,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "name": "Adidas Yeezy",
+        "imageUrl": "https://i.ibb.co/dJbG1cT/yeezy.png",
+        "price": 280,
+        "description": "Trendy Adidas Yeezy sneakers.",
+        "category": "Clothing",
+        "date": "2024-01-20",
+        "stock": 8,
+        "onSale": true,
+        "featured": false,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "name": "Black Converse",
+        "imageUrl": "https://i.ibb.co/bPmVXyP/black-converse.png",
+        "price": 110,
+        "description": "Classic black Converse sneakers.",
+        "category": "Clothing",
+        "date": "2024-01-25",
+        "stock": 25,
+        "onSale": false,
+        "featured": false,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "name": "Nike White AirForce",
+        "imageUrl": "https://i.ibb.co/1RcFPk0/white-nike-high-tops.png",
+        "price": 160,
+        "description": "Stylish white Nike AirForce.",
+        "category": "Clothing",
+        "date": "2024-01-30",
+        "stock": 15,
+        "onSale": false,
+        "featured": true,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 14,
+        "name": "Nike Red High Tops",
+        "imageUrl": "https://i.ibb.co/QcvzydB/nikes-red.png",
+        "price": 160,
+        "description": "Eye-catching red Nike high tops.",
+        "category": "Clothing",
+        "date": "2024-02-05",
+        "stock": 20,
+        "onSale": true,
+        "featured": false,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 15,
+        "name": "Nike Brown High Tops",
+        "imageUrl": "https://i.ibb.co/fMTV342/nike-brown.png",
+        "price": 160,
+        "description": "Cool brown Nike high tops.",
+        "category": "Clothing",
+        "date": "2024-02-10",
+        "stock": 18,
+        "onSale": false,
+        "featured": true,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 16,
+        "name": "Air Jordan Limited",
+        "imageUrl": "https://i.ibb.co/w4k6Ws9/nike-funky.png",
+        "price": 190,
+        "description": "Limited edition Air Jordan sneakers.",
+        "category": "Clothing",
+        "date": "2024-02-15",
+        "stock": 5,
+        "onSale": false,
+        "featured": false,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    },
+    {
+        "id": 17,
+        "name": "Timberlands",
+        "imageUrl": "https://i.ibb.co/Mhh6wBg/timberlands.png",
+        "price": 200,
+        "description": "Durable and rugged Timberlands.",
+        "category": "Clothing",
+        "date": "2024-02-20",
+        "stock": 10,
+        "onSale": true,
+        "featured": false,
+        "specifications": {
+            "material": "Wool",
+            "sleeveLength": "N/A",
+            "fit": "Regular",
+            "careInstructions": "Hand wash only"
+        },
+        "reviews": [
+            {
+                "name": "John Doe",
+                "date": "2024-01-10",
+                "rating": 4,
+                "comment": "Great hat, fits perfectly."
+            },
+            {
+                "name": "Jane Smith",
+                "date": "2024-01-12",
+                "rating": 5,
+                "comment": "Love the style and quality."
+            }
+        ]
+    }
+]

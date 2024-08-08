@@ -1,5 +1,5 @@
-'use client';
-// Import necessary components and data
+"use client";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { FilterIcon, LayoutGridIcon } from "@/components/ui/icons";
@@ -13,56 +13,43 @@ import {
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
 import { Container } from "@chakra-ui/react";
-import { useState } from "react";
-import SHOP_DATA from "@/shop_data"; // Adjust the path according to your project structure
 
-// Define the type for product data
-interface Product {
-  id: number;
-  name: string;
-  imageUrl: string;
-  price: number;
-  description?: string; // Optional if not every product has a description
-  category: string;
-  date?: string; // Optional property for date
-  stock: number; // Number of items in stock
-  onSale: boolean; // Indicates if the product is on sale
-  featured: boolean; // Indicates if the product is featured
+interface CategoryDetails {
+  [category: string]: {
+    imageUrl: string;
+    description: string;
+  };
 }
 
-
-// Extract unique categories from SHOP_DATA
-const getUniqueCategories = (products: Product[]) => {
-  const categoriesSet = new Set(products.map((product) => product.category));
-  return Array.from(categoriesSet);
-};
-
-// Get representative product details for each category
-const getCategoryDetails = (products: Product[], categories: string[]) => {
-  const details: Record<string, { imageUrl: string; description: string }> = {};
-
-  categories.forEach((category) => {
-    const categoryProducts = products.filter((product) => product.category === category);
-    if (categoryProducts.length > 0) {
-      details[category] = {
-        imageUrl: categoryProducts[0].imageUrl, // Use the first product's image for simplicity
-        description: categoryProducts[0].description || "Description not available",
-      };
-    }
-  });
-
-  return details;
-};
-
 export default function CategoriesPage() {
-  // State for view mode
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [categories, setCategories] = useState<string[]>([]);
+  const [categoryDetails, setCategoryDetails] = useState<CategoryDetails>({});
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Get unique categories from SHOP_DATA
-  const uniqueCategories = getUniqueCategories(SHOP_DATA);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('/api/categories');
+        if (!response.ok) {
+          throw new Error('Failed to fetch categories');
+        }
+        const data = await response.json();
+        setCategories(data.categories);
+        setCategoryDetails(data.categoryDetails);
+      } catch (error) {
+        setError('An error occurred while fetching categories.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // Get category details
-  const categoryDetails = getCategoryDetails(SHOP_DATA, uniqueCategories);
+    fetchCategories();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <Container maxW="container.xl">
@@ -107,7 +94,7 @@ export default function CategoriesPage() {
                   : "flex flex-col gap-6"
               }`}
             >
-              {uniqueCategories.map((category) => (
+              {categories.map((category) => (
                 <div
                   key={category}
                   className={`${

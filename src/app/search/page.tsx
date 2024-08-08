@@ -12,7 +12,6 @@ import {
   Flex,
   Button,
 } from "@chakra-ui/react";
-import SHOP_DATA from "@/shop_data";
 import Link from "next/link";
 
 interface Product {
@@ -44,14 +43,37 @@ const SearchPage: React.FC = () => {
   const searchParams = useSearchParams();
   const query = searchParams.get("query") || "";
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Filter products based on the search query
-    const results = SHOP_DATA.filter((product) =>
-      product.name.toLowerCase().includes(query.toLowerCase())
-    );
-    setFilteredProducts(results);
+    // Fetch products from the API
+    const fetchProducts = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch('/api/products');
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        const products: Product[] = await response.json();
+        
+        // Filter products based on the search query
+        const results = products.filter((product) =>
+          product.name.toLowerCase().includes(query.toLowerCase())
+        );
+        setFilteredProducts(results);
+      } catch (error) {
+        setError('An error occurred while fetching products.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
   }, [query]);
+
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>{error}</Text>;
 
   return (
     <Container maxW="container.xl" py={20}>
@@ -63,11 +85,11 @@ const SearchPage: React.FC = () => {
           {filteredProducts.map((product) => (
             <Link
               href={`/products/${product.id}`}
+              key={product.id} // Move key here to avoid React key warnings
               className="block"
               prefetch={false}
             >
               <Box
-                key={product.id}
                 display="grid"
                 gridTemplateColumns="80px 1fr"
                 alignItems="center"

@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { FilterIcon, LayoutGridIcon } from "@/components/ui/icons";
@@ -12,7 +13,6 @@ import {
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
 import { Container } from "@chakra-ui/react";
-import SHOP_DATA from "@/shop_data"; // Adjust the path according to your project structure
 import { LayoutList } from "lucide-react";
 
 // Define the type for product data
@@ -21,18 +21,28 @@ interface Product {
   name: string;
   imageUrl: string;
   price: number;
-  description?: string; // Optional if not every product has a description
+  description?: string;
   category: string;
-  date?: string; // Optional property for date
-  stock: number; // Number of items in stock
-  onSale: boolean; // Indicates if the product is on sale
-  featured: boolean; // Indicates if the product is featured
+  date?: string;
+  stock: number;
+  onSale: boolean;
+  featured: boolean;
+  specifications: {
+    material: string;
+    sleeveLength: string;
+    fit: string;
+    careInstructions: string;
+  };
+  reviews: {
+    name: string;
+    date: string;
+    rating: number;
+    comment: string;
+  }[];
 }
-
 export default function ProductsPage() {
-  // State for view mode
+  const [products, setProducts] = useState<Product[]>([]);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
-  // State for filters
   const [filters, setFilters] = useState({
     featured: false,
     onSale: false,
@@ -43,11 +53,19 @@ export default function ProductsPage() {
     oldest: false,
   });
 
-  // Function to apply filters
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const response = await fetch("/api/products");
+      const data = await response.json();
+      setProducts(data);
+    };
+    fetchProducts();
+    console.log("products", products);
+  }, []);
+
   const applyFilters = (products: Product[]) => {
     let filteredProducts = products;
 
-    // Filter logic
     if (filters.featured) {
       filteredProducts = filteredProducts.filter((product) => product.featured);
     }
@@ -55,12 +73,9 @@ export default function ProductsPage() {
       filteredProducts = filteredProducts.filter((product) => product.onSale);
     }
     if (filters.inStock) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.stock > 0
-      );
+      filteredProducts = filteredProducts.filter((product) => product.stock > 0);
     }
 
-    // Sort logic
     if (filters.priceLowToHigh) {
       filteredProducts = filteredProducts.sort((a, b) => a.price - b.price);
     } else if (filters.priceHighToLow) {
@@ -82,8 +97,7 @@ export default function ProductsPage() {
     return filteredProducts;
   };
 
-  // Get filtered and sorted products
-  const filteredProducts = applyFilters(SHOP_DATA);
+  const filteredProducts = applyFilters(products);
 
   return (
     <Container maxW="container.xl">
