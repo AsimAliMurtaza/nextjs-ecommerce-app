@@ -1,25 +1,53 @@
+'use client';
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 
-const products = [
-  {
-    id: 1,
-    name: "Cozy Knit Sweater",
-    description: "Stay warm and stylish",
-    price: 49.99,
-    imageUrl: "/placeholder.svg",
-  },
-  {
-    id: 2,
-    name: "Ergonomic Office Chair",
-    description: "Comfortable and supportive",
-    price: 40.99,
-    imageUrl: "/placeholder.svg",
-  },
-  // Add more products as needed
-];
+// Define the type for product data
+interface Product {
+  id: number;
+  name: string;
+  imageUrl: string;
+  price: number;
+  description?: string; // Optional if not every product has a description
+  category: string;
+  date?: string; // Optional property for date
+  stock: number; // Number of items in stock
+  onSale: boolean; // Indicates if the product is on sale
+  featured: boolean; // Indicates if the product is featured
+  specifications: {
+    material: string;
+    sleeveLength: string;
+    fit: string;
+    careInstructions: string;
+  };
+  reviews: {
+    name: string;
+    date: string;
+    rating: number;
+    comment: string;
+  }[];
+}
+
+// Fetch products from the API
+const fetchProducts = async () => {
+  const response = await fetch('/api/products'); // Adjust the API endpoint as needed
+  const data: Product[] = await response.json();
+  return data;
+};
 
 export default function QuickOrder() {
+  const [products, setProducts] = useState<Product[]>([]);
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      const fetchedProducts = await fetchProducts();
+      setProducts(fetchedProducts);
+    };
+
+    loadProducts();
+  }, []);
+
   return (
     <section className="py-12 md:py-16 lg:py-20">
       <div className="container">
@@ -55,6 +83,7 @@ export default function QuickOrder() {
                     }}
                     variant="outline"
                     size="sm"
+                    onClick={() => handleAddToCart(product)}
                   >
                     Add to Cart
                   </Button>
@@ -67,3 +96,9 @@ export default function QuickOrder() {
     </section>
   );
 }
+
+// Function to handle adding a product to the cart
+const handleAddToCart = (product: Product) => {
+  // Implement the functionality to add the product to the cart
+  console.log("Adding product to cart:", product);
+};
