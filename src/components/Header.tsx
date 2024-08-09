@@ -16,8 +16,17 @@ import {
 import { useRouter } from "next/navigation";
 import CartButton from "./ui/cart-card";
 import SearchBar from "./ui/searchBar";
+import { Image } from "@chakra-ui/react";
+import { useSession } from "next-auth/react";
+
+type user = {
+  name: string;
+  email: string;
+  image: string;
+};
 
 export default function Header() {
+  const { data: session } = useSession();
   const router = useRouter();
   return (
     <header
@@ -62,9 +71,9 @@ export default function Header() {
       <div className="flex items-center gap-4">
         <CartButton />
 
-        <SearchBar/>
+        <SearchBar />
         <Button
-          variant={"outline"}
+          variant="outline"
           size="sm"
           className="hidden lg:inline-flex"
           style={{
@@ -74,8 +83,23 @@ export default function Header() {
             router.push("/account");
           }}
         >
-          <UserIcon className="h-4 w-4 mr-2" />
-          Account
+          {session ? (
+            <div className="flex items-center">
+              <Image
+                src={session.user?.image || "/default-avatar.png"} // Fallback if user image is not available
+                alt={session.user?.name || "User Avatar"}
+                width={30}
+                height={30}
+                className="rounded-full mr-2"
+                sx={{
+                  borderRadius: "full",
+                }}
+              />
+              <span>{session.user?.name}</span>
+            </div>
+          ) : (
+            <UserIcon className="h-5 w-5" />
+          )}
         </Button>
         <Sheet>
           <SheetTrigger asChild>
