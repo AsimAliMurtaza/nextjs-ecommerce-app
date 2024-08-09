@@ -8,8 +8,18 @@ export default function Discover() {
 
   // Image data
   const images = [
-    { src: "https://i.ibb.co/ZYW3VTp/brown-brim.png", alt: "Product Image 1", width: 400, height: 400 },
-    { src: "https://i.ibb.co/bPmVXyP/black-converse.png", alt: "Product Image 2", width: 400, height: 400 },
+    {
+      src: "https://i.ibb.co/ZYW3VTp/brown-brim.png",
+      alt: "Product Image 1",
+      width: 400,
+      height: 400,
+    },
+    {
+      src: "https://i.ibb.co/bPmVXyP/black-converse.png",
+      alt: "Product Image 2",
+      width: 400,
+      height: 400,
+    },
   ];
 
   const handleClick = () => {

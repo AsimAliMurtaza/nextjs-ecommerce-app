@@ -7,7 +7,6 @@ import React, {
   useEffect,
 } from "react";
 
-// Define the shape of the product in the cart
 interface CartProduct {
   id: number;
   name: string;
@@ -16,7 +15,6 @@ interface CartProduct {
   imageUrl?: string;
 }
 
-// Define the shape of the context
 interface CartContextType {
   cart: CartProduct[];
   addToCart: (product: CartProduct, quantity: number) => void;
@@ -24,7 +22,6 @@ interface CartContextType {
   clearCart: () => void;
 }
 
-// Create the context
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: ReactNode }> = ({
@@ -70,7 +67,6 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   useEffect(() => {
-    console.log("Cart updated:", cart);
   }, [cart]);
 
   return (
@@ -82,7 +78,6 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
-// Custom hook to use the CartContext
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {

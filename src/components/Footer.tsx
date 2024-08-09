@@ -79,7 +79,7 @@ export default function Footer() {
             </Heading>
             <Box as="ul" color="gray.700" gap={2}>
               <Text as="li">
-                <Link href="/my-account">My Account</Link>
+                <Link href="/account">My Account</Link>
               </Text>
               <Text as="li">
                 <Link href="/orders">My Orders</Link>

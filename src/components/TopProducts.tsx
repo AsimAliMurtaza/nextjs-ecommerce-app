@@ -80,7 +80,7 @@ export default function TopProducts() {
   };
 
   return (
-    <section className="py-8 md:py-12 lg:py-16">
+    <section className="py-8 md:py-12 lg:py-10">
       <div className="container">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl md:text-3xl font-bold">Top Products</h2>

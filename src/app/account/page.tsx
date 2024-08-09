@@ -1,40 +1,35 @@
 "use client";
-import { Box, Button, Container, FormControl, FormLabel, Heading, Input, Stack, Text, useToast } from "@chakra-ui/react";
-import { ChangeEvent, FormEvent, useState } from "react";
-
-interface UserInfo {
-  username: string;
-  email: string;
-  password: string;
-  newPassword: string;
-}
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  Stack,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../api/auth/[...nextauth]/options";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 export default function AccountPage() {
-  const [userInfo, setUserInfo] = useState<UserInfo>({
-    username: "john_doe",
-    email: "john_doe@example.com",
-    password: "",
-    newPassword: "",
-  });
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
-  const toast = useToast();
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserInfo({ ...userInfo, [name]: value });
-  };
-
-  const handleUpdate = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Add update logic here
-    toast({
-      title: "Profile updated.",
-      description: "Your account information has been updated successfully.",
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-    });
-  };
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/api/auth/signin");
+    }
+  }, [status, router]);
+  if (status === "loading") {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <Container maxW="container.lg" py={20}>
@@ -46,43 +41,23 @@ export default function AccountPage() {
           <Heading size="md" mb={4}>
             Personal Information
           </Heading>
-          <form onSubmit={handleUpdate}>
+          <form>
             <Stack spacing={4}>
               <FormControl>
                 <FormLabel>Username</FormLabel>
-                <Input
-                  type="text"
-                  name="username"
-                  value={userInfo.username}
-                  onChange={handleChange}
-                />
+                <Input type="text" name="username" />
               </FormControl>
               <FormControl>
                 <FormLabel>Email</FormLabel>
-                <Input
-                  type="email"
-                  name="email"
-                  value={userInfo.email}
-                  onChange={handleChange}
-                />
+                <Input type="email" name="email" />
               </FormControl>
               <FormControl>
                 <FormLabel>Current Password</FormLabel>
-                <Input
-                  type="password"
-                  name="password"
-                  value={userInfo.password}
-                  onChange={handleChange}
-                />
+                <Input type="password" name="password" />
               </FormControl>
               <FormControl>
                 <FormLabel>New Password</FormLabel>
-                <Input
-                  type="password"
-                  name="newPassword"
-                  value={userInfo.newPassword}
-                  onChange={handleChange}
-                />
+                <Input type="password" name="newPassword" />
               </FormControl>
               <Button colorScheme="teal" type="submit">
                 Update Profile
