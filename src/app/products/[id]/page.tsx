@@ -114,8 +114,8 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
             src={product.imageUrl}
             alt={product.name}
             borderRadius="lg"
-            boxSize={{ base: "100%", md: "450px" }}
-            height={{ base: "400px", md: "450px" }}
+            width={{ base: "100%", md: "100%" }}
+            height={{ base: "300px", md: "350px" }}
             objectFit="cover"
           />
         </Box>

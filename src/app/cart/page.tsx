@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { useCart } from "@/contexts/cart-context";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
   Container,
@@ -11,7 +10,9 @@ import {
   Text,
   Stack,
   Heading,
+  Button,
   useBreakpointValue,
+  IconButton,
 } from "@chakra-ui/react";
 import { MinusIcon, PlusIcon } from "@/components/ui/icons";
 
@@ -44,7 +45,7 @@ const CheckoutPage: React.FC = () => {
       (acc, product) => acc + product.price * product.quantity,
       0
     );
-    const shipping = 5.0; 
+    const shipping = 5.0;
     const tax = subtotal * 0.08;
     const total = subtotal + shipping + tax;
 
@@ -78,9 +79,7 @@ const CheckoutPage: React.FC = () => {
             alignItems="center"
             justifyContent="center"
           >
-            <Text color="gray.500">
-              The cart is empty.
-            </Text>
+            <Text color="gray.500">The cart is empty.</Text>
           </Box>
         ) : (
           <Stack spacing={4}>
@@ -113,21 +112,21 @@ const CheckoutPage: React.FC = () => {
                   </Heading>
                 </Box>
                 <Flex alignItems="center" gap={4}>
-                  <Button
-                    variant="outline"
-                    size="sm"
+                  <IconButton
+                    aria-label="Decrease quantity"
+                    icon={<MinusIcon />}
                     onClick={() => decreaseQuantity(product)}
-                  >
-                    <MinusIcon />
-                  </Button>
-                  <Text fontSize="lg">{product.quantity}</Text>
-                  <Button
                     variant="outline"
                     size="sm"
+                  />
+                  <Text fontSize="lg">{product.quantity}</Text>
+                  <IconButton
+                    aria-label="Increase quantity"
+                    icon={<PlusIcon />}
                     onClick={() => increaseQuantity(product)}
-                  >
-                    <PlusIcon />
-                  </Button>
+                    variant="outline"
+                    size="sm"
+                  />
                 </Flex>
               </Box>
             ))}
@@ -136,9 +135,7 @@ const CheckoutPage: React.FC = () => {
                 <Heading as="h3" size="md">
                   Order Summary
                 </Heading>
-                <Button variant="outline">
-                  Edit
-                </Button>
+                <Button variant="outline">Edit</Button>
               </Flex>
               <Stack spacing={2} mb={4}>
                 {orderSummary.map((item) => (
@@ -154,12 +151,7 @@ const CheckoutPage: React.FC = () => {
                 ))}
               </Stack>
               <Separator />
-              <Button
-                color="white"
-                style={{
-                  width: "100%",
-                }}
-              >
+              <Button colorScheme="teal" variant="solid" width="full">
                 Proceed to Checkout
               </Button>
             </Box>
