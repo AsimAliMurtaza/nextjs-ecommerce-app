@@ -93,7 +93,7 @@ export default function Header() {
               }}
             >
               <Image
-                src={session.user?.image || ""} // Fallback if user image is not available
+                src={session.user?.image || ""}
                 width={30}
                 height={30}
                 className="rounded-full mr-2"

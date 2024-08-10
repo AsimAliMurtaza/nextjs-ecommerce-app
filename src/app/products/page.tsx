@@ -60,7 +60,6 @@ export default function ProductsPage() {
       setProducts(data);
     };
     fetchProducts();
-    console.log("products", products);
   }, []);
 
   const applyFilters = (products: Product[]) => {

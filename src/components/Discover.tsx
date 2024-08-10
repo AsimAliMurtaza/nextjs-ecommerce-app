@@ -30,7 +30,10 @@ export default function Discover() {
   };
 
   return (
-    <section className="py-20 md:py-16 lg:py-16">
+    <section className="py-20 md:py-16 lg:py-16" style={{
+      paddingTop: "7rem",
+      paddingBottom: "2rem",
+}}>
       <div className="container grid md:grid-cols-2 gap-8 items-center">
         <div className="space-y-4">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">

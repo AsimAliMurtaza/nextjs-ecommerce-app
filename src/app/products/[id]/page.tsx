@@ -116,7 +116,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
             src={product.imageUrl}
             alt={product.name}
             borderRadius="lg"
-            boxSize="450px" // Fixed size for the image
+            boxSize="450px"
             objectFit="cover"
           />
         </Box>
@@ -183,12 +183,6 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                 <Button colorScheme="teal" onClick={handleAddToCart}>
                   Buy
                 </Button>
-                <Button colorScheme="blue" onClick={() => router.push("/cart")}>
-                  Go to Cart
-                </Button>
-                <Button variant="outline" onClick={() => router.back()}>
-                  Go Back
-                </Button>
               </HStack>
             </VStack>
           </form>
@@ -198,8 +192,8 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
             maxW="container.xl"
             display="flex"
             flexDirection="column"
-            marginTop="40px" // Ensure there's space above the newsletter section
-            marginBottom="40px" // Ensure there's space below the newsletter section
+            marginTop="40px"
+            marginBottom="40px"
           >
             <Heading as="h3" size="lg" mb={6} color="black">
               Product Specifications
@@ -248,7 +242,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
             maxW="container.xl"
             display="flex"
             flexDirection="column"
-            marginTop="40px" // Ensure there's space above the newsletter section
+            marginTop="40px" 
           >
             <Heading as="h3" size="lg" mb={6} color="gray.700">
               Customer Reviews

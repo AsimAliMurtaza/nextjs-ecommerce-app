@@ -1,20 +1,19 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 
-// Define the type for product data
 interface Product {
   id: number;
   name: string;
   imageUrl: string;
   price: number;
-  description?: string; // Optional if not every product has a description
+  description?: string;
   category: string;
-  date?: string; // Optional property for date
-  stock: number; // Number of items in stock
-  onSale: boolean; // Indicates if the product is on sale
-  featured: boolean; // Indicates if the product is featured
+  date?: string;
+  stock: number;
+  onSale: boolean;
+  featured: boolean;
   specifications: {
     material: string;
     sleeveLength: string;
@@ -29,9 +28,8 @@ interface Product {
   }[];
 }
 
-// Fetch products from the API
 const fetchProducts = async () => {
-  const response = await fetch('/api/products'); // Adjust the API endpoint as needed
+  const response = await fetch("/api/products");
   const data: Product[] = await response.json();
   return data;
 };
@@ -63,7 +61,10 @@ export default function QuickOrder() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {products.map((product) => (
-            <div key={product.id} className="bg-background rounded-lg shadow-sm overflow-hidden">
+            <div
+              key={product.id}
+              className="bg-background rounded-lg shadow-sm overflow-hidden"
+            >
               <div className="p-4 space-y-2">
                 <img
                   src={product.imageUrl}
@@ -73,9 +74,13 @@ export default function QuickOrder() {
                   className="w-full aspect-square object-cover rounded-md"
                 />
                 <h3 className="font-semibold text-lg">{product.name}</h3>
-                <p className="text-muted-foreground text-sm">{product.description}</p>
+                <p className="text-muted-foreground text-sm">
+                  {product.description}
+                </p>
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-lg">${product.price}</span>
+                  <span className="font-semibold text-lg">
+                    ${product.price}
+                  </span>
                   <Button
                     style={{
                       backgroundColor: "#59B9B7",
@@ -83,7 +88,6 @@ export default function QuickOrder() {
                     }}
                     variant="outline"
                     size="sm"
-                    onClick={() => handleAddToCart(product)}
                   >
                     Add to Cart
                   </Button>
@@ -96,9 +100,3 @@ export default function QuickOrder() {
     </section>
   );
 }
-
-// Function to handle adding a product to the cart
-const handleAddToCart = (product: Product) => {
-  // Implement the functionality to add the product to the cart
-  console.log("Adding product to cart:", product);
-};

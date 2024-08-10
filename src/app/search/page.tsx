@@ -51,19 +51,18 @@ const SearchPage: React.FC = () => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const response = await fetch('/api/products');
+        const response = await fetch("/api/products");
         if (!response.ok) {
-          throw new Error('Failed to fetch products');
+          throw new Error("Failed to fetch products");
         }
         const products: Product[] = await response.json();
-        
-        // Filter products based on the search query
+
         const results = products.filter((product) =>
           product.name.toLowerCase().includes(query.toLowerCase())
         );
         setFilteredProducts(results);
       } catch (error) {
-        setError('An error occurred while fetching products.');
+        setError("An error occurred while fetching products.");
       } finally {
         setLoading(false);
       }
@@ -91,8 +90,8 @@ const SearchPage: React.FC = () => {
             >
               <Box
                 display="grid"
-                gridTemplateColumns="80px 1fr"
                 alignItems="center"
+                gridTemplateColumns="80px 1fr"
                 gap={4}
                 p={4}
                 borderWidth="1px"
