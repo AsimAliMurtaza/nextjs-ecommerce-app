@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { FilterIcon, LayoutGridIcon } from "@/components/ui/icons";
 import {
   DropdownMenu,
@@ -12,9 +11,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { Container } from "@chakra-ui/react";
 import { LayoutList } from "lucide-react";
 import Image from "next/image";
+import {
+  Box,
+  Container,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  Button,
+  Text,
+  Stack,
+  useDisclosure,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Checkbox,
+} from "@chakra-ui/react";
 
 interface Product {
   id: number;
@@ -53,11 +70,10 @@ export default function ProductsPage() {
     oldest: false,
   });
 
-  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch("/api/products"); 
+        const response = await fetch("/api/products");
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }
@@ -81,7 +97,9 @@ export default function ProductsPage() {
       filteredProducts = filteredProducts.filter((product) => product.onSale);
     }
     if (filters.inStock) {
-      filteredProducts = filteredProducts.filter((product) => product.stock > 0);
+      filteredProducts = filteredProducts.filter(
+        (product) => product.stock > 0
+      );
     }
 
     if (filters.priceLowToHigh) {
@@ -106,204 +124,227 @@ export default function ProductsPage() {
   };
 
   const filteredProducts = applyFilters(products);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Container maxW="container.xl">
-      <main className="flex-1">
-        <section className="py-20 md:py-20 lg:py-22 bg-muted">
-          <div className="container">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold">All Products</h2>
-              <div className="flex items-center gap-4">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm">
-                      <FilterIcon className="h-4 w-4 mr-2" />
-                      Filter
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuLabel>Filter by</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem
-                      onCheckedChange={(checked) =>
-                        setFilters((prev) => ({ ...prev, featured: checked }))
-                      }
+    <Container maxW="container.xl" py={{ base: 8, md: 12, lg: 16 }}>
+      <main>
+        <Box py={{ base: 8, md: 12, lg: 10 }} borderRadius="md">
+          <Flex
+            direction={{ base: "row", md: "row" }}
+            justify="space-between"
+            align="center"
+            border="1px solid #e2e8f0"
+            borderRadius="md"
+            p={4}
+            mb={4}
+            shadow={"md"}
+          >
+            <Heading as="h2" size="lg">
+              All Products
+            </Heading>
+            <Flex gap={4} align="right">
+              <Button
+                variant="ghost"
+                colorScheme="teal"
+                size="sm"
+                onClick={onOpen}
+              >
+                <FilterIcon />
+                Filter
+              </Button>
+              <Button
+                variant="ghost"
+                colorScheme="teal"
+                size="sm"
+                onClick={() =>
+                  setViewMode(viewMode === "grid" ? "list" : "grid")
+                }
+              >
+                {viewMode === "grid" ? (
+                  <>
+                    <LayoutList />
+                    List
+                  </>
+                ) : (
+                  <>
+                    <LayoutGridIcon />
+                    Grid
+                  </>
+                )}
+              </Button>
+            </Flex>
+          </Flex>
+
+          <Grid
+            templateColumns={{
+              base: "1fr",
+              md: "repeat(2, 1fr)",
+              lg: "repeat(4, 1fr)",
+            }}
+            gap={6}
+            templateRows={{ base: "auto", lg: "1fr" }}
+            alignItems="start"
+            display={viewMode === "grid" ? "grid" : "flex"}
+            flexDirection={viewMode === "list" ? "column" : "row"}
+          >
+            {filteredProducts.length === 0 ? (
+              <Text>No products found.</Text>
+            ) : (
+              filteredProducts.map((product) => (
+                <Box
+                  key={product.id}
+                  bg="white"
+                  borderRadius="md"
+                  boxShadow="md"
+                  overflow="hidden"
+                  width={viewMode === "list" ? "100%" : "auto"}
+                  height={viewMode === "list" ? "auto" : "100%"}
+                  display="flex"
+                  flexDirection={viewMode === "list" ? "row" : "column"}
+                >
+                  <Link href={`/products/${product.id}`}>
+                    <Flex
+                      direction={viewMode === "list" ? "row" : "column"}
+                      align="center"
+                      p={4}
                     >
-                      Featured
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem
-                      onCheckedChange={(checked) =>
-                        setFilters((prev) => ({ ...prev, onSale: checked }))
-                      }
-                    >
-                      On Sale
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem
-                      onCheckedChange={(checked) =>
-                        setFilters((prev) => ({ ...prev, inStock: checked }))
-                      }
-                    >
-                      In Stock
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem
-                      onCheckedChange={(checked) =>
-                        setFilters((prev) => ({
-                          ...prev,
-                          priceLowToHigh: checked,
-                        }))
-                      }
-                    >
-                      Price: Low to High
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem
-                      onCheckedChange={(checked) =>
-                        setFilters((prev) => ({
-                          ...prev,
-                          priceHighToLow: checked,
-                        }))
-                      }
-                    >
-                      Price: High to Low
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem
-                      onCheckedChange={(checked) =>
-                        setFilters((prev) => ({ ...prev, newest: checked }))
-                      }
-                    >
-                      Newest
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem
-                      onCheckedChange={(checked) =>
-                        setFilters((prev) => ({ ...prev, oldest: checked }))
-                      }
-                    >
-                      Oldest
-                    </DropdownMenuCheckboxItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm">
-                      <LayoutGridIcon className="h-4 w-4 mr-2" />
-                      View
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuLabel>View as</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem
-                      onClick={() => setViewMode("grid")}
-                      checked={viewMode === "grid"}
-                    >
-                      <LayoutGridIcon className="h-4 w-4 mr-2" />
-                      Grid
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem
-                      onClick={() => setViewMode("list")}
-                      checked={viewMode === "list"}
-                    >
-                      <LayoutList className="h-4 w-4 mr-2" />
-                      List
-                    </DropdownMenuCheckboxItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </div>
-            <div
-              className={`${
-                viewMode === "grid"
-                  ? "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
-                  : "flex flex-col gap-6"
-              }`}
-            >
-              {filteredProducts.length === 0 ? (
-                <p>No products found.</p>
-              ) : (
-                filteredProducts.map((product) => (
-                  <div
-                    key={product.id}
-                    className={`${
-                      viewMode === "grid"
-                        ? "bg-background rounded-lg shadow-sm overflow-hidden flex flex-col"
-                        : "bg-background rounded-lg shadow-sm overflow-hidden flex md:flex-row"
-                    }`}
-                  >
-                    <Link
-                      href={`/products/${product.id}`}
-                      className="block"
-                      prefetch={false}
-                    >
-                      <div
-                        className={`${
-                          viewMode === "list" ? "flex flex-row" : ""
-                        }`}
+                      {viewMode === "list" && (
+                        <Box flexShrink={0} mr={4}>
+                          <Image
+                            src={product.imageUrl}
+                            alt={product.name}
+                            width={200}
+                            height={200}
+                            objectFit="cover"
+                          />
+                        </Box>
+                      )}
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        textAlign={viewMode === "list" ? "left" : "center"}
+                        flex={1}
                       >
-                        {viewMode === "list" && (
-                          <div className="flex-shrink-0 mr-4">
-                            <Image
-                              src={product.imageUrl}
-                              alt={product.name}
-                              width={150}
-                              height={150}
-                              className="w-48 h-48 object-cover"
-                            />
-                          </div>
+                        {viewMode === "grid" && (
+                          <Image
+                            src={product.imageUrl}
+                            alt={product.name}
+                            width={200}
+                            height={200}
+                            objectFit="cover"
+                          />
                         )}
-                        <div
-                          className={`${
-                            viewMode === "list"
-                              ? "flex-1 p-4 flex flex-col justify-between"
-                              : "p-4 space-y-2"
-                          }`}
-                        >
-                          {viewMode === "grid" && (
-                            <Image
-                              src={product.imageUrl}
-                              alt={product.name}
-                              width={300}
-                              height={300}
-                              className="w-full aspect-square object-cover"
-                            />
-                          )}
-                          <div
-                            className={`${
-                              viewMode === "list"
-                                ? "flex-1 flex flex-col justify-between"
-                                : ""
-                            }`}
+                        <Heading as="h3" size="md" mb={2}>
+                          {product.name}
+                        </Heading>
+                        <Text mb={2} color="gray.600">
+                          {product.description}
+                        </Text>
+                        <Flex direction="column" align="center" mt={4}>
+                          <Text fontWeight="bold" mb={2}>
+                            ${product.price}
+                          </Text>
+                          <Button
+                            size="sm"
+                            bg="teal.500"
+                            color="white"
+                            _hover={{ bg: "teal.600" }}
                           >
-                            <h3 className="font-semibold text-lg">
-                              {product.name}
-                            </h3>
-                            <p className="text-muted-foreground text-sm">
-                              {product.description}
-                            </p>
-                          </div>
-                          <div className="mt-4 flex flex-col items-start">
-                            <span className="font-semibold text-lg mb-2">
-                              ${product.price}
-                            </span>
-                            <Button
-                              size="sm"
-                              style={{
-                                backgroundColor: "#59B9B7",
-                              }}
-                            >
-                              Buy
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-        </section>
+                            Buy
+                          </Button>
+                        </Flex>
+                      </Box>
+                    </Flex>
+                  </Link>
+                </Box>
+              ))
+            )}
+          </Grid>
+        </Box>
+
+        <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+          <DrawerOverlay>
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader>Filter by</DrawerHeader>
+              <DrawerBody>
+                <Stack spacing={4}>
+                  <Checkbox
+                    onChange={(e) =>
+                      setFilters((prev) => ({
+                        ...prev,
+                        featured: e.target.checked,
+                      }))
+                    }
+                  >
+                    Featured
+                  </Checkbox>
+                  <Checkbox
+                    onChange={(e) =>
+                      setFilters((prev) => ({
+                        ...prev,
+                        onSale: e.target.checked,
+                      }))
+                    }
+                  >
+                    On Sale
+                  </Checkbox>
+                  <Checkbox
+                    onChange={(e) =>
+                      setFilters((prev) => ({
+                        ...prev,
+                        inStock: e.target.checked,
+                      }))
+                    }
+                  >
+                    In Stock
+                  </Checkbox>
+                  <Checkbox
+                    onChange={(e) =>
+                      setFilters((prev) => ({
+                        ...prev,
+                        priceLowToHigh: e.target.checked,
+                      }))
+                    }
+                  >
+                    Price: Low to High
+                  </Checkbox>
+                  <Checkbox
+                    onChange={(e) =>
+                      setFilters((prev) => ({
+                        ...prev,
+                        priceHighToLow: e.target.checked,
+                      }))
+                    }
+                  >
+                    Price: High to Low
+                  </Checkbox>
+                  <Checkbox
+                    onChange={(e) =>
+                      setFilters((prev) => ({
+                        ...prev,
+                        newest: e.target.checked,
+                      }))
+                    }
+                  >
+                    Newest
+                  </Checkbox>
+                  <Checkbox
+                    onChange={(e) =>
+                      setFilters((prev) => ({
+                        ...prev,
+                        oldest: e.target.checked,
+                      }))
+                    }
+                  >
+                    Oldest
+                  </Checkbox>
+                </Stack>
+              </DrawerBody>
+            </DrawerContent>
+          </DrawerOverlay>
+        </Drawer>
       </main>
     </Container>
   );

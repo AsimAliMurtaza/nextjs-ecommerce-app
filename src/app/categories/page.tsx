@@ -1,19 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { LayoutGridIcon } from "@/components/ui/icons";
-import { LayoutListIcon } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuCheckboxItem,
-} from "@/components/ui/dropdown-menu";
-import { Container } from "@chakra-ui/react";
-import Image from "next/image";
+import { Button, Container, Flex, Grid, Heading, Box, Image, Text, useBreakpointValue, useDisclosure, IconButton } from "@chakra-ui/react";
+import { LayoutGridIcon, LayoutListIcon } from "lucide-react";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
 
 interface CategoryDetails {
   [category: string]: {
@@ -49,109 +39,75 @@ export default function CategoriesPage() {
     fetchCategories();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return <Text>Loading...</Text>;
+  if (error) return <Text>{error}</Text>;
 
   return (
-    <Container maxW="container.xl">
-      <main className="flex-1">
-        <section className="py-20 md:py-20 lg:py-22 bg-muted">
-          <div className="container">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold">Categories</h2>
-              <div className="flex items-center gap-4">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm">
-                      <LayoutGridIcon className="h-4 w-4 mr-2" />
-                      View
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuLabel>View as</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem
-                      onClick={() => setViewMode("grid")}
-                      checked={viewMode === "grid"}
-                    >
-                      <LayoutGridIcon className="h-4 w-4 mr-2" />
-                      Grid
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem
-                      onClick={() => setViewMode("list")}
-                      checked={viewMode === "list"}
-                    >
-                      <LayoutListIcon className="h-4 w-4 mr-2" />
-                      List
-                    </DropdownMenuCheckboxItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
-            </div>
-            <div
-              className={`${
-                viewMode === "grid"
-                  ? "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
-                  : "flex flex-col gap-6"
-              }`}
+    <Container maxW="container.xl" py={20}>
+      <Flex direction="column" align="center" mb={8}>
+        <Heading as="h2" size="lg" mb={4}>Categories</Heading>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" colorScheme="teal" rightIcon={viewMode === "grid" ? <LayoutGridIcon /> : <LayoutListIcon />}>
+              View
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuLabel>View as</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuCheckboxItem
+              onClick={() => setViewMode("grid")}
+              checked={viewMode === "grid"}
             >
-              {categories.map((category) => (
-                <div
-                  key={category}
-                  className={`${
-                    viewMode === "grid"
-                      ? "bg-background rounded-lg shadow-sm overflow-hidden"
-                      : "bg-background rounded-lg shadow-sm overflow-hidden flex flex-row"
-                  }`}
-                >
-                  <Link href={`/categories/${category}`} className="block" prefetch={false}>
-                    {viewMode === "list" && (
-                      <div className="flex-shrink-0">
-                        <Image
-                          src={categoryDetails[category]?.imageUrl || "/placeholder.svg"}
-                          alt={category}
-                          width={150}
-                          height={150}
-                          className="w-48 h-48 object-cover"
-                        />
-                      </div>
-                    )}
-                    <div
-                      className={`${
-                        viewMode === "list"
-                          ? "flex-1 p-4 flex flex-col justify-between"
-                          : "p-4 space-y-2"
-                      }`}
-                    >
-                      {viewMode === "grid" && (
-                        <Image
-                          src={categoryDetails[category]?.imageUrl || "/placeholder.svg"}
-                          alt={category}
-                          width={300}
-                          height={300}
-                          className="w-full aspect-square object-cover"
-                        />
-                      )}
-                      <div
-                        className={`${
-                          viewMode === "list"
-                            ? "flex-1 flex flex-col justify-between"
-                            : ""
-                        }`}
-                      >
-                        <h3 className="font-semibold text-lg">{category}</h3>
-                        <p className="text-muted-foreground text-sm">
-                          {categoryDetails[category]?.description || "Description not available"}
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      </main>
+              <LayoutGridIcon />
+              Grid
+            </DropdownMenuCheckboxItem>
+            <DropdownMenuCheckboxItem
+              onClick={() => setViewMode("list")}
+              checked={viewMode === "list"}
+            >
+              <LayoutListIcon />
+              List
+            </DropdownMenuCheckboxItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </Flex>
+      <Grid
+        templateColumns={viewMode === "grid" ? { base: "repeat(2, 1fr)", sm: "repeat(3, 1fr)", md: "repeat(4, 1fr)", lg: "repeat(5, 1fr)" } : "1fr"}
+        gap={6}
+        mb={8}
+      >
+        {categories.map((category) => (
+          <Box
+            key={category}
+            bg="white"
+            borderRadius="md"
+            overflow="hidden"
+            boxShadow="md"
+            display={viewMode === "list" ? "flex" : "block"}
+            flexDirection={viewMode === "list" ? "row" : "column"}
+            _hover={{ shadow: "md", cursor: "pointer", transform: "scale(1.04)", transition: "all 0.2s ease-in-out" }}
+          >
+            <Link href={`/categories/${category}`} passHref>
+                <Box flexShrink={0}>
+                  <Image
+                    src={categoryDetails[category]?.imageUrl || "/placeholder.svg"}
+                    alt={category}
+                    width={viewMode === "list" ? 150 : 300}
+                    height={viewMode === "list" ? 150 : 300}
+                    objectFit="cover"
+                  />
+                </Box>
+                <Box p={4} flex="1">
+                  <Heading as="h3" size="md" mb={2}>{category}</Heading>
+                  <Text color="gray.600">
+                    {categoryDetails[category]?.description || "Description not available"}
+                  </Text>
+                </Box>
+            </Link>
+          </Box>
+        ))}
+      </Grid>
     </Container>
   );
 }

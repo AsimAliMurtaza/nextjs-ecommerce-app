@@ -107,23 +107,25 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
         maxW="6xl"
         mx="auto"
         alignItems="start"
+        templateRows="auto"
       >
         <Box>
           <Image
             src={product.imageUrl}
             alt={product.name}
             borderRadius="lg"
-            boxSize="450px"
+            boxSize={{ base: "100%", md: "450px" }}
+            height={{ base: "400px", md: "450px" }}
             objectFit="cover"
           />
         </Box>
         <Box>
-          <Heading as="h1" size="xl" mb={4}>
+          <Heading as="h1" size={{ base: "lg", md: "xl" }} mb={4}>
             {product.name}
           </Heading>
           {product.description && <Text mb={4}>{product.description}</Text>}
           <Flex align="center" mb={4}>
-            <Text fontSize="2xl" fontWeight="bold" mr={4}>
+            <Text fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold" mr={4}>
               ${product.price}
             </Text>
           </Flex>
@@ -184,7 +186,10 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
             </VStack>
           </form>
         </Box>
-        <Box gridColumn="span 2">
+        <Box
+          gridColumn={{ base: "1 / -1", md: "span 2" }}
+          mt={{ base: 6, md: 0 }}
+        >
           <Container
             maxW="container.xl"
             display="flex"
@@ -196,7 +201,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
               Product Specifications
             </Heading>
             <Grid
-              templateColumns="1fr 2fr"
+              templateColumns={{ base: "1fr", md: "1fr 2fr" }}
               gap={6}
               borderWidth="1px"
               borderRadius="md"

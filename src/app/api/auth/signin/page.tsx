@@ -10,9 +10,9 @@ import {
   Box,
   Heading,
   Text,
+  IconButton,
 } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
-import { Icon } from "@chakra-ui/icons";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import React from "react";
 
@@ -40,23 +40,27 @@ export default function SignInForm() {
       redirect: true,
       callbackUrl: "/",
     });
+
+    if (result?.error) {
+      setError(result.error);
+    }
   };
 
   return (
-    <Container maxW="lg" paddingTop={70} paddingBottom={0}>
+    <Container maxW="lg" py={{base: "16", md:"16", lg: "16"}}>
       <Box
-        w="100%"
-        height="86vh"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          border: "1px solid #e2e8f0",
-          borderRadius: "10px",
-          shadow: "md",
-        }}
+        w="full"
+        maxW="100%"
+        mx="auto"
+        borderWidth={1}
+        borderRadius="lg"
+        shadow="md"
+        p={4}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
       >
-        <VStack spacing={10}>
+        <VStack spacing={6}>
           <Heading as="h2" size="lg" textAlign="center">
             Welcome Back
           </Heading>
@@ -64,8 +68,8 @@ export default function SignInForm() {
             Sign in
           </Text>
 
-          <Box as="form" onSubmit={(e) => handleSubmit(e)} w="100%">
-            <FormControl id="signIn-email" mb={4} isRequired>
+          <Box as="form" onSubmit={(e) => handleSubmit(e)} w="full">
+            <FormControl id="signIn-email" mb={2} isRequired>
               <FormLabel>Email</FormLabel>
               <Input
                 type="email"
@@ -76,7 +80,7 @@ export default function SignInForm() {
                 placeholder="Enter your email address"
               />
             </FormControl>
-            <FormControl id="signIn-password" mb={4} isRequired>
+            <FormControl id="signIn-password" mb={2} isRequired>
               <FormLabel>Password</FormLabel>
               <Input
                 type="password"
@@ -95,40 +99,35 @@ export default function SignInForm() {
               type="submit"
               colorScheme="teal"
               variant="solid"
-              w="100%"
-              mt={4}
+              w="full"
+              mt={2}
             >
               Sign In
             </Button>
-            <div
-              style={{
-                textAlign: "center",
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "row",
-                gap: "20px",
-              }}
-            >
+            <VStack spacing={4} mt={4}>
+              <Text fontSize="sm">
+                Or sign in with
+              </Text>
               <Button
                 onClick={() => signIn("google", { callbackUrl: "/" })}
                 colorScheme="blue"
                 size="lg"
-                marginTop="20px"
+                w="full"
+                leftIcon={<FaGoogle />}
               >
-                Sign in with
-                <Icon as={FaGoogle} ml="5px" />
+                Google
               </Button>
               <Button
                 onClick={() => signIn("github", { callbackUrl: "/" })}
                 colorScheme="gray"
                 size="lg"
-                marginTop="20px"
+                w="full"
+                leftIcon={<FaGithub />}
               >
-                Sign in with
-                <Icon as={FaGithub} ml="5px" />
+                GitHub
               </Button>
-            </div>
-            <Text fontSize="sm" marginTop="20px">
+            </VStack>
+            <Text fontSize="sm" mt={4} textAlign="center">
               Don&apos;t have an account?{" "}
               <a href="/auth/signup" style={{ color: "#3182ce" }}>
                 Sign Up

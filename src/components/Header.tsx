@@ -167,16 +167,28 @@ export default function Header() {
       </Flex>
 
       <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay />
+        <DrawerOverlay sx={{
+          backdropFilter: "blur(4px)",
+          background: "rgba(255, 255, 255, 0.5)",
+        }} />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Menu</DrawerHeader>
+          <DrawerHeader
+            sx={{
+              fontSize: "2xl",
+              fontWeight: "bold",
+              color: "teal",
+            }}
+          >
+            Menu
+          </DrawerHeader>
           <DrawerBody>
             <Flex direction="column" gap={4}>
               <Link href="/" passHref>
                 <Button
                   variant="link"
                   fontSize="lg"
+                  colorScheme="teal"
                   _hover={{ textDecoration: "underline" }}
                   leftIcon={<HomeIcon />}
                 >
@@ -187,6 +199,7 @@ export default function Header() {
                 <Button
                   variant="link"
                   fontSize="lg"
+                  colorScheme="teal"
                   _hover={{ textDecoration: "underline" }}
                   leftIcon={<PackageIcon />}
                 >
@@ -197,6 +210,7 @@ export default function Header() {
                 <Button
                   variant="link"
                   fontSize="lg"
+                  colorScheme="teal"
                   _hover={{ textDecoration: "underline" }}
                   leftIcon={<LayoutGridIcon />}
                 >
@@ -207,6 +221,7 @@ export default function Header() {
                 <Button
                   variant="link"
                   fontSize="lg"
+                  colorScheme="teal"
                   _hover={{ textDecoration: "underline" }}
                   leftIcon={<ShoppingCartIcon />}
                 >
@@ -217,6 +232,7 @@ export default function Header() {
                 <Button
                   variant="link"
                   fontSize="lg"
+                  colorScheme="teal"
                   _hover={{ textDecoration: "underline" }}
                   leftIcon={<UserIcon />}
                 >
