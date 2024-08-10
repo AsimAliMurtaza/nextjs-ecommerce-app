@@ -68,7 +68,7 @@ export default function Footer() {
               <Link href="/orders">My Orders</Link>
               <Link href="/wishlist">Wishlist</Link>
               <Link href="/compare">Compare</Link>
-              <Link href="/faqs">FAQ's</Link>
+              <Link href="/faqs">FAQ&apos;s</Link>
               <Link href="/contact">Contact Us</Link>
             </Stack>
           </GridItem>
