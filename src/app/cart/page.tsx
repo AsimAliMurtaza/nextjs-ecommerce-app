@@ -28,12 +28,12 @@ const CheckoutPage: React.FC = () => {
   const { cart, addToCart, removeFromCart } = useCart();
 
   const increaseQuantity = (product: CartProduct) => {
-    addToCart(product, 1 / 2);
+    addToCart(product, 1);
   };
 
   const decreaseQuantity = (product: CartProduct) => {
     if (product.quantity > 1) {
-      addToCart(product, -1 / 2);
+      addToCart(product, -1);
     } else {
       removeFromCart(product.id);
     }
@@ -44,7 +44,7 @@ const CheckoutPage: React.FC = () => {
       (acc, product) => acc + product.price * product.quantity,
       0
     );
-    const shipping = 5.0;
+    const shipping = 5.0; 
     const tax = subtotal * 0.08;
     const total = subtotal + shipping + tax;
 
@@ -78,7 +78,9 @@ const CheckoutPage: React.FC = () => {
             alignItems="center"
             justifyContent="center"
           >
-            <Text color="gray.500">The cart is empty.</Text>
+            <Text color="gray.500">
+              The cart is empty.
+            </Text>
           </Box>
         ) : (
           <Stack spacing={4}>
@@ -134,7 +136,9 @@ const CheckoutPage: React.FC = () => {
                 <Heading as="h3" size="md">
                   Order Summary
                 </Heading>
-                <Button variant="outline">Edit</Button>
+                <Button variant="outline">
+                  Edit
+                </Button>
               </Flex>
               <Stack spacing={2} mb={4}>
                 {orderSummary.map((item) => (
