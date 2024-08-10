@@ -53,11 +53,21 @@ export default function ProductsPage() {
     oldest: false,
   });
 
+  
   useEffect(() => {
     const fetchProducts = async () => {
-      const response = await fetch("/api/products");
-      const data = await response.json();
-      setProducts(data);
+      try {
+        const response = await fetch("/api/products"); // Use absolute or relative path
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const data = await response.json();
+        console.log(data);
+        setProducts(data);
+      } catch (err) {
+        console.error("Failed to fetch products:", err);
+        setError("Failed to load products. Please try again later.");
+      }
     };
     fetchProducts();
   }, []);

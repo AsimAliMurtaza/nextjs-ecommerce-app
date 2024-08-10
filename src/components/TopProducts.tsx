@@ -29,11 +29,20 @@ interface Product {
     comment: string;
   }[];
 }
+const fetchProducts = async (): Promise<Product[]> => {
+  try {
+    const response = await fetch("/api/products");
 
-const fetchProducts = async () => {
-  const response = await fetch("/api/products");
-  const data: Product[] = await response.json();
-  return data;
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    const data: Product[] = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch products:", error);
+    throw error; // Re-throw the error so it can be handled by the caller
+  }
 };
 
 const getTopProducts = (products: Product[]) => {
