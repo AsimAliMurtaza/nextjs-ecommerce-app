@@ -16,6 +16,10 @@ const userSchema = new Schema<IUser>({
     type: String,
     required: [true, "Please provide a password"],
   },
+  name: {
+    type: String,
+    required: [true, "Please provide a name"],
+  },
 });
 
 const User = models.users || model<IUser>("users", userSchema);

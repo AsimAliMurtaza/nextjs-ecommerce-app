@@ -7,7 +7,6 @@ import GoogleProvider from "next-auth/providers/google";
 import dbConnect from "@/lib/db";
 import User from "@/models/User";
 
-
 export const authOptions: NextAuthOptions = {
   providers: [
     GitHubProvider({
@@ -33,13 +32,18 @@ export const authOptions: NextAuthOptions = {
 
         // Fetch user from the database
         const user = await User.findOne({ email: credentials.email });
-        if (user.email === credentials.email && user.password === credentials.password) {
-        return { id: user.id, email: user.email, name: user.name };
-        }
-        else {
+        if (
+          user.email === credentials.email &&
+          user.password === credentials.password
+        ) {
+          return { id: user.id, email: user.email, name: user.name };
+        } else {
           throw new Error("Invalid credentials");
         }
       },
     }),
   ],
+  pages: {
+    signIn: "/auth/signin",
+  },
 };

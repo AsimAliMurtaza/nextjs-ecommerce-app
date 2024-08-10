@@ -18,6 +18,7 @@ import CartButton from "./ui/cart-card";
 import SearchBar from "./ui/searchBar";
 import { Image } from "@chakra-ui/react";
 import { useSession } from "next-auth/react";
+import { signOut, signIn } from "next-auth/react";
 
 type user = {
   name: string;
@@ -72,22 +73,27 @@ export default function Header() {
         <CartButton />
 
         <SearchBar />
-        <Button
-          variant="outline"
-          size="sm"
-          className="hidden lg:inline-flex"
-          style={{
-            color: "black",
-          }}
-          onClick={() => {
-            router.push("/account");
-          }}
-        >
-          {session ? (
-            <div className="flex items-center">
+
+        {session ? (
+          <div className="flex items-center">
+            <Button
+              variant="outline"
+              sx={{
+                color: "white",
+                backgroundColor: "#59B9B7",
+                fontWeight: "thin",
+                fontSize: "small",
+                height: "30px",
+                border: "1px solid white",
+                borderRadius: "5px",
+              }}
+              onClick={() => {
+                signOut();
+                router.push("/");
+              }}
+            >
               <Image
-                src={session.user?.image || "/default-avatar.png"} // Fallback if user image is not available
-                alt={session.user?.name || "User Avatar"}
+                src={session.user?.image || ""} // Fallback if user image is not available
                 width={30}
                 height={30}
                 className="rounded-full mr-2"
@@ -95,12 +101,28 @@ export default function Header() {
                   borderRadius: "full",
                 }}
               />
-              <span>{session.user?.name}</span>
-            </div>
-          ) : (
-            <UserIcon className="h-5 w-5" />
-          )}
-        </Button>
+              Sign Out
+            </Button>
+          </div>
+        ) : (
+          <Button
+            variant="outline"
+            sx={{
+              color: "white",
+              backgroundColor: "#59B9B7",
+              fontWeight: "thin",
+              fontSize: "small",
+              height: "30px",
+              border: "1px solid white",
+              borderRadius: "5px",
+            }}
+            onClick={() => {
+              signIn();
+            }}
+          >
+            Sign In
+          </Button>
+        )}
         <Sheet>
           <SheetTrigger asChild>
             <Button size="icon" className="lg:hidden">
