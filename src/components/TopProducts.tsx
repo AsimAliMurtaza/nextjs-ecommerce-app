@@ -3,7 +3,15 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import {
+  Box,
+  Container,
+  Flex,
+  Grid,
+  Heading,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 
 interface Product {
   id: number;
@@ -85,66 +93,76 @@ export default function TopProducts() {
   };
 
   return (
-    <section className="py-8 md:py-12 lg:py-10">
-      <div className="container">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold">Top Products</h2>
-          <Link
-            href="/products"
-            className="text-primary hover:underline"
-            prefetch={false}
-          >
+    <Box as="section" py={{ base: 24, md: 20, lg: 20 }} width="100%">
+      <Container maxW="container.xl" px={{ base: 4, md: 6 }}>
+        <Flex direction="row" align="center" justify="space-between" mb={8}>
+          <Heading as="h2" size={{ base: "lg", md: "xl" }} fontWeight="bold">
+            Top Products
+          </Heading>
+          <Link href="/products" color="teal.500">
             View All
           </Link>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        </Flex>
+        <Grid
+          templateColumns={{
+            base: "repeat(2, 1fr)",
+            sm: "repeat(3, 1fr)",
+            md: "repeat(4, 1fr)",
+            lg: "repeat(5, 1fr)",
+          }}
+          gap={6}
+        >
           {topProducts.map((product) => (
-            <div className="flex flex-col justify-between" key={product.id}>
-              <div className="bg-background rounded-lg shadow-sm overflow-hidden">
-                <Link
-                  href={`/products/${product.id}`}
-                  className="block"
-                  prefetch={false}
-                >
-                  <Image
-                    src={product.imageUrl}
-                    alt={product.name}
-                    width={300}
-                    height={300}
-                    className="w-full aspect-square object-cover"
-                  />
-                  <div className="p-4 space-y-2">
-                    <h3 className="font-semibold text-lg">{product.name}</h3>
-                    <p className="text-muted-foreground text-sm">
-                      {product.description}
-                    </p>
-                  </div>
-                  <div>
-                    <span className="font-thin text-sm mt-auto mb-5 flex flex-col items-center">
-                      Avg Rating:{" "}
-                      {calculateAverageRating(product.reviews).toFixed(1)}
-                    </span>
-                  </div>
-                </Link>
-              </div>
-              <div className="mt-auto mb-5 flex flex-col items-center">
-                <span className="font-semibold text-lg mb-2">
+            <Box
+              key={product.id}
+              bg="white"
+              borderRadius="lg"
+              shadow="sm"
+              overflow="hidden"
+              display="flex"
+              flexDirection="column"
+              justifyContent="space-between"
+              p={4}
+              _hover={{ shadow: "md", cursor: "pointer", transform: "scale(1.04)", transition: "all 0.2s ease-in-out" }}
+            >
+              <Link href={`/products/${product.id}`}>
+                <Image
+                  src={product.imageUrl}
+                  alt={product.name}
+                  borderRadius="md"
+                  objectFit="cover"
+                  width="100%"
+                  height={{ base: "auto", sm: "200px" }}
+                />
+                <Box mt={4}>
+                  <Heading as="h3" size="md" mb={2} fontWeight="semibold">
+                    {product.name}
+                  </Heading>
+                  <Text color="gray.600" fontSize="sm">
+                    {product.description}
+                  </Text>
+                </Box>
+                <Text mt={2} fontSize="sm" fontWeight="thin" textAlign="center">
+                  Avg Rating:{" "}
+                  {calculateAverageRating(product.reviews).toFixed(1)}
+                </Text>
+              </Link>
+              <Flex direction="column" align="center" mt={4}>
+                <Text fontSize="lg" fontWeight="semibold" mb={2}>
                   ${product.price}
-                </span>
+                </Text>
                 <Button
                   size="sm"
-                  style={{
-                    backgroundColor: "#59B9B7",
-                  }}
+                  color="white"
                   onClick={() => handleOnClick(product.id)}
                 >
                   Buy
                 </Button>
-              </div>
-            </div>
+              </Flex>
+            </Box>
           ))}
-        </div>
-      </div>
-    </section>
+        </Grid>
+      </Container>
+    </Box>
   );
 }

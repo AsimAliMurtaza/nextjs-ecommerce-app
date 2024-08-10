@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button, Box, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { Carousel } from "antd";
 import Image from "next/image";
@@ -25,66 +25,75 @@ export default function Discover() {
   const handleClick = () => {
     router.push("/categories");
   };
+
   const handleShopClick = () => {
     router.push("/products");
   };
 
   return (
-    <section
-      className="py-20 md:py-16 lg:py-16"
-      style={{
-        paddingTop: "7rem",
-        paddingBottom: "2rem",
-      }}
-    >
-      <div className="container grid md:grid-cols-2 gap-8 items-center">
-        <div className="space-y-4">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
-            Discover the Best Products for Your Lifestyle
-          </h1>
-          <p className="text-muted-foreground text-lg">
-            Browse our curated collection of top-rated products across various
-            categories.
-          </p>
-          <div className="flex gap-4">
-            <Button
-              size="lg"
-              style={{
-                backgroundColor: "#59B9B7",
-              }}
-              onClick={handleShopClick}
-            >
-              Shop Now
-            </Button>
-            <Button variant="outline" size="lg" onClick={handleClick}>
-              Explore Categories
-            </Button>
-          </div>
-        </div>
-        <div className="w-full md:w-3/4 lg:w-1/2 mx-auto">
-          <Carousel
-            autoplay
-            style={{
-              borderRadius: "1rem",
-              overflow: "hidden",
-              margin: "10px auto",
-              maxWidth: "400px",
-            }}
+    <Box as="section" py={{ base: 24, md: 20, lg: 20 }} width="100%">
+      <Container maxW="container.xl">
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          gap={4}
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Box flex="1">
+            <Heading as="h1" size={{ base: "lg", md: "xl" }} mb={4}>
+              Discover the Best Products for Your Lifestyle
+            </Heading>
+            <Text fontSize={{ base: "md", md: "lg" }} mb={6}>
+              Browse our curated collection of top-rated products across various
+              categories.
+            </Text>
+            <Flex direction={{ base: "column", md: "row" }} gap={4}>
+              <Button
+                type="submit"
+                size="lg"
+                colorScheme="teal"
+                variant="ghost"
+                onClick={handleShopClick}
+              >
+                Shop Now
+              </Button>
+              <Button variant="outline" size="lg" onClick={handleClick}>
+                Explore Categories
+              </Button>
+            </Flex>
+          </Box>
+          <Box
+            flex="1"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            overflow="hidden"
+            marginTop={{ base: 8, md: 0, lg: 0 }}
           >
-            {images.map((image, index) => (
-              <div key={index}>
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  width={image.width}
-                  height={image.height}
-                  className="rounded-lg object-cover w-full aspect-square"
-                />
-              </div>
-            ))}
-          </Carousel>
-        </div>
-      </div>
-    </section>
+            <Carousel
+              autoplay
+              style={{
+                borderRadius: "1rem",
+                overflow: "hidden",
+                width: "400px",
+                maxHeight: "400px",
+              }}
+            >
+              {images.map((image, index) => (
+                <div key={index}>
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={image.width}
+                    height={image.height}
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+              ))}
+            </Carousel>
+          </Box>
+        </Flex>
+      </Container>
+    </Box>
   );
 }

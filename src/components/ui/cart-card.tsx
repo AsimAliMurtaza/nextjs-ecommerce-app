@@ -34,18 +34,14 @@ const CartButton: React.FC = () => {
         },
       }}
     >
-      <IconButton
-        icon={<ChevronDownIcon/>}
-        aria-label="Cart"
-        variant={"outline"}
-        size="sm"
-        className="hidden lg:inline-flex"
-        style={{
-          height: "30px",
-          borderRadius: "5px",
-          border: "1px solid white",
-        }}
-      />
+      <Flex align="center">
+        <IconButton
+          icon={<ChevronDownIcon />}
+          aria-label="Open Cart"
+          variant="ghost"
+          size="xs"
+        />
+      </Flex>
 
       {isOpen && (
         <Card

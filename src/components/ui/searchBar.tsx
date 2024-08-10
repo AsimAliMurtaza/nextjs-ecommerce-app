@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Input, Button, Flex } from "@chakra-ui/react";
+import { Input, Button, Flex, useBreakpointValue } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 
 const SearchBar: React.FC = () => {
@@ -13,33 +13,31 @@ const SearchBar: React.FC = () => {
     }
   };
 
+  const inputWidth = useBreakpointValue({ base: "120px", sm: "150px" });
+
   return (
     <Flex align="center" gap={2}>
       <Input
         placeholder="Search products..."
         value={query}
-        sx={{
-          width: "150px",
-          height: "30px",
-          borderRadius: "5px",
-          border: "1px solid white",
-          backgroundColor: "white",
-          fontWeight: "thin",
-          fontSize: "small",
-        }}
         onChange={(e) => setQuery(e.target.value)}
+        width={inputWidth}
+        height="30px"
+        borderRadius="md"
+        borderColor="white"
+        backgroundColor="white"
+        fontSize="sm"
+        fontWeight="normal"
+        _placeholder={{ color: "gray.500" }}
+        _focus={{ borderColor: "teal.500", boxShadow: "outline" }}
       />
       <Button
+        onClick={handleSearch}
         variant="outline"
-        sx={{
-          color: "white",
-          backgroundColor: "#59B9B7",
-          fontWeight: "thin",
-          fontSize: "small",
-          height: "30px",
-          border: "1px solid white",
-          borderRadius: "5px",
-        }}
+        colorScheme="teal"
+        size="sm"
+        height="30px"
+        borderRadius="md"
       >
         Search
       </Button>

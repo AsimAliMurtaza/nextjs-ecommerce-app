@@ -6,6 +6,7 @@ import {
   Heading,
   Link,
   Text,
+  Stack,
 } from "@chakra-ui/react";
 
 export default function Footer() {
@@ -13,7 +14,7 @@ export default function Footer() {
     <Box
       as="footer"
       bg="gray.100"
-      py={{ base: 12, md: 16, lg: 20 }}
+      py={{ base: 8, md: 12, lg: 16 }}
       width="100%"
     >
       <Container maxW="container.xl">
@@ -25,8 +26,9 @@ export default function Footer() {
           }}
           gap={8}
         >
+          {/* About Section */}
           <GridItem>
-            <Heading as="h3" size="xl" color="green.600" mb={4}>
+            <Heading as="h3" size="lg" color="green.600" mb={4}>
               Ecommerce
             </Heading>
             <Text color="gray.700" mb={4}>
@@ -42,57 +44,38 @@ export default function Footer() {
             </Text>
           </GridItem>
 
+          {/* Useful Links Section */}
           <GridItem>
-            <Heading as="h4" size="lg" mb={4}>
+            <Heading as="h4" size="md" mb={4}>
               Useful Links
             </Heading>
-            <Box as="ul" color="gray.700" gap={2}>
-              <Text as="li">
-                <Link href="/">Home</Link>
-              </Text>
-              <Text as="li">
-                <Link href="/about">About</Link>
-              </Text>
-              <Text as="li">
-                <Link href="/blogs">Blogs</Link>
-              </Text>
-              <Text as="li">
-                <Link href="/offers">Offers</Link>
-              </Text>
-              <Text as="li">
-                <Link href="/search">Search</Link>
-              </Text>
-            </Box>
+            <Stack spacing={2} color="gray.700">
+              <Link href="/">Home</Link>
+              <Link href="/about">About</Link>
+              <Link href="/blogs">Blogs</Link>
+              <Link href="/offers">Offers</Link>
+              <Link href="/search">Search</Link>
+            </Stack>
           </GridItem>
 
+          {/* Quick Pages Section */}
           <GridItem>
-            <Heading as="h4" size="lg" mb={4}>
+            <Heading as="h4" size="md" mb={4}>
               Quick Pages
             </Heading>
-            <Box as="ul" color="gray.700" gap={2}>
-              <Text as="li">
-                <Link href="/account">My Account</Link>
-              </Text>
-              <Text as="li">
-                <Link href="/orders">My Orders</Link>
-              </Text>
-              <Text as="li">
-                <Link href="/wishlist">Wishlist</Link>
-              </Text>
-              <Text as="li">
-                <Link href="/compare">Compare</Link>
-              </Text>
-              <Text as="li">
-                <Link href="/faqs">FAQ&apos;s</Link>
-              </Text>
-              <Text as="li">
-                <Link href="/contact">Contact Us</Link>
-              </Text>
-            </Box>
+            <Stack spacing={2} color="gray.700">
+              <Link href="/account">My Account</Link>
+              <Link href="/orders">My Orders</Link>
+              <Link href="/wishlist">Wishlist</Link>
+              <Link href="/compare">Compare</Link>
+              <Link href="/faqs">FAQ's</Link>
+              <Link href="/contact">Contact Us</Link>
+            </Stack>
           </GridItem>
 
+          {/* Contact Us Section */}
           <GridItem>
-            <Heading as="h4" size="lg" mb={4}>
+            <Heading as="h4" size="md" mb={4}>
               Contact Us
             </Heading>
             <Text color="gray.700" mb={4}>
@@ -101,21 +84,12 @@ export default function Footer() {
             <Text color="gray.700" mb={4}>
               <strong>Email Address:</strong> support@lmao.com
             </Text>
-            <Heading as="h4" size="lg" mb={4}>
+            <Heading as="h4" size="md" mb={4}>
               Download App:
             </Heading>
-            <Box
-              sx={{
-                display: "flex",
-                gap: "1rem",
-                justifyContent: "flex-start",
-                alignItems: "center",
-              }}
-            >
-              <Link href="https://youtu.be/dQw4w9WgXcQ">
-                Link to our android app
-              </Link>
-            </Box>
+            <Link color="teal.500" href="https://youtu.be/dQw4w9WgXcQ">
+              Link to our android app
+            </Link>
           </GridItem>
         </Grid>
       </Container>

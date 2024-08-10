@@ -1,8 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Button } from "./ui/button";
-import Image from "next/image";
+import {
+  Button,
+  Box,
+  Container,
+  Grid,
+  Heading,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 
 interface Product {
   id: number;
@@ -48,56 +55,87 @@ export default function QuickOrder() {
   }, []);
 
   return (
-    <section className="py-12 md:py-16 lg:py-20">
-      <div className="container">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold">Quick Order</h2>
-          <Link
-            href="/cart"
-            className="text-primary hover:underline"
-            prefetch={false}
-          >
-            View Cart
-          </Link>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="bg-background rounded-lg shadow-sm overflow-hidden"
+    <Box as="section" py={{ base: 12, md: 16, lg: 20 }} width="100%">
+      <Container maxW="container.xl">
+        <Box
+          mb={8}
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Heading as="h2" size={{ base: "lg", md: "xl" }} fontWeight="bold">
+            Quick Order
+          </Heading>
+          <Link href="/cart">
+            <Text
+              color="teal.500"
+              fontWeight="medium"
+              _hover={{ textDecoration: "underline" }}
             >
-              <div className="p-4 space-y-2">
-                <Image
-                  src={product.imageUrl}
-                  alt={product.name}
-                  width={200}
-                  height={200}
-                  className="w-full aspect-square object-cover rounded-md"
-                />
-                <h3 className="font-semibold text-lg">{product.name}</h3>
-                <p className="text-muted-foreground text-sm">
-                  {product.description}
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-lg">
-                    ${product.price}
-                  </span>
-                  <Button
-                    style={{
-                      backgroundColor: "#59B9B7",
-                      color: "white",
-                    }}
-                    variant="outline"
-                    size="sm"
-                  >
-                    Add to Cart
-                  </Button>
-                </div>
-              </div>
-            </div>
+              View Cart
+            </Text>
+          </Link>
+        </Box>
+        <Grid
+          templateColumns={{
+            base: "repeat(1, 1fr)",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
+            lg: "repeat(4, 1fr)",
+          }}
+          gap={6}
+        >
+          {products.map((product) => (
+            <Box
+              key={product.id}
+              bg="white"
+              borderRadius="lg"
+              shadow="md"
+              overflow="hidden"
+              p={4}
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="space-between"
+              _hover={{
+                shadow: "md",
+                cursor: "pointer",
+                transform: "scale(1.04)",
+                transition: "all 0.2s ease-in-out",
+              }}
+            >
+              <Image
+                src={product.imageUrl}
+                alt={product.name}
+                boxSize="200px"
+                objectFit="cover"
+                borderRadius="md"
+                mb={4}
+              />
+              <Heading as="h3" size="md" fontWeight="semibold" mb={2}>
+                {product.name}
+              </Heading>
+              <Text color="gray.600" fontSize="sm" mb={4}>
+                {product.description}
+              </Text>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+                width="full"
+              >
+                <Text fontWeight="semibold" fontSize="lg">
+                  ${product.price}
+                </Text>
+
+                <Button type="submit" colorScheme="teal" variant="outline">
+                  Add to Cart
+                </Button>
+              </Box>
+            </Box>
           ))}
-        </div>
-      </div>
-    </section>
+        </Grid>
+      </Container>
+    </Box>
   );
 }

@@ -1,182 +1,232 @@
 "use client";
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import {
+  Button,
+  Box,
+  Flex,
+  useDisclosure,
+  Image,
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+} from "@chakra-ui/react";
+import { useSession, signOut, signIn } from "next-auth/react";
+import CartButton from "./ui/cart-card";
+import SearchBar from "./ui/searchBar";
 import { ShoppingBag } from "lucide-react";
 import {
-  SearchIcon,
-  UserIcon,
-  ShoppingCartIcon,
   MenuIcon,
   HomeIcon,
   PackageIcon,
   LayoutGridIcon,
+  ShoppingCartIcon,
+  UserIcon,
 } from "./ui/icons";
-
-import { useRouter } from "next/navigation";
-import CartButton from "./ui/cart-card";
-import SearchBar from "./ui/searchBar";
-import { Image } from "@chakra-ui/react";
-import { useSession } from "next-auth/react";
-import { signOut, signIn } from "next-auth/react";
-
-type user = {
-  name: string;
-  email: string;
-  image: string;
-};
 
 export default function Header() {
   const { data: session } = useSession();
   const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleSignOut = () => {
+    signOut();
+    router.push("/");
+  };
+
+  const handleSignIn = () => {
+    signIn();
+  };
+
   return (
-    <header
-      style={{
-        backgroundColor: "#59B9B7",
-        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.05)",
-        zIndex: 1000,
-      }}
-      className="px-4 lg:px-6 py-3 flex items-center justify-between fixed w-full"
+    <Box
+      as="header"
+      bg="#59B9B7"
+      boxShadow="md"
+      position="fixed"
+      width="100%"
+      top="0"
+      zIndex="1000"
+      px={{ base: 4, lg: 6 }}
+      py={3}
     >
-      <Link href="/" className="flex items-center gap-2" prefetch={false}>
-        <ShoppingBag className="h-6 w-6" />
-        <span className="font-semibold text-lg">Ecommerce</span>
-      </Link>
-      <nav className="hidden lg:flex items-center gap-6">
-        <Link href="/" className="font-medium hover:underline" prefetch={false}>
-          Home
-        </Link>
-        <Link
-          href="/products"
-          className="font-medium hover:underline"
-          prefetch={false}
-        >
-          Products
-        </Link>
-        <Link
-          href="/categories"
-          className="font-medium hover:underline"
-          prefetch={false}
-        >
-          Categories
-        </Link>
+      <Flex align="center" justify="space-between" wrap="wrap">
+        {/* Title and Burger Menu */}
+        <Flex align="center" gap={2} display={{ base: "flex", md: "none" }}>
+          <Link href="/" passHref>
+            <Flex align="center" gap={2}>
+              <ShoppingBag size={24} />
+              <Box fontWeight="bold" fontSize="lg">
+                Ecommerce
+              </Box>
+            </Flex>
+          </Link>
+          <Button
+            onClick={onOpen}
+            variant="outline"
+            colorScheme="teal"
+            size="sm"
+            aria-label="Menu"
+          >
+            <MenuIcon />
+          </Button>
+        </Flex>
 
-        <Link
-          href="/cart"
-          className="font-medium hover:underline"
-          prefetch={false}
+        {/* Full Menu for larger screens */}
+        <Flex align="center" gap={4} display={{ base: "none", md: "flex" }}>
+          <Link href="/" passHref>
+            <Flex align="center" gap={2}>
+              <ShoppingBag size={24} />
+              <Box fontWeight="bold" fontSize="lg">
+                Ecommerce
+              </Box>
+            </Flex>
+          </Link>
+          <Link href="/" passHref>
+            <Button
+              variant="link"
+              fontSize="md"
+              _hover={{ textDecoration: "underline" }}
+              colorScheme="gray.800"
+            >
+              Home
+            </Button>
+          </Link>
+          <Link href="/products" passHref>
+            <Button
+              variant="link"
+              fontSize="md"
+              _hover={{ textDecoration: "underline" }}
+              colorScheme="gray.800"
+            >
+              Products
+            </Button>
+          </Link>
+          <Link href="/categories" passHref>
+            <Button
+              variant="link"
+              fontSize="md"
+              _hover={{ textDecoration: "underline" }}
+              colorScheme="gray.800"
+            >
+              Categories
+            </Button>
+          </Link>
+          <Link href="/cart" passHref>
+            <Button
+              variant="link"
+              fontSize="md"
+              _hover={{ textDecoration: "underline" }}
+              colorScheme="gray.800"
+            >
+              Cart
+            </Button>
+          </Link>
+        </Flex>
+
+        <Flex
+          align="center"
+          gap={4}
+          display={{ base: "none", md: "flex" }} // Hide on small screens
         >
-          Cart
-        </Link>
-      </nav>
-      <div className="flex items-center gap-4">
-        <CartButton />
+          <CartButton />
+          <SearchBar />
 
-        <SearchBar />
-
-        {session ? (
-          <div className="flex items-center">
+          {session ? (
             <Button
               variant="outline"
-              style={{
-                color: "white",
-                backgroundColor: "#59B9B7",
-                fontWeight: "thin",
-                fontSize: "small",
-                height: "30px",
-                border: "1px solid white",
-                borderRadius: "5px",
-              }}
-              onClick={() => {
-                signOut();
-                router.push("/");
-              }}
+              colorScheme="teal"
+              size="sm"
+              onClick={handleSignOut}
+              rightIcon={
+                <Image
+                  src={session.user?.image || ""}
+                  alt="Profile Image"
+                  boxSize="25px"
+                  borderRadius="full"
+                  mr={2}
+                />
+              }
             >
-              <Image
-                src={session.user?.image || ""}
-                alt={""}
-                width="25px"
-                height="25px"
-                className="rounded-full mr-2"
-                sx={{
-                  borderRadius: "full",
-                }}
-              />
               Sign Out
             </Button>
-          </div>
-        ) : (
-          <Button
-            variant="outline"
-            style={{
-              color: "white",
-              backgroundColor: "#59B9B7",
-              fontWeight: "thin",
-              fontSize: "small",
-              height: "30px",
-              border: "1px solid white",
-              borderRadius: "5px",
-            }}
-            onClick={() => {
-              signIn();
-            }}
-          >
-            Sign In
-          </Button>
-        )}
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button size="icon" className="lg:hidden">
-              <MenuIcon className="h-6 w-6" />
-              <span className="sr-only">Toggle menu</span>
+          ) : (
+            <Button
+              variant="outline"
+              colorScheme="teal"
+              size="sm"
+              onClick={handleSignIn}
+            >
+              Sign In
             </Button>
-          </SheetTrigger>
-          <SheetContent side="left" className="sm:max-w-xs mt-16">
-            <nav className="grid gap-4 text-lg font-medium">
-              <Link
-                href="/"
-                className="flex items-center gap-4"
-                prefetch={false}
-              >
-                <HomeIcon className="h-5 w-5" />
-                Home
+          )}
+        </Flex>
+      </Flex>
+
+      <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Menu</DrawerHeader>
+          <DrawerBody>
+            <Flex direction="column" gap={4}>
+              <Link href="/" passHref>
+                <Button
+                  variant="link"
+                  fontSize="lg"
+                  _hover={{ textDecoration: "underline" }}
+                  leftIcon={<HomeIcon />}
+                >
+                  Home
+                </Button>
               </Link>
-              <Link
-                href="/products"
-                className="flex items-center gap-4"
-                prefetch={false}
-              >
-                <PackageIcon className="h-5 w-5" />
-                Products
+              <Link href="/products" passHref>
+                <Button
+                  variant="link"
+                  fontSize="lg"
+                  _hover={{ textDecoration: "underline" }}
+                  leftIcon={<PackageIcon />}
+                >
+                  Products
+                </Button>
               </Link>
-              <Link
-                href="/categories"
-                className="flex items-center gap-4"
-                prefetch={false}
-              >
-                <LayoutGridIcon className="h-5 w-5" />
-                Categories
+              <Link href="/categories" passHref>
+                <Button
+                  variant="link"
+                  fontSize="lg"
+                  _hover={{ textDecoration: "underline" }}
+                  leftIcon={<LayoutGridIcon />}
+                >
+                  Categories
+                </Button>
               </Link>
-              <Link
-                href="/cart"
-                className="flex items-center gap-4"
-                prefetch={false}
-              >
-                <ShoppingCartIcon className="h-5 w-5" />
-                Cart
+              <Link href="/cart" passHref>
+                <Button
+                  variant="link"
+                  fontSize="lg"
+                  _hover={{ textDecoration: "underline" }}
+                  leftIcon={<ShoppingCartIcon />}
+                >
+                  Cart
+                </Button>
               </Link>
-              <Link
-                href="/account"
-                className="flex items-center gap-4"
-                prefetch={false}
-              >
-                <UserIcon className="h-5 w-5" />
-                Account
+              <Link href="/account" passHref>
+                <Button
+                  variant="link"
+                  fontSize="lg"
+                  _hover={{ textDecoration: "underline" }}
+                  leftIcon={<UserIcon />}
+                >
+                  Account
+                </Button>
               </Link>
-            </nav>
-          </SheetContent>
-        </Sheet>
-      </div>
-    </header>
+            </Flex>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </Box>
   );
 }

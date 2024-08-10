@@ -1,4 +1,13 @@
-import Link from "next/link";
+"use client";
+import {
+  Box,
+  Container,
+  Flex,
+  Grid,
+  Heading,
+  Link,
+  Text,
+} from "@chakra-ui/react";
 import {
   LaptopIcon,
   ClubIcon,
@@ -10,69 +19,140 @@ import {
 
 export default function Category() {
   return (
-    <section className="py-12 md:py-16 lg:py-20">
-      <div className="container">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold">Shop by Category</h2>
+    <Box as="section" py={{ base: 12, md: 16, lg: 20 }} width="100%">
+      <Container maxW="container.xl">
+        <Flex align="center" justify="space-between" mb={8}>
+          <Heading as="h2" size={{ base: "lg", md: "xl" }} fontWeight="bold">
+            Shop by Category
+          </Heading>
           <Link
             href="/categories"
-            className="text-primary hover:underline"
-            prefetch={false}
+            color="teal.500"
+            fontWeight="medium"
+            _hover={{ textDecoration: "underline" }}
           >
             View All
           </Link>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+        </Flex>
+        <Grid
+          templateColumns={{
+            base: "repeat(2, 1fr)",
+            sm: "repeat(3, 1fr)",
+            md: "repeat(4, 1fr)",
+            lg: "repeat(6, 1fr)",
+          }}
+          gap={6}
+        >
           <Link
             href="/categories/Clothing"
-            className="bg-background rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors"
-            prefetch={false}
+            bg="white"
+            borderRadius="lg"
+            shadow="sm"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            p={4}
+            _hover={{ bg: "teal.100", color: "teal.800" }}
+            transition="background-color 0.2s ease, color 0.2s ease"
           >
-            <ShirtIcon className="h-8 w-8" />
-            <span className="font-medium text-sm">Clothing</span>
+            <ShirtIcon />
+            <Text fontWeight="medium" mt={2}>
+              Clothing
+            </Text>
           </Link>
           <Link
             href="/categories/Electronics"
-            className="bg-background rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors"
-            prefetch={false}
+            bg="white"
+            borderRadius="lg"
+            shadow="sm"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            p={4}
+            _hover={{ bg: "teal.100", color: "teal.800" }}
+            transition="background-color 0.2s ease, color 0.2s ease"
           >
-            <LaptopIcon className="h-8 w-8" />
-            <span className="font-medium text-sm">Electronics</span>
+            <LaptopIcon />
+            <Text fontWeight="medium" mt={2}>
+              Electronics
+            </Text>
           </Link>
           <Link
             href="/categories/Home"
-            className="bg-background rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors"
-            prefetch={false}
+            bg="white"
+            borderRadius="lg"
+            shadow="sm"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            p={4}
+            _hover={{ bg: "teal.100", color: "teal.800" }}
+            transition="background-color 0.2s ease, color 0.2s ease"
           >
-            <HomeIcon className="h-8 w-8" />
-            <span className="font-medium text-sm">Home</span>
+            <HomeIcon />
+            <Text fontWeight="medium" mt={2}>
+              Home
+            </Text>
           </Link>
           <Link
             href="/categories/Beauty"
-            className="bg-background rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors"
-            prefetch={false}
+            bg="white"
+            borderRadius="lg"
+            shadow="sm"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            p={4}
+            _hover={{ bg: "teal.100", color: "teal.800" }}
+            transition="background-color 0.2s ease, color 0.2s ease"
           >
-            <PaintbrushIcon className="h-8 w-8" />
-            <span className="font-medium text-sm">Beauty</span>
+            <PaintbrushIcon />
+            <Text fontWeight="medium" mt={2}>
+              Beauty
+            </Text>
           </Link>
           <Link
             href="/categories/Sports"
-            className="bg-background rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors"
-            prefetch={false}
+            bg="white"
+            borderRadius="lg"
+            shadow="sm"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            p={4}
+            _hover={{ bg: "teal.100", color: "teal.800" }}
+            transition="background-color 0.2s ease, color 0.2s ease"
           >
-            <ClubIcon className="h-8 w-8" />
-            <span className="font-medium text-sm">Sports</span>
+            <ClubIcon />
+            <Text fontWeight="medium" mt={2}>
+              Sports
+            </Text>
           </Link>
           <Link
             href="/categories/Outdoor"
-            className="bg-background rounded-lg shadow-sm overflow-hidden flex flex-col items-center justify-center gap-2 p-4 hover:bg-accent hover:text-accent-foreground transition-colors"
-            prefetch={false}
+            bg="white"
+            borderRadius="lg"
+            shadow="sm"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            p={4}
+            _hover={{ bg: "teal.100", color: "teal.800" }}
+            transition="background-color 0.2s ease, color 0.2s ease"
           >
-            <CaravanIcon className="h-8 w-8" />
-            <span className="font-medium text-sm">Outdoor</span>
+            <CaravanIcon />
+            <Text fontWeight="medium" mt={2}>
+              Outdoor
+            </Text>
           </Link>
-        </div>
-      </div>
-    </section>
+        </Grid>
+      </Container>
+    </Box>
   );
 }
