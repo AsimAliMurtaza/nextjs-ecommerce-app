@@ -78,7 +78,7 @@ export default function Header() {
           <div className="flex items-center">
             <Button
               variant="outline"
-              sx={{
+              style={{
                 color: "white",
                 backgroundColor: "#59B9B7",
                 fontWeight: "thin",
@@ -94,8 +94,9 @@ export default function Header() {
             >
               <Image
                 src={session.user?.image || ""}
-                width={30}
-                height={30}
+                alt={""}
+                width="25px"
+                height="25px"
                 className="rounded-full mr-2"
                 sx={{
                   borderRadius: "full",
@@ -107,7 +108,7 @@ export default function Header() {
         ) : (
           <Button
             variant="outline"
-            sx={{
+            style={{
               color: "white",
               backgroundColor: "#59B9B7",
               fontWeight: "thin",

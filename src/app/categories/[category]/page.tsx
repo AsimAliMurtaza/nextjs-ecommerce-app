@@ -4,7 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Container } from "@chakra-ui/react";
-import SHOP_DATA from "@/shop_data"; // Adjust the path according to your project structure
+import Image from "next/image";
+import SHOP_DATA from "@/shop_data";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -13,28 +14,26 @@ import {
   DropdownMenuSeparator,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { FilterIcon, LayoutGridIcon } from "@/components/ui/icons";
+import { LayoutGridIcon } from "@/components/ui/icons";
 import { LayoutListIcon } from "lucide-react";
-// Define the type for product data
+
 interface Product {
   id: number;
   name: string;
   imageUrl: string;
   price: number;
-  description?: string; // Optional if not every product has a description
+  description?: string;
   category: string;
-  date?: string; // Optional property for date
-  stock: number; // Number of items in stock
-  onSale: boolean; // Indicates if the product is on sale
-  featured: boolean; // Indicates if the product is featured
+  date?: string;
+  stock: number;
+  onSale: boolean;
+  featured: boolean;
 }
 
 export default function CategoryPage() {
-  // Access the category parameter from the URL
   const { category } = useParams<{ category: string }>();
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-  // Filter products based on the selected category
   const filteredProducts = SHOP_DATA.filter(
     (product) => product.category === category
   );
@@ -42,7 +41,7 @@ export default function CategoryPage() {
   return (
     <Container maxW="container.xl">
       <main className="flex-1">
-        <section className="py-20 md:py-20 lg:py-22 bg-mted">
+        <section className="py-20 md:py-20 lg:py-22 bg-muted">
           <div className="container">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl md:text-3xl font-bold">{category}</h2>
@@ -101,7 +100,7 @@ export default function CategoryPage() {
                     >
                       {viewMode === "list" && (
                         <div className="flex-shrink-0">
-                          <img
+                          <Image
                             src={product.imageUrl}
                             alt={product.name}
                             width={150}
@@ -118,7 +117,7 @@ export default function CategoryPage() {
                         }`}
                       >
                         {viewMode === "grid" && (
-                          <img
+                          <Image
                             src={product.imageUrl}
                             alt={product.name}
                             width={300}

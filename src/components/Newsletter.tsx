@@ -22,7 +22,6 @@ export default function Newsletter() {
 
   const handleSubmit = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
-    // Basic email validation
     if (!email) {
       setError("Email is required");
       return;
@@ -54,8 +53,8 @@ export default function Newsletter() {
       alignItems="center"
       justifyContent="center"
       padding="40px"
-      marginTop="40px" // Ensure there's space above the newsletter section
-      marginBottom="40px" // Ensure there's space below the newsletter section
+      marginTop="40px" 
+      marginBottom="40px" 
     >
       <FormControl as="form" onSubmit={handleSubmit}>
         <FormLabel fontSize="20px" textAlign="center" marginBottom="10px">

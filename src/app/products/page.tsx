@@ -14,8 +14,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Container } from "@chakra-ui/react";
 import { LayoutList } from "lucide-react";
+import Image from "next/image";
 
-// Define the type for product data
 interface Product {
   id: number;
   name: string;
@@ -234,7 +234,7 @@ export default function ProductsPage() {
                       >
                         {viewMode === "list" && (
                           <div className="flex-shrink-0 mr-4">
-                            <img
+                            <Image
                               src={product.imageUrl}
                               alt={product.name}
                               width={150}
@@ -251,7 +251,7 @@ export default function ProductsPage() {
                           }`}
                         >
                           {viewMode === "grid" && (
-                            <img
+                            <Image
                               src={product.imageUrl}
                               alt={product.name}
                               width={300}

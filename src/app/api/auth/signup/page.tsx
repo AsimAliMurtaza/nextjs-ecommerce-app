@@ -12,14 +12,12 @@ import {
   Box,
   Text,
 } from "@chakra-ui/react";
-import { useRouter } from "next/navigation";
 
 export default function SignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter();
 
   const handleInputChange =
     (setter: React.Dispatch<React.SetStateAction<string>>) =>

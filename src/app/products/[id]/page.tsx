@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+
 import {
   Box,
   Button,
@@ -10,7 +10,6 @@ import {
   Radio,
   RadioGroup,
   Stack,
-  Select,
   FormLabel,
   FormControl,
   Avatar,
@@ -25,9 +24,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import SHOP_DATA from "@/shop_data"; // Adjust the path according to your project structure
-import { StarIcon } from "@/components/ui/icons"; // Use Chakra UI's built-in star icon
-import { useCart } from "@/contexts/cart-context"; // Adjust the import path as needed
+import SHOP_DATA from "@/shop_data";
+import { StarIcon } from "@/components/ui/icons";
+import { useCart } from "@/contexts/cart-context";
 
 interface Product {
   id: number;
@@ -61,10 +60,14 @@ interface Params {
 }
 
 const ProductDetail: React.FC<Params> = ({ params }) => {
-  const router = useRouter();
   const toast = useToast();
   const { id } = params;
   const { addToCart } = useCart();
+  const [quantity, setQuantity] = useState(1);
+
+  const handleQuantityChange = (value: number) => {
+    setQuantity(value);
+  };
 
   const productId = parseInt(id, 10);
   const product = SHOP_DATA.find(
@@ -74,8 +77,6 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
   if (!product) {
     return <div>Product not found</div>;
   }
-
-  const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = () => {
     addToCart(
@@ -95,10 +96,6 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
       duration: 3000,
       isClosable: true,
     });
-  };
-
-  const handleQuantityChange = (value: number) => {
-    setQuantity(value);
   };
 
   return (
@@ -167,7 +164,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
               <Slider
                 defaultValue={1}
                 min={1}
-                max={product.stock} // Limiting the max to available stock
+                max={product.stock}
                 step={1}
                 onChangeEnd={(val) => handleQuantityChange(val)}
               >
@@ -242,7 +239,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
             maxW="container.xl"
             display="flex"
             flexDirection="column"
-            marginTop="40px" 
+            marginTop="40px"
           >
             <Heading as="h3" size="lg" mb={6} color="gray.700">
               Customer Reviews
@@ -276,7 +273,6 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                                 ? "yellow.500"
                                 : "gray.300"
                             }
-                            boxSize={5} // Adjust size if needed
                           />
                         ))}
                       </Flex>

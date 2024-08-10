@@ -7,7 +7,7 @@ import {
 
 export default function DropdownMenu() {
   <Menu>
-    <MenuButton aria-label="Options" variant="outline" />
+    <MenuButton aria-label="Options" />
     <MenuList>
       <MenuItem>New Tab</MenuItem>
       <MenuItem>New Window</MenuItem>

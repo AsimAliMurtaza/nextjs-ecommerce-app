@@ -1,5 +1,3 @@
-// src/params.ts
-
 import SHOP_DATA from '@/shop_data'; // Adjust the import path if necessary
 
 // Define the type for product data
@@ -24,9 +22,9 @@ export const getProductById = (id: number): Product | undefined => {
   return SHOP_DATA.find((product) => product.id === id);
 };
 
-// Example usage
+// Corrected function to get product detail
 export const getProductDetail = (params: Params): Product | undefined => {
-  const { id } = params;
+  const { id } = params.params; // Access id from params.params
   const productId = parseInt(id, 10);
   return getProductById(productId);
 };

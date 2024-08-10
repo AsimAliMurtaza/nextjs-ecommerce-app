@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { FilterIcon, LayoutGridIcon } from "@/components/ui/icons";
+import { LayoutGridIcon } from "@/components/ui/icons";
 import { LayoutListIcon } from "lucide-react";
 import {
   DropdownMenu,
@@ -13,6 +13,7 @@ import {
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
 import { Container } from "@chakra-ui/react";
+import Image from "next/image";
 
 interface CategoryDetails {
   [category: string]: {
@@ -106,7 +107,7 @@ export default function CategoriesPage() {
                   <Link href={`/categories/${category}`} className="block" prefetch={false}>
                     {viewMode === "list" && (
                       <div className="flex-shrink-0">
-                        <img
+                        <Image
                           src={categoryDetails[category]?.imageUrl || "/placeholder.svg"}
                           alt={category}
                           width={150}
@@ -123,7 +124,7 @@ export default function CategoriesPage() {
                       }`}
                     >
                       {viewMode === "grid" && (
-                        <img
+                        <Image
                           src={categoryDetails[category]?.imageUrl || "/placeholder.svg"}
                           alt={category}
                           width={300}

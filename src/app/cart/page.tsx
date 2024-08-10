@@ -1,7 +1,6 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { useCart } from "@/contexts/cart-context";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -12,13 +11,10 @@ import {
   Text,
   Stack,
   Heading,
-  CardBody,
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { MinusIcon, PlusIcon } from "@/components/ui/icons";
-import { Card } from "antd";
 
-// Define the type for products in the cart
 interface CartProduct {
   id: number;
   name: string;
@@ -48,8 +44,8 @@ const CheckoutPage: React.FC = () => {
       (acc, product) => acc + product.price * product.quantity,
       0
     );
-    const shipping = 5.0; // Example flat rate
-    const tax = subtotal * 0.08; // Example tax rate (8%)
+    const shipping = 5.0;
+    const tax = subtotal * 0.08;
     const total = subtotal + shipping + tax;
 
     return [
@@ -82,9 +78,7 @@ const CheckoutPage: React.FC = () => {
             alignItems="center"
             justifyContent="center"
           >
-            <Text color="gray.500">
-              The cart is empty.
-            </Text>
+            <Text color="gray.500">The cart is empty.</Text>
           </Box>
         ) : (
           <Stack spacing={4}>
@@ -120,8 +114,6 @@ const CheckoutPage: React.FC = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    borderRadius="40%"
-                    p={1}
                     onClick={() => decreaseQuantity(product)}
                   >
                     <MinusIcon />
@@ -130,8 +122,6 @@ const CheckoutPage: React.FC = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    borderRadius="40%"
-                    p={1}
                     onClick={() => increaseQuantity(product)}
                   >
                     <PlusIcon />
@@ -144,9 +134,7 @@ const CheckoutPage: React.FC = () => {
                 <Heading as="h3" size="md">
                   Order Summary
                 </Heading>
-                <Button variant="outline">
-                  Edit
-                </Button>
+                <Button variant="outline">Edit</Button>
               </Flex>
               <Stack spacing={2} mb={4}>
                 {orderSummary.map((item) => (
@@ -161,14 +149,12 @@ const CheckoutPage: React.FC = () => {
                   </Flex>
                 ))}
               </Stack>
-              <Separator my={4} />
+              <Separator />
               <Button
-                bg="black"
                 color="white"
                 style={{
                   width: "100%",
                 }}
-                _hover={{ bg: "gray.700" }}
               >
                 Proceed to Checkout
               </Button>

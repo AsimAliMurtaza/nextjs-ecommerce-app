@@ -3,19 +3,19 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
-// Define the type for product data
 interface Product {
   id: number;
   name: string;
   imageUrl: string;
   price: number;
-  description?: string; // Optional if not every product has a description
+  description?: string;
   category: string;
-  date?: string; // Optional property for date
-  stock: number; // Number of items in stock
-  onSale: boolean; // Indicates if the product is on sale
-  featured: boolean; // Indicates if the product is featured
+  date?: string;
+  stock: number;
+  onSale: boolean;
+  featured: boolean;
   specifications: {
     material: string;
     sleeveLength: string;
@@ -30,16 +30,13 @@ interface Product {
   }[];
 }
 
-// Fetch products from an API or database
 const fetchProducts = async () => {
   const response = await fetch("/api/products");
   const data: Product[] = await response.json();
   return data;
 };
 
-// Get top products based on rating
 const getTopProducts = (products: Product[]) => {
-  // Sort products by the highest average rating and pick the top 5-6
   const topRatedProducts = products
     .sort((a, b) => {
       const avgRatingA =
@@ -60,7 +57,6 @@ export default function TopProducts() {
   const router = useRouter();
 
   useEffect(() => {
-    // Fetch and set products when the component mounts
     const loadProducts = async () => {
       const fetchedProducts = await fetchProducts();
       setProducts(fetchedProducts);
@@ -101,7 +97,7 @@ export default function TopProducts() {
                   className="block"
                   prefetch={false}
                 >
-                  <img
+                  <Image
                     src={product.imageUrl}
                     alt={product.name}
                     width={300}
@@ -115,7 +111,7 @@ export default function TopProducts() {
                     </p>
                   </div>
                   <div>
-                    <span className="font-thin text-sm mb-2 mt-auto mb-5 flex flex-col items-center">
+                    <span className="font-thin text-sm mt-auto mb-5 flex flex-col items-center">
                       Avg Rating:{" "}
                       {calculateAverageRating(product.reviews).toFixed(1)}
                     </span>

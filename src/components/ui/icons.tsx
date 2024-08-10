@@ -1,4 +1,7 @@
-export function CaravanIcon(props) {
+interface IconProps extends React.SVGProps<SVGSVGElement> {}
+
+
+export function CaravanIcon(props: IconProps){
   return (
     <svg
       {...props}
@@ -21,7 +24,7 @@ export function CaravanIcon(props) {
   );
 }
 
-export function ClubIcon(props) {
+export function ClubIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -41,7 +44,7 @@ export function ClubIcon(props) {
   );
 }
 
-export function HomeIcon(props) {
+export function HomeIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -61,7 +64,7 @@ export function HomeIcon(props) {
   );
 }
 
-export function LaptopIcon(props) {
+export function LaptopIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -80,7 +83,7 @@ export function LaptopIcon(props) {
   );
 }
 
-export function LayoutGridIcon(props) {
+export function LayoutGridIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -102,7 +105,7 @@ export function LayoutGridIcon(props) {
   );
 }
 
-export function MenuIcon(props) {
+export function MenuIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -123,7 +126,7 @@ export function MenuIcon(props) {
   );
 }
 
-export function MountainIcon(props) {
+export function MountainIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -142,7 +145,7 @@ export function MountainIcon(props) {
   );
 }
 
-export function PackageIcon(props) {
+export function PackageIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -164,7 +167,7 @@ export function PackageIcon(props) {
   );
 }
 
-export function PaintbrushIcon(props) {
+export function PaintbrushIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -185,7 +188,7 @@ export function PaintbrushIcon(props) {
   );
 }
 
-export function SearchIcon(props) {
+export function SearchIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -205,7 +208,7 @@ export function SearchIcon(props) {
   );
 }
 
-export function ShirtIcon(props) {
+export function ShirtIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -224,7 +227,7 @@ export function ShirtIcon(props) {
   );
 }
 
-export function ShoppingCartIcon(props) {
+export function ShoppingCartIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -245,7 +248,7 @@ export function ShoppingCartIcon(props) {
   );
 }
 
-export function UserIcon(props) {
+export function UserIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -265,7 +268,7 @@ export function UserIcon(props) {
   );
 }
 
-export function XIcon(props) {
+export function XIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -285,7 +288,7 @@ export function XIcon(props) {
   );
 }
 
-export function StarIcon(props) {
+export function StarIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -304,7 +307,7 @@ export function StarIcon(props) {
   );
 }
 
-export function FilterIcon(props) {
+export function FilterIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -323,7 +326,7 @@ export function FilterIcon(props) {
   );
 }
 
-export function MinusIcon(props) {
+export function MinusIcon(props: IconProps) {
   return (
     <svg
       {...props}
@@ -342,7 +345,7 @@ export function MinusIcon(props) {
   );
 }
 
-export function PlusIcon(props) {
+export function PlusIcon(props: IconProps) {
   return (
     <svg
       {...props}

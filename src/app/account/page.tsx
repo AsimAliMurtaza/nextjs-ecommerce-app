@@ -9,11 +9,8 @@ import {
   Input,
   Stack,
   Text,
-  useToast,
 } from "@chakra-ui/react";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../api/auth/[...nextauth]/options";
-import { redirect } from "next/navigation";
+
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";

@@ -1,16 +1,14 @@
-// src/shop_data.ts
-
 interface Product {
   id: number;
   name: string;
   imageUrl: string;
   price: number;
-  description?: string; // Optional if not every product has a description
+  description?: string; 
   category: string;
-  date?: string; // Optional property for date
-  stock: number; // Number of items in stock
-  onSale: boolean; // Indicates if the product is on sale
-  featured: boolean; // Indicates if the product is featured
+  date?: string; 
+  stock: number; 
+  onSale: boolean; 
+  featured: boolean; 
   specifications: {
     material: string;
     sleeveLength: string;

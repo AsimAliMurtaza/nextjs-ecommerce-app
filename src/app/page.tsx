@@ -2,7 +2,6 @@
 import Category from "@/components/Category";
 import Discover from "@/components/Discover";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 import Newsletter from "@/components/Newsletter";
 import QuickOrder from "@/components/QuickOrder";
 import TopProducts from "@/components/TopProducts";

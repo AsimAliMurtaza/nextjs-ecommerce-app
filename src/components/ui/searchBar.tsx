@@ -40,7 +40,6 @@ const SearchBar: React.FC = () => {
           border: "1px solid white",
           borderRadius: "5px",
         }}
-        onClick={handleSearch}
       >
         Search
       </Button>

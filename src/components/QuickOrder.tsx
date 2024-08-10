@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
+import Image from "next/image";
 
 interface Product {
   id: number;
@@ -66,7 +67,7 @@ export default function QuickOrder() {
               className="bg-background rounded-lg shadow-sm overflow-hidden"
             >
               <div className="p-4 space-y-2">
-                <img
+                <Image
                   src={product.imageUrl}
                   alt={product.name}
                   width={200}
