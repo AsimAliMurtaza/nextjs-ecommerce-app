@@ -47,7 +47,7 @@ export default function SignInForm() {
   };
 
   return (
-    <Container maxW="lg" py={{base: "16", md:"16", lg: "16"}}>
+    <Container maxW="lg" py={{ base: "16", md: "16", lg: "16" }}>
       <Box
         w="full"
         maxW="100%"
@@ -105,9 +105,7 @@ export default function SignInForm() {
               Sign In
             </Button>
             <VStack spacing={4} mt={4}>
-              <Text fontSize="sm">
-                Or sign in with
-              </Text>
+              <Text fontSize="sm">Or sign in with</Text>
               <Button
                 onClick={() => signIn("google", { callbackUrl: "/" })}
                 colorScheme="blue"

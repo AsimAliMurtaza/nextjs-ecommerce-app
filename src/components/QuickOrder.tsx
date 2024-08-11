@@ -9,7 +9,9 @@ import {
   Heading,
   Image,
   Text,
+  useToast,
 } from "@chakra-ui/react";
+import { useCart } from "@/contexts/cart-context";
 
 interface Product {
   id: number;
@@ -44,6 +46,8 @@ const fetchProducts = async () => {
 
 export default function QuickOrder() {
   const [products, setProducts] = useState<Product[]>([]);
+  const { addToCart } = useCart();
+  const toast = useToast();
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -53,6 +57,27 @@ export default function QuickOrder() {
 
     loadProducts();
   }, []);
+
+  const handleAddToCart = (product: Product) => {
+    const quantity = 1; // Default quantity
+    addToCart(
+      {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        quantity,
+        imageUrl: product.imageUrl,
+      },
+      quantity
+    );
+    toast({
+      title: "Added to cart",
+      description: `${quantity} x ${product.name} added to your cart.`,
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
 
   return (
     <Box as="section" py={{ base: 12, md: 16, lg: 20 }} width="100%">
@@ -128,7 +153,12 @@ export default function QuickOrder() {
                   ${product.price}
                 </Text>
 
-                <Button type="submit" colorScheme="teal" variant="outline">
+                <Button
+                  type="submit"
+                  colorScheme="teal"
+                  variant="outline"
+                  onClick={() => handleAddToCart(product)}
+                >
                   Add to Cart
                 </Button>
               </Box>

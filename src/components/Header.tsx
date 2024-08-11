@@ -26,6 +26,7 @@ import {
   ShoppingCartIcon,
   UserIcon,
 } from "./ui/icons";
+import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 
 export default function Header() {
   const { data: session } = useSession();
@@ -144,10 +145,12 @@ export default function Header() {
               rightIcon={
                 <Image
                   src={session.user?.image || ""}
-                  alt="Profile Image"
+                  alt="Pfp"
+                  alignItems="center"
+                  border="2px solid teal"
                   boxSize="25px"
                   borderRadius="full"
-                  mr={2}
+                  mr={0}
                 />
               }
             >
@@ -167,23 +170,74 @@ export default function Header() {
       </Flex>
 
       <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay sx={{
-          backdropFilter: "blur(4px)",
-          background: "rgba(255, 255, 255, 0.5)",
-        }} />
+        <DrawerOverlay
+          sx={{
+            backdropFilter: "blur(4px)",
+            background: "rgba(255, 255, 255, 0.5)",
+          }}
+        />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader
-            sx={{
-              fontSize: "2xl",
-              fontWeight: "bold",
-              color: "teal",
-            }}
-          >
-            Menu
-          </DrawerHeader>
+
+          {session ? (
+            <DrawerHeader
+              sx={{
+                fontSize: "xl",
+                fontWeight: "bold",
+                color: "teal",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                p: 4,
+                gap: 2,
+              }}
+            >
+              <Image
+                src={session.user?.image || ""}
+                alt="Pfp"
+                boxSize="50px"
+                borderRadius="full"
+                border="2px solid teal"
+                mr={2}
+              />
+              {session.user?.name}
+            </DrawerHeader>
+          ) : (
+            <DrawerHeader
+              sx={{
+                fontSize: "2xl",
+                fontWeight: "bold",
+                color: "teal",
+              }}
+            >
+              Menu
+            </DrawerHeader>
+          )}
           <DrawerBody>
             <Flex direction="column" gap={4}>
+              {session ? (
+                <Button
+                  variant="link"
+                  fontSize="lg"
+                  colorScheme="teal"
+                  _hover={{ textDecoration: "underline" }}
+                  leftIcon={<FaSignOutAlt />}
+                  onClick={handleSignOut}
+                >
+                  Sign Out
+                </Button>
+              ) : (
+                <Button
+                  variant="link"
+                  fontSize="lg"
+                  colorScheme="teal"
+                  _hover={{ textDecoration: "underline" }}
+                  leftIcon={<FaSignInAlt />}
+                  onClick={handleSignIn}
+                >
+                  Sign In
+                </Button>
+              )}
               <Link href="/" passHref>
                 <Button
                   variant="link"
