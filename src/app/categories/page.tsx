@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button, Container, Flex, Grid, Heading, Box, Image, Text, useBreakpointValue, useDisclosure, IconButton } from "@chakra-ui/react";
 import { LayoutGridIcon, LayoutListIcon } from "lucide-react";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
+import Loader from "@/components/ui/loader";
 
 interface CategoryDetails {
   [category: string]: {
@@ -39,7 +40,7 @@ export default function CategoriesPage() {
     fetchCategories();
   }, []);
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <Loader />;
   if (error) return <Text>{error}</Text>;
 
   return (

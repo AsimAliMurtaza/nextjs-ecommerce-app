@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LayoutGridIcon } from "@/components/ui/icons";
 import { LayoutListIcon } from "lucide-react";
+import Loader from "@/components/ui/loader";
 
 interface Product {
   id: number; // Use _id for MongoDB documents
@@ -79,7 +80,7 @@ export default function CategoryPage() {
   }, [category]);
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return <Loader />;
   }
 
   if (error) {

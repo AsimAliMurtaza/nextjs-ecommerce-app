@@ -32,6 +32,7 @@ import {
   DrawerOverlay,
   Checkbox,
 } from "@chakra-ui/react";
+import Loader from "@/components/ui/loader";
 
 interface Product {
   id: number;
@@ -57,9 +58,14 @@ interface Product {
     comment: string;
   }[];
 }
+
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const [filters, setFilters] = useState({
     featured: false,
     onSale: false,
@@ -71,22 +77,51 @@ export default function ProductsPage() {
   });
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchProducts = async () => {
       try {
+        setLoading(true);
         const response = await fetch("/api/products");
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }
         const data = await response.json();
-        console.log(data);
-        setProducts(data);
+        if (isMounted) {
+          setProducts(data);
+          setError(null); // Clear any previous errors
+        }
       } catch (err) {
-        console.error("Failed to fetch products:", err);
+        if (isMounted) {
+          console.error("Failed to fetch products:", err);
+          setError("Failed to load products. Please try again later.");
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false); // Ensure loading is set to false even if an error occurs
+        }
       }
     };
+
     fetchProducts();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return (
+      <Container maxW="container.xl" py={20}>
+        <Heading as="h1" size="xl" textAlign="center" color="red.500">
+          {error}
+        </Heading>
+      </Container>
+    );
+  }
   const applyFilters = (products: Product[]) => {
     let filteredProducts = products;
 
@@ -124,7 +159,6 @@ export default function ProductsPage() {
   };
 
   const filteredProducts = applyFilters(products);
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Container maxW="container.xl" py={{ base: 8, md: 12, lg: 16 }}>

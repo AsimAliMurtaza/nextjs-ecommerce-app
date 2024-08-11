@@ -23,10 +23,11 @@ import {
   HStack,
   VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SHOP_DATA from "@/shop_data";
 import { StarIcon } from "@/components/ui/icons";
 import { useCart } from "@/contexts/cart-context";
+import Loader from "@/components/ui/loader";
 
 interface Product {
   id: number;
@@ -64,6 +65,18 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
   const { id } = params;
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    // Simulate fetching data
+    setTimeout(() => {
+      setLoading(false);
+    }, 500); // Adjust the delay as needed
+  }, [id]);
+  if (loading) {
+    return <Loader />;
+  }
 
   const handleQuantityChange = (value: number) => {
     setQuantity(value);
