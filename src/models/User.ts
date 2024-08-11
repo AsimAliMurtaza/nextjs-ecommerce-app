@@ -4,6 +4,7 @@ interface IUser extends Document {
   name: string;
   email: string;
   password: string;
+  image?: string; // Make image optional
 }
 
 const userSchema = new Schema<IUser>({
@@ -20,8 +21,12 @@ const userSchema = new Schema<IUser>({
     type: String,
     required: [true, "Please provide a name"],
   },
+  image: {
+    type: String,
+    required: false, // Make image optional
+  },
 });
 
-const User = models.users || model<IUser>("users", userSchema);
+const User = models.User || model<IUser>("User", userSchema);
 
 export default User;

@@ -33,7 +33,8 @@ export const authOptions: NextAuthOptions = {
           user.email === credentials.email &&
           user.password === credentials.password
         ) {
-          return { id: user.id, email: user.email, name: user.name };
+          console.log(user.image);
+          return { id: user.id, email: user.email, name: user.name, image: user.image };
         } else {
           throw new Error("Invalid credentials");
         }
