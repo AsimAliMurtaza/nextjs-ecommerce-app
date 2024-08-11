@@ -7,6 +7,7 @@ import {
   FormLabel,
   Heading,
   Input,
+  Image,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -21,7 +22,7 @@ export default function AccountPage() {
 
   useEffect(() => {
     if (status === "unauthenticated") {
-      router.push("/api/auth/signin");
+      router.push("/auth/signin");
     }
   }, [status, router]);
   if (status === "loading") {
@@ -38,15 +39,47 @@ export default function AccountPage() {
           <Heading size="md" mb={4}>
             Personal Information
           </Heading>
+          <Box
+            borderWidth="1px"
+            borderRadius="100"
+            p={4}
+            shadow="md"
+            width="40"
+            height="40"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            mx="auto"
+          >
+            <Image
+              src={session?.user?.image ?? ""}
+              alt="User profile picture"
+              sx={{
+                borderRadius: "full",
+                width: "100%",
+                height: "100%",
+              }}
+            />
+          </Box>
           <form>
             <Stack spacing={4}>
               <FormControl>
                 <FormLabel>Username</FormLabel>
-                <Input type="text" name="username" />
+                <Input
+                  type="text"
+                  disabled
+                  name="username"
+                  value={session?.user?.name ?? ""}
+                />
               </FormControl>
               <FormControl>
                 <FormLabel>Email</FormLabel>
-                <Input type="email" name="email" />
+                <Input
+                  type="email"
+                  name="email"
+                  disabled
+                  value={session?.user?.email ?? ""}
+                />
               </FormControl>
               <FormControl>
                 <FormLabel>Current Password</FormLabel>

@@ -27,11 +27,13 @@ import {
   UserIcon,
 } from "./ui/icons";
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import { useCart } from "@/contexts/cart-context";
 
 export default function Header() {
   const { data: session } = useSession();
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { cart } = useCart();
 
   const handleSignOut = () => {
     signOut();
@@ -124,6 +126,16 @@ export default function Header() {
               colorScheme="gray.800"
             >
               Cart
+            </Button>
+          </Link>
+          <Link href="/account" passHref>
+            <Button
+              variant="link"
+              fontSize="md"
+              _hover={{ textDecoration: "underline" }}
+              colorScheme="gray.800"
+            >
+              Account
             </Button>
           </Link>
         </Flex>
@@ -279,7 +291,13 @@ export default function Header() {
                   _hover={{ textDecoration: "underline" }}
                   leftIcon={<ShoppingCartIcon />}
                 >
-                  Cart
+                  Cart &nbsp;
+                  <span style={{
+                    fontSize: "sm",
+                    color: "teal",
+                  }}>
+                    {cart.length}
+                  </span>
                 </Button>
               </Link>
               <Link href="/account" passHref>
