@@ -111,256 +111,274 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
   };
 
   return (
-    <div>
-      <Container maxW="container.lg" py={{ base: 16, md: 16, lg: 16 }}>
-        <Grid
-          templateColumns={{ base: "1fr", md: "1fr 1fr" }}
-          gap={6}
-          p={4}
-          mx="auto"
-          templateRows="auto"
+    <Box as="section" width="100%">
+      <Grid
+        templateColumns={{ base: "1fr", md: "1fr 1fr" }}
+        gap={6}
+        p={4}
+        mx="auto"
+        templateRows="auto"
+      >
+        <Box
+          sx={{
+            display: "grid",
+            placeItems: "center",
+            borderRadius: "lg",
+            overflow: "hidden",
+          }}
         >
+          {loading ? (
+            <Skeleton
+              borderRadius="lg"
+              mt={{ base: 20, md: 20 }}
+              width={{ base: "50%", md: "80%" }}
+              height={{ base: "auto", md: "500px" }}
+            />
+          ) : (
+            <Image
+              src={product.imageUrl}
+              alt={product.name}
+              borderRadius="lg"
+              mt={{ base: 20, md: 20 }}
+              width={{ base: "50%", md: "80%" }}
+              height={{ base: "auto", md: "500px" }}
+              objectFit="cover"
+            />
+          )}
+        </Box>
+        <Box>
+          {loading ? (
+            <>
+              <Skeleton
+                height="32px"
+                sx={{
+                  mt: "80px",
+                }}
+                mb={4}
+              />
+              <Skeleton height="24px" mb={4} />
+              <Skeleton height="24px" mb={4} />
+              <Skeleton height="24px" mb={4} />
+              <Skeleton height="20px" mb={4} />
+              <Skeleton height="20px" mb={4} />
+              <Skeleton height="20px" mb={4} />
+              <Skeleton height="40px" />
+            </>
+          ) : (
+            <Container
+              maxW="container.lg"
+              sx={{
+                mt: "80px",
+              }}
+            >
+              <Heading as="h1" size={{ base: "lg", md: "xl" }} mb={4}>
+                {product.name}
+              </Heading>
+              {product.description && <Text mb={4}>{product.description}</Text>}
+              <Flex align="center" mb={4}>
+                <Text
+                  fontSize={{ base: "xl", md: "2xl" }}
+                  fontWeight="bold"
+                  mr={4}
+                >
+                  ${product.price}
+                </Text>
+              </Flex>
+              <form>
+                {product.category === "Clothing" && (
+                  <>
+                    <FormControl id="color" mb={4}>
+                      <FormLabel>Color</FormLabel>
+                      <RadioGroup defaultValue="black">
+                        <Stack spacing={2} direction="row">
+                          {["black", "white", "blue"].map((color) => (
+                            <Radio key={color} value={color} colorScheme="blue">
+                              {color.charAt(0).toUpperCase() + color.slice(1)}
+                            </Radio>
+                          ))}
+                        </Stack>
+                      </RadioGroup>
+                    </FormControl>
+                    <FormControl id="size" mb={4}>
+                      <FormLabel>Size</FormLabel>
+                      <RadioGroup defaultValue="m">
+                        <Stack spacing={2} direction="row">
+                          {["xs", "s", "m", "l", "xl"].map((size) => (
+                            <Radio key={size} value={size} colorScheme="blue">
+                              {size.toUpperCase()}
+                            </Radio>
+                          ))}
+                        </Stack>
+                      </RadioGroup>
+                    </FormControl>
+                  </>
+                )}
+                <Flex align="center" mb={4}>
+                  <Text>
+                    Stock: {loading ? <Skeleton width="50px" /> : product.stock}
+                  </Text>
+                </Flex>
+                <FormControl id="quantity" mb={4}>
+                  <FormLabel>Quantity</FormLabel>
+                  {loading ? (
+                    <Skeleton height="30px" />
+                  ) : (
+                    <>
+                      <Slider
+                        defaultValue={1}
+                        min={1}
+                        max={product.stock}
+                        step={1}
+                        onChangeEnd={(val) => handleQuantityChange(val)}
+                      >
+                        <SliderTrack>
+                          <SliderFilledTrack />
+                        </SliderTrack>
+                        <SliderThumb />
+                      </Slider>
+                      <Text mt={2}>Quantity: {quantity}</Text>
+                    </>
+                  )}
+                </FormControl>
+                <VStack spacing={6} align="left">
+                  <HStack spacing={10}>
+                    {loading ? (
+                      <Skeleton height="40px" width="100px" />
+                    ) : (
+                      <Button colorScheme="teal" onClick={handleAddToCart}>
+                        Buy
+                      </Button>
+                    )}
+                  </HStack>
+                </VStack>
+              </form>
+            </Container>
+          )}
+        </Box>
+      </Grid>
+
+      <Box
+        gridColumn={{ base: "1 / -1", md: "span 2" }}
+        mt={{ base: 6, md: 0 }}
+      >
+        <Container
+          maxW="container.lg"
+          display="flex"
+          flexDirection="column"
+          marginTop="40px"
+          marginBottom="40px"
+        >
+          <Heading as="h3" size="lg" mb={6} color="black">
+            Product Specifications
+          </Heading>
           <Box
+            mb={6}
             sx={{
-              display: "grid",
-              placeItems: "center",
-              borderRadius: "lg",
-              overflow: "hidden",
+              border: "1px solid",
+              borderColor: "gray.200",
+              borderRadius: "md",
             }}
           >
             {loading ? (
-              <Skeleton height="350px" width="100%" />
+              <Skeleton height="250px" />
             ) : (
-              <Image
-                src={product.imageUrl}
-                alt={product.name}
-                borderRadius="lg"
-                width={{ base: "auto", md: "100%" }}
-                height={{ base: "auto", md: "100%" }}
-                objectFit="cover"
-              />
-            )}
-          </Box>
-          <Box>
-            {loading ? (
-              <>
-                <Skeleton height="32px" mb={4} />
-                <Skeleton height="24px" mb={4} />
-                <Skeleton height="24px" mb={4} />
-                <Skeleton height="24px" mb={4} />
-                <Skeleton height="20px" mb={4} />
-                <Skeleton height="20px" mb={4} />
-                <Skeleton height="20px" mb={4} />
-                <Skeleton height="40px" />
-              </>
-            ) : (
-              <Container maxW="container.lg">
-                <Heading as="h1" size={{ base: "lg", md: "xl" }} mb={4}>
-                  {product.name}
-                </Heading>
-                {product.description && (
-                  <Text mb={4}>{product.description}</Text>
-                )}
-                <Flex align="center" mb={4}>
-                  <Text
-                    fontSize={{ base: "xl", md: "2xl" }}
-                    fontWeight="bold"
-                    mr={4}
-                  >
-                    ${product.price}
+              <Container maxW="container.lg" p={4}>
+                <Box>
+                  <Text fontWeight="bold" color="gray.700" mb={2}>
+                    Material
                   </Text>
-                </Flex>
-                <form>
-                  {product.category === "Clothing" && (
-                    <>
-                      <FormControl id="color" mb={4}>
-                        <FormLabel>Color</FormLabel>
-                        <RadioGroup defaultValue="black">
-                          <Stack spacing={2} direction="row">
-                            {["black", "white", "blue"].map((color) => (
-                              <Radio
-                                key={color}
-                                value={color}
-                                colorScheme="blue"
-                              >
-                                {color.charAt(0).toUpperCase() + color.slice(1)}
-                              </Radio>
-                            ))}
-                          </Stack>
-                        </RadioGroup>
-                      </FormControl>
-                      <FormControl id="size" mb={4}>
-                        <FormLabel>Size</FormLabel>
-                        <RadioGroup defaultValue="m">
-                          <Stack spacing={2} direction="row">
-                            {["xs", "s", "m", "l", "xl"].map((size) => (
-                              <Radio key={size} value={size} colorScheme="blue">
-                                {size.toUpperCase()}
-                              </Radio>
-                            ))}
-                          </Stack>
-                        </RadioGroup>
-                      </FormControl>
-                    </>
-                  )}
-                  <Flex align="center" mb={4}>
-                    <Text>
-                      Stock:{" "}
-                      {loading ? <Skeleton width="50px" /> : product.stock}
-                    </Text>
-                  </Flex>
-                  <FormControl id="quantity" mb={4}>
-                    <FormLabel>Quantity</FormLabel>
-                    {loading ? (
-                      <Skeleton height="30px" />
-                    ) : (
-                      <>
-                        <Slider
-                          defaultValue={1}
-                          min={1}
-                          max={product.stock}
-                          step={1}
-                          onChangeEnd={(val) => handleQuantityChange(val)}
-                        >
-                          <SliderTrack>
-                            <SliderFilledTrack />
-                          </SliderTrack>
-                          <SliderThumb />
-                        </Slider>
-                        <Text mt={2}>Quantity: {quantity}</Text>
-                      </>
-                    )}
-                  </FormControl>
-                  <VStack spacing={6} align="left">
-                    <HStack spacing={10}>
-                      {loading ? (
-                        <Skeleton height="40px" width="100px" />
-                      ) : (
-                        <Button colorScheme="teal" onClick={handleAddToCart}>
-                          Buy
-                        </Button>
-                      )}
-                    </HStack>
-                  </VStack>
-                </form>
+                  <Text color="gray.600">
+                    {product.specifications.material}
+                  </Text>
+                </Box>
+                <Box>
+                  <Text fontWeight="bold" color="gray.700" mb={2}>
+                    Sleeve Length
+                  </Text>
+                  <Text color="gray.600">
+                    {product.specifications.sleeveLength}
+                  </Text>
+                </Box>
+                <Box>
+                  <Text fontWeight="bold" color="gray.700" mb={2}>
+                    Fit
+                  </Text>
+                  <Text color="gray.600">{product.specifications.fit}</Text>
+                </Box>
+                <Box>
+                  <Text fontWeight="bold" color="gray.700" mb={2}>
+                    Care Instructions
+                  </Text>
+                  <Text color="gray.600">
+                    {product.specifications.careInstructions}
+                  </Text>
+                </Box>
               </Container>
             )}
           </Box>
-          <Box
-            gridColumn={{ base: "1 / -1", md: "span 2" }}
-            mt={{ base: 6, md: 0 }}
-          >
-            <Container
-              maxW="container.lg"
-              display="flex"
-              flexDirection="column"
-              marginTop="40px"
-              marginBottom="40px"
-            >
-              <Heading as="h3" size="lg" mb={6} color="black">
-                Product Specifications
-              </Heading>
-              {loading ? (
-                <Skeleton height="150px" />
-              ) : (
-                <Container maxW="container.lg">
-                  <Box>
-                    <Text fontWeight="bold" color="gray.700" mb={2}>
-                      Material
-                    </Text>
-                    <Text color="gray.600">
-                      {product.specifications.material}
-                    </Text>
-                  </Box>
-                  <Box>
-                    <Text fontWeight="bold" color="gray.700" mb={2}>
-                      Sleeve Length
-                    </Text>
-                    <Text color="gray.600">
-                      {product.specifications.sleeveLength}
-                    </Text>
-                  </Box>
-                  <Box>
-                    <Text fontWeight="bold" color="gray.700" mb={2}>
-                      Fit
-                    </Text>
-                    <Text color="gray.600">{product.specifications.fit}</Text>
-                  </Box>
-                  <Box>
-                    <Text fontWeight="bold" color="gray.700" mb={2}>
-                      Care Instructions
-                    </Text>
-                    <Text color="gray.600">
-                      {product.specifications.careInstructions}
-                    </Text>
-                  </Box>
-                </Container>
-              )}
-            </Container>
+        </Container>
 
-            <Container
-              maxW="container.lg"
-              display="flex"
-              flexDirection="column"
-              marginTop="40px"
-            >
-              <Heading as="h3" size="lg" mb={6} color="gray.700">
-                Customer Reviews
-              </Heading>
-              {loading ? (
-                <>
-                  <Skeleton height="100px" mb={4} />
-                  <Skeleton height="100px" mb={4} />
-                  <Skeleton height="100px" mb={4} />
-                </>
-              ) : (
-                product.reviews.map((review, index) => (
-                  <Box
-                    key={index}
-                    borderWidth="1px"
-                    borderRadius="md"
-                    p={4}
-                    mb={4}
-                    bg="white"
-                    shadow="sm"
-                  >
-                    <Flex align="center" mb={4}>
-                      <Avatar name={review.name} src="/placeholder-user.jpg" />
-                      <Box ml={4} flex="1">
-                        <Flex align="center" mb={2}>
-                          <Heading as="h4" size="md" mr={2} color="gray.700">
-                            {review.name}
-                          </Heading>
-                          <Text fontSize="sm" color="gray.500" mr={2}>
-                            {review.date}
-                          </Text>
-                          <Flex ml="auto">
-                            {[...Array(5)].map((_, starIndex) => (
-                              <StarIcon
-                                key={starIndex}
-                                color={
-                                  starIndex < review.rating
-                                    ? "yellow.500"
-                                    : "gray.300"
-                                }
-                              />
-                            ))}
-                          </Flex>
-                        </Flex>
-                        <Text fontSize="sm" color="gray.600">
-                          {review.comment}
-                        </Text>
-                      </Box>
+        <Container
+          maxW="container.lg"
+          display="flex"
+          flexDirection="column"
+          marginTop="40px"
+        >
+          <Heading as="h3" size="lg" mb={6} color="gray.700">
+            Customer Reviews
+          </Heading>
+          {loading ? (
+            <>
+              <Skeleton height="100px" mb={4} />
+              <Skeleton height="100px" mb={4} />
+              <Skeleton height="100px" mb={4} />
+            </>
+          ) : (
+            product.reviews.map((review, index) => (
+              <Box
+                key={index}
+                borderWidth="1px"
+                borderRadius="md"
+                p={4}
+                mb={4}
+                bg="white"
+                shadow="sm"
+              >
+                <Flex align="center" mb={4}>
+                  <Avatar name={review.name} src="/placeholder-user.jpg" />
+                  <Box ml={4} flex="1">
+                    <Flex align="center" mb={2}>
+                      <Heading as="h4" size="md" mr={2} color="gray.700">
+                        {review.name}
+                      </Heading>
+                      <Text fontSize="sm" color="gray.500" mr={2}>
+                        {review.date}
+                      </Text>
+                      <Flex ml="auto">
+                        {[...Array(5)].map((_, starIndex) => (
+                          <StarIcon
+                            key={starIndex}
+                            color={
+                              starIndex < review.rating
+                                ? "yellow.500"
+                                : "gray.300"
+                            }
+                          />
+                        ))}
+                      </Flex>
                     </Flex>
+                    <Text fontSize="sm" color="gray.600">
+                      {review.comment}
+                    </Text>
                   </Box>
-                ))
-              )}
-            </Container>
-          </Box>
-        </Grid>
-      </Container>
+                </Flex>
+              </Box>
+            ))
+          )}
+        </Container>
+      </Box>
       <Footer />
-    </div>
+    </Box>
   );
 };
 
