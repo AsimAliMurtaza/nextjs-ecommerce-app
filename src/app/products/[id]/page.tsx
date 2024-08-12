@@ -251,7 +251,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
             mt={{ base: 6, md: 0 }}
           >
             <Container
-              maxW="container.xl"
+              maxW="container.lg"
               display="flex"
               flexDirection="column"
               marginTop="40px"
@@ -307,7 +307,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
             </Container>
 
             <Container
-              maxW="container.xl"
+              maxW="container.lg"
               display="flex"
               flexDirection="column"
               marginTop="40px"
