@@ -4,7 +4,7 @@
 import { usePathname } from "next/navigation";
 import Header from "@/components/Header";
 
-export default function ConditionalHeader({ children }: { children: React.ReactNode }) {
+export function ConditionalHeader({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const noHeaderRoutes = ["/api/auth/signin", "/auth/signup"];
 
