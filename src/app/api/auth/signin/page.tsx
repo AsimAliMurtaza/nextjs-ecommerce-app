@@ -47,10 +47,8 @@ export default function SignInForm() {
   };
 
   return (
-    <Container maxW="lg" py={{ base: "16", md: "16", lg: "16" }}>
+    <Container maxW="lg" py={{ base: "6", md: "6", lg: "10" }} sx={{}}>
       <Box
-        w="full"
-        maxW="100%"
         mx="auto"
         borderWidth={1}
         borderRadius="lg"

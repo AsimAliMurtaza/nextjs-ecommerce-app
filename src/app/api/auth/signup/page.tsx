@@ -29,15 +29,12 @@ export default function SignUpForm() {
       setter(event.target.value);
     };
 
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (file) {
-        console.log("Selected file:", file); // Debugging line
-        setImageFile(file);
-        console.log("Selected file:", file); // Debugging line
-      }
-    };
-    
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+    }
+  };
 
   const clearFormData = () => {
     setEmail("");
@@ -56,7 +53,6 @@ export default function SignUpForm() {
     try {
       // Upload the image to Firebase
       const imageUrl = await uploadImage(imageFile);
-      console.log("Image URL:", imageUrl); // Debugging line
 
       // Send the user data to the API
       const response = await fetch("/api/auth/signup/new-user", {
@@ -154,6 +150,21 @@ export default function SignUpForm() {
                 Sign Up
               </Button>
             </FormControl>
+            <Text fontSize="sm" mt={4} textAlign="center">
+              Already have an account?{" "}
+              <span
+                onClick={() => {
+                  router.back();
+                }}
+                style={{
+                  color: "#3182CE",
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                }}
+              >
+                Sign In
+              </span>
+            </Text>
           </Box>
         </VStack>
       </Box>
