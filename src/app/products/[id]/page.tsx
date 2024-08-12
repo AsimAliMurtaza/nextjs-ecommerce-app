@@ -23,12 +23,12 @@ import {
   HStack,
   VStack,
   Skeleton,
+  SkeletonText,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import SHOP_DATA from "@/shop_data";
 import { StarIcon } from "@/components/ui/icons";
 import { useCart } from "@/contexts/cart-context";
-import Loader from "@/components/ui/loader";
 import Footer from "@/components/Footer";
 
 interface Product {
@@ -77,8 +77,6 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
     }, 500); // Adjust the delay as needed
   }, [id]);
 
-
-
   const handleQuantityChange = (value: number) => {
     setQuantity(value);
   };
@@ -114,14 +112,12 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
 
   return (
     <>
-      <Container maxW="container.xl" py={{ base: 8, md: 12, lg: 16 }}>
+      <Container maxW="container.lg" py={{ base: 16, md: 16, lg: 16 }}>
         <Grid
           templateColumns={{ base: "1fr", md: "1fr 1fr" }}
           gap={6}
           p={4}
-          maxW="6xl"
           mx="auto"
-          alignItems="start"
           templateRows="auto"
         >
           <Box
@@ -140,7 +136,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                 alt={product.name}
                 borderRadius="lg"
                 width={{ base: "auto", md: "100%" }}
-                height={{ base: "auto", md: "350px" }}
+                height={{ base: "auto", md: "100%" }}
                 objectFit="cover"
               />
             )}
@@ -152,6 +148,10 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                 <Skeleton height="24px" mb={4} />
                 <Skeleton height="24px" mb={4} />
                 <Skeleton height="24px" mb={4} />
+                <Skeleton height="20px" mb={4} />
+                <Skeleton height="20px" mb={4} />
+                <Skeleton height="20px" mb={4} />
+                <Skeleton height="40px" />
               </>
             ) : (
               <>
@@ -198,29 +198,39 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                     </>
                   )}
                   <Flex align="center" mb={4}>
-                    <Text>Stock: {product.stock}</Text>
+                    <Text>Stock: {loading ? <Skeleton width="50px" /> : product.stock}</Text>
                   </Flex>
                   <FormControl id="quantity" mb={4}>
                     <FormLabel>Quantity</FormLabel>
-                    <Slider
-                      defaultValue={1}
-                      min={1}
-                      max={product.stock}
-                      step={1}
-                      onChangeEnd={(val) => handleQuantityChange(val)}
-                    >
-                      <SliderTrack>
-                        <SliderFilledTrack />
-                      </SliderTrack>
-                      <SliderThumb />
-                    </Slider>
-                    <Text mt={2}>Quantity: {quantity}</Text>
+                    {loading ? (
+                      <Skeleton height="30px" />
+                    ) : (
+                      <>
+                        <Slider
+                          defaultValue={1}
+                          min={1}
+                          max={product.stock}
+                          step={1}
+                          onChangeEnd={(val) => handleQuantityChange(val)}
+                        >
+                          <SliderTrack>
+                            <SliderFilledTrack />
+                          </SliderTrack>
+                          <SliderThumb />
+                        </Slider>
+                        <Text mt={2}>Quantity: {quantity}</Text>
+                      </>
+                    )}
                   </FormControl>
                   <VStack spacing={6} align="left">
                     <HStack spacing={10}>
-                      <Button colorScheme="teal" onClick={handleAddToCart}>
-                        Buy
-                      </Button>
+                      {loading ? (
+                        <Skeleton height="40px" width="100px" />
+                      ) : (
+                        <Button colorScheme="teal" onClick={handleAddToCart}>
+                          Buy
+                        </Button>
+                      )}
                     </HStack>
                   </VStack>
                 </form>
@@ -297,7 +307,11 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                 Customer Reviews
               </Heading>
               {loading ? (
-                <Skeleton height="150px" />
+                <>
+                  <Skeleton height="100px" mb={4} />
+                  <Skeleton height="100px" mb={4} />
+                  <Skeleton height="100px" mb={4} />
+                </>
               ) : (
                 product.reviews.map((review, index) => (
                   <Box

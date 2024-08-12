@@ -75,7 +75,7 @@ export default function CategoriesPage() {
           gap={6}
           mb={8}
         >
-          {[...Array(10).keys()].map((_, index) => (
+           {Array.from({ length: 10 }).map((_, index) => (
             <Box
               key={index}
               bg="white"

@@ -13,7 +13,7 @@ import {
   Heading,
   Text,
   Skeleton,
-  SkeletonText
+  SkeletonText,
 } from "@chakra-ui/react";
 import {
   DropdownMenu,
@@ -81,90 +81,6 @@ export default function CategoryPage() {
     };
   }, [category]);
 
-  if (loading) {
-    return (
-      <Container maxW="container.xl" py={20}>
-        <Flex direction="column" mb={8}>
-          <Flex justify="space-between" align="center" mb={8}>
-            <Heading as="h2" size="lg">
-              {category}
-            </Heading>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  colorScheme="teal"
-                  size="sm"
-                  rightIcon={
-                    viewMode === "grid" ? <LayoutGridIcon /> : <LayoutListIcon />
-                  }
-                >
-                  View
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel>View as</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuCheckboxItem
-                  onClick={() => setViewMode("grid")}
-                  checked={viewMode === "grid"}
-                >
-                  <LayoutGridIcon />
-                  Grid
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem
-                  onClick={() => setViewMode("list")}
-                  checked={viewMode === "list"}
-                >
-                  <LayoutListIcon />
-                  List
-                </DropdownMenuCheckboxItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </Flex>
-          <Grid
-            templateColumns={
-              viewMode === "grid"
-                ? {
-                    base: "repeat(2, 1fr)",
-                    sm: "repeat(3, 1fr)",
-                    md: "repeat(4, 1fr)",
-                    lg: "repeat(5, 1fr)",
-                  }
-                : "1fr"
-            }
-            gap={6}
-          >
-            {[...Array(10).keys()].map((_, index) => (
-              <Box
-                key={index}
-                bg="white"
-                borderRadius="md"
-                boxShadow="md"
-                display={viewMode === "list" ? "flex" : "block"}
-                flexDirection={viewMode === "list" ? "row" : "column"}
-                overflow="hidden"
-              >
-                <Skeleton
-                  height={viewMode === "list" ? 150 : 300}
-                  width={viewMode === "list" ? 150 : 300}
-                />
-                <Box p={4} flex="1">
-                  <SkeletonText noOfLines={2} spacing="4" />
-                  <Skeleton height="20px" mt={4} />
-                </Box>
-              </Box>
-            ))}
-          </Grid>
-        </Flex>
-      </Container>
-    );
-  }
-
-  if (error) {
-    return <Text>Error: {error}</Text>;
-  }
-
   return (
     <Container maxW="container.xl" py={20}>
       <Flex direction="column" mb={8}>
@@ -205,7 +121,44 @@ export default function CategoryPage() {
             </DropdownMenuContent>
           </DropdownMenu>
         </Flex>
-        {products.length === 0 ? (
+        {loading ? (
+          <Grid
+            templateColumns={
+              viewMode === "grid"
+                ? {
+                    base: "repeat(2, 1fr)",
+                    sm: "repeat(3, 1fr)",
+                    md: "repeat(4, 1fr)",
+                    lg: "repeat(5, 1fr)",
+                  }
+                : "1fr"
+            }
+            gap={6}
+          >
+            {Array.from({ length: 10 }).map((_, index) => (
+              <Box
+                key={index}
+                bg="white"
+                borderRadius="md"
+                boxShadow="md"
+                display={viewMode === "list" ? "flex" : "block"}
+                flexDirection={viewMode === "list" ? "row" : "column"}
+                overflow="hidden"
+              >
+                <Skeleton
+                  height={viewMode === "list" ? 150 : 300}
+                  width={viewMode === "list" ? 150 : 300}
+                />
+                <Box p={4} flex="1">
+                  <SkeletonText noOfLines={2} spacing="4" />
+                  <Skeleton height="20px" mt={4} />
+                </Box>
+              </Box>
+            ))}
+          </Grid>
+        ) : error ? (
+          <Text>Error: {error}</Text>
+        ) : products.length === 0 ? (
           <Text>No products found in this category.</Text>
         ) : (
           <Grid
