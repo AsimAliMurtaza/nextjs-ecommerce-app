@@ -111,7 +111,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
   };
 
   return (
-    <>
+    <div>
       <Container maxW="container.lg" py={{ base: 16, md: 16, lg: 16 }}>
         <Grid
           templateColumns={{ base: "1fr", md: "1fr 1fr" }}
@@ -158,7 +158,9 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                 <Heading as="h1" size={{ base: "lg", md: "xl" }} mb={4}>
                   {product.name}
                 </Heading>
-                {product.description && <Text mb={4}>{product.description}</Text>}
+                {product.description && (
+                  <Text mb={4}>{product.description}</Text>
+                )}
                 <Flex align="center" mb={4}>
                   <Text
                     fontSize={{ base: "xl", md: "2xl" }}
@@ -176,7 +178,11 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                         <RadioGroup defaultValue="black">
                           <Stack spacing={2} direction="row">
                             {["black", "white", "blue"].map((color) => (
-                              <Radio key={color} value={color} colorScheme="blue">
+                              <Radio
+                                key={color}
+                                value={color}
+                                colorScheme="blue"
+                              >
                                 {color.charAt(0).toUpperCase() + color.slice(1)}
                               </Radio>
                             ))}
@@ -198,7 +204,10 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                     </>
                   )}
                   <Flex align="center" mb={4}>
-                    <Text>Stock: {loading ? <Skeleton width="50px" /> : product.stock}</Text>
+                    <Text>
+                      Stock:{" "}
+                      {loading ? <Skeleton width="50px" /> : product.stock}
+                    </Text>
                   </Flex>
                   <FormControl id="quantity" mb={4}>
                     <FormLabel>Quantity</FormLabel>
@@ -359,7 +368,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
         </Grid>
       </Container>
       <Footer />
-    </>
+    </div>
   );
 };
 
