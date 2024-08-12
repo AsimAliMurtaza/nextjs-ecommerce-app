@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   Button,
+  Text,
   Box,
   Flex,
   useDisclosure,
@@ -107,8 +108,8 @@ export default function Header() {
         >
           <Link href="/" passHref>
             <Flex align="center" gap={2}>
-              <ShoppingBag size={24} />
-              <Box fontWeight="bold" fontSize="lg">
+              <ShoppingBag size={32} />
+              <Box fontWeight="bold" fontSize="2xl">
                 Ecommerce
               </Box>
             </Flex>
@@ -121,7 +122,7 @@ export default function Header() {
             <Link href="/" passHref>
               <Button
                 variant="link"
-                fontSize="md"
+                fontSize="xl"
                 _hover={{ textDecoration: "underline" }}
                 colorScheme="gray.800"
               >
@@ -132,7 +133,7 @@ export default function Header() {
           <Link href="/products" passHref>
             <Button
               variant="link"
-              fontSize="md"
+              fontSize="xl"
               _hover={{ textDecoration: "underline" }}
               colorScheme="gray.800"
             >
@@ -141,8 +142,8 @@ export default function Header() {
           </Link>
           <Link href="/categories" passHref>
             <Button
+              fontSize="xl"
               variant="link"
-              fontSize="md"
               _hover={{ textDecoration: "underline" }}
               colorScheme="gray.800"
             >
@@ -152,7 +153,7 @@ export default function Header() {
           <Link href="/cart" passHref>
             <Button
               variant="link"
-              fontSize="md"
+              fontSize="xl"
               _hover={{ textDecoration: "underline" }}
               colorScheme="gray.800"
             >
@@ -164,12 +165,16 @@ export default function Header() {
 
           {session ? (
             <Menu>
-              <MenuButton>
+              <MenuButton
+                sx={{
+                  marginRight: "5px",
+                }}
+              >
                 <Image
                   src={session?.user?.image || ""}
                   alt="Pfp"
                   border="1px solid teal"
-                  boxSize="30px"
+                  boxSize="35px"
                   borderRadius="full"
                   width="100%"
                   _hover={{ cursor: "pointer" }}
@@ -224,32 +229,40 @@ export default function Header() {
             background: "rgba(255, 255, 255, 0.5)",
           }}
         />
-        <DrawerContent>
+        <DrawerContent
+          sx={{
+            backdropFilter: "blur(4px)",
+            background: "rgba(180, 244, 236, 0.5)",
+          }}
+        >
           <DrawerCloseButton />
 
           {session ? (
-            <DrawerHeader
+            <Box
               sx={{
-                fontSize: "xl",
-                fontWeight: "bold",
-                color: "teal",
                 display: "flex",
-                flexDirection: "row",
+                flexDirection: "column",
                 alignItems: "center",
-                p: 4,
-                gap: 2,
+                gap: 4,
+                padding: 4,
               }}
             >
               <Image
                 src={session.user?.image || ""}
-                alt="Pfp"
-                boxSize="50px"
+                alt="image"
+                boxSize="200px"
                 borderRadius="full"
-                border="2px solid teal"
-                mr={2}
               />
-              {session.user?.name}
-            </DrawerHeader>
+              <Text
+                sx={{
+                  fontSize: "xl",
+                  fontWeight: "bold",
+                  color: "teal",
+                }}
+              >
+                Welcome, {session.user?.name}!
+              </Text>
+            </Box>
           ) : (
             <DrawerHeader
               sx={{
@@ -262,13 +275,11 @@ export default function Header() {
             </DrawerHeader>
           )}
           <DrawerBody>
-            <Flex direction="column" gap={4}>
+            <Flex direction="column" gap={2}>
               {session ? (
                 <Button
-                  variant="link"
                   fontSize="lg"
                   colorScheme="teal"
-                  _hover={{ textDecoration: "underline" }}
                   leftIcon={<FaSignOutAlt />}
                   onClick={handleSignOut}
                 >
@@ -276,10 +287,11 @@ export default function Header() {
                 </Button>
               ) : (
                 <Button
-                  variant="link"
+                  variant="ghost"
                   fontSize="lg"
                   colorScheme="teal"
-                  _hover={{ textDecoration: "underline" }}
+                  w="full"
+                  borderRadius="lg"
                   leftIcon={<FaSignInAlt />}
                   onClick={handleSignIn}
                 >
@@ -288,10 +300,14 @@ export default function Header() {
               )}
               <Link href="/" passHref>
                 <Button
-                  variant="link"
+                  variant="ghost"
                   fontSize="lg"
                   colorScheme="teal"
-                  _hover={{ textDecoration: "underline" }}
+                  w="full"
+                  p="0.5rem"
+                  borderRadius="lg"
+                  justifyContent="flex-start"
+                  _hover={{ bg: "teal.200", cursor: "pointer" }}
                   leftIcon={<HomeIcon />}
                 >
                   Home
@@ -299,10 +315,14 @@ export default function Header() {
               </Link>
               <Link href="/products" passHref>
                 <Button
-                  variant="link"
+                  variant="ghost"
                   fontSize="lg"
                   colorScheme="teal"
-                  _hover={{ textDecoration: "underline" }}
+                  w="full"
+                  p="0.5rem"
+                  borderRadius="lg"
+                  justifyContent="flex-start"
+                  _hover={{ bg: "teal.200", cursor: "pointer" }}
                   leftIcon={<PackageIcon />}
                 >
                   Products
@@ -310,10 +330,14 @@ export default function Header() {
               </Link>
               <Link href="/categories" passHref>
                 <Button
-                  variant="link"
+                  variant="ghost"
                   fontSize="lg"
                   colorScheme="teal"
-                  _hover={{ textDecoration: "underline" }}
+                  w="full"
+                  p="0.5rem"
+                  borderRadius="lg"
+                  justifyContent="flex-start"
+                  _hover={{ bg: "teal.200", cursor: "pointer" }}
                   leftIcon={<LayoutGridIcon />}
                 >
                   Categories
@@ -321,10 +345,14 @@ export default function Header() {
               </Link>
               <Link href="/cart" passHref>
                 <Button
-                  variant="link"
+                  variant="ghost"
                   fontSize="lg"
                   colorScheme="teal"
-                  _hover={{ textDecoration: "underline" }}
+                  w="full"
+                  p="0.5rem"
+                  borderRadius="lg"
+                  justifyContent="flex-start"
+                  _hover={{ bg: "teal.200", cursor: "pointer" }}
                   leftIcon={<ShoppingCartIcon />}
                 >
                   Cart &nbsp;
@@ -334,16 +362,20 @@ export default function Header() {
                       color: "teal",
                     }}
                   >
-                    {cart.length}
+                    {cart.length > 0 ? `(${cart.length})` : ""}
                   </span>
                 </Button>
               </Link>
               <Link href="/account" passHref>
                 <Button
-                  variant="link"
+                  variant="ghost"
                   fontSize="lg"
                   colorScheme="teal"
-                  _hover={{ textDecoration: "underline" }}
+                  w="full"
+                  p="0.5rem"
+                  borderRadius="lg"
+                  justifyContent="flex-start"
+                  _hover={{ bg: "teal.200", cursor: "pointer" }}
                   leftIcon={<UserIcon />}
                 >
                   Account
