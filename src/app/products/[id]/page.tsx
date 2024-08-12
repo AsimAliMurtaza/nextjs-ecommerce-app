@@ -154,7 +154,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                 <Skeleton height="40px" />
               </>
             ) : (
-              <>
+              <Container maxW="container.lg">
                 <Heading as="h1" size={{ base: "lg", md: "xl" }} mb={4}>
                   {product.name}
                 </Heading>
@@ -243,7 +243,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                     </HStack>
                   </VStack>
                 </form>
-              </>
+              </Container>
             )}
           </Box>
           <Box
