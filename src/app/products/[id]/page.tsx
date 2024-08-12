@@ -114,7 +114,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
 
   return (
     <>
-      <Container maxW="container.lg" py={20}>
+      <Container maxW="container.xl" py={{ base: 8, md: 12, lg: 16 }}>
         <Grid
           templateColumns={{ base: "1fr", md: "1fr 1fr" }}
           gap={6}
