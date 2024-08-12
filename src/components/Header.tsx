@@ -13,6 +13,10 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  MenuList,
+  MenuItem,
+  MenuButton,
+  Menu,
 } from "@chakra-ui/react";
 import { useSession, signOut, signIn } from "next-auth/react";
 import CartButton from "./ui/cart-card";
@@ -44,6 +48,10 @@ export default function Header() {
     signIn();
   };
 
+  const handleRoute = () => {
+    router.push("/account");
+  };
+
   return (
     <Box
       as="header"
@@ -52,8 +60,8 @@ export default function Header() {
       position="fixed"
       width="100%"
       zIndex="1000"
-      px={{ base: 4, lg: 6 }}
-      py={3}
+      px={{ base: 2, lg: 4 }}
+      py={4}
     >
       <Flex align="center" justify="space-between" wrap="wrap">
         {/* Title and Burger Menu */}
@@ -87,11 +95,16 @@ export default function Header() {
         </Flex>
 
         {/* Full Menu for larger screens */}
-        <Flex align="center" gap={4} display={{ base: "none", md: "flex" }} sx={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          width: "100%",
-        }}>
+        <Flex
+          align="center"
+          gap={4}
+          display={{ base: "none", md: "flex" }}
+          sx={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
           <Link href="/" passHref>
             <Flex align="center" gap={2}>
               <ShoppingBag size={24} />
@@ -146,39 +159,51 @@ export default function Header() {
               Cart
             </Button>
           </Link>
-          <Link href="/account" passHref>
-            <Button
-              variant="link"
-              fontSize="md"
-              _hover={{ textDecoration: "underline" }}
-              colorScheme="gray.800"
-            >
-              Account
-            </Button>
-          </Link>
           <CartButton />
           <SearchBar />
 
           {session ? (
-            <Button
-              variant="outline"
-              colorScheme="teal"
-              size="sm"
-              onClick={handleSignOut}
-              rightIcon={
+            <Menu>
+              <MenuButton>
                 <Image
-                  src={session.user?.image || ""}
+                  src={session?.user?.image || ""}
                   alt="Pfp"
-                  alignItems="center"
-                  border="2px solid teal"
-                  boxSize="25px"
+                  border="1px solid teal"
+                  boxSize="30px"
                   borderRadius="full"
-                  mr={0}
+                  width="100%"
+                  _hover={{ cursor: "pointer" }}
                 />
-              }
-            >
-              Sign Out
-            </Button>
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={handleSignOut}>
+                  <Button
+                    colorScheme="teal"
+                    variant="ghost"
+                    w="100%"
+                    sx={{
+                      textAlign: "center",
+                      width: "100%",
+                    }}
+                  >
+                    Sign Out
+                  </Button>
+                </MenuItem>
+                <MenuItem onClick={handleRoute}>
+                  <Button
+                    colorScheme="teal"
+                    variant="ghost"
+                    w="100%"
+                    sx={{
+                      textAlign: "center",
+                      width: "100%",
+                    }}
+                  >
+                    My Account
+                  </Button>
+                </MenuItem>
+              </MenuList>
+            </Menu>
           ) : (
             <Button
               variant="outline"
