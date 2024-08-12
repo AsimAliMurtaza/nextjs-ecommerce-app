@@ -263,15 +263,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
               {loading ? (
                 <Skeleton height="150px" />
               ) : (
-                <Grid
-                  templateColumns={{ base: "1fr", md: "1fr 2fr" }}
-                  gap={6}
-                  borderWidth="1px"
-                  borderRadius="md"
-                  p={4}
-                  bg="white"
-                  shadow="sm"
-                >
+                <Container maxW="container.lg">
                   <Box>
                     <Text fontWeight="bold" color="gray.700" mb={2}>
                       Material
@@ -302,7 +294,7 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
                       {product.specifications.careInstructions}
                     </Text>
                   </Box>
-                </Grid>
+                </Container>
               )}
             </Container>
 
