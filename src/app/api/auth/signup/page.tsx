@@ -51,16 +51,14 @@ export default function SignUpForm() {
     }
 
     try {
-      // Upload the image to Firebase
       const imageUrl = await uploadImage(imageFile);
 
-      // Send the user data to the API
       const response = await fetch("/api/auth/signup/new-user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, name, imageUrl }), // Use the URL from Firebase
+        body: JSON.stringify({ email, password, name, imageUrl }),
       });
 
       if (!response.ok) {
@@ -76,7 +74,7 @@ export default function SignUpForm() {
   };
 
   return (
-    <Container maxW="md" paddingTop={76} paddingBottom={0}>
+    <Container maxW="lg" py={{ base: "20", md: "20", lg: "20" }}>
       <Box
         w="full"
         maxW="100%"

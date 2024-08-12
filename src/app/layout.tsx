@@ -3,7 +3,7 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { CartProvider } from "@/contexts/cart-context";
 import { Metadata } from "next";
-import { ConditionalHeader } from "@/components/ConditionalHeader";
+import Header from "@/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +22,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <CartProvider>
-            <ConditionalHeader>{children}</ConditionalHeader>
+            <Header />
+            {children}
           </CartProvider>
         </Providers>
       </body>
