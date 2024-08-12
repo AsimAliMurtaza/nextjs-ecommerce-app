@@ -31,8 +31,10 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Checkbox,
+  Skeleton,
+  SkeletonCircle,
+  SkeletonText,
 } from "@chakra-ui/react";
-import Loader from "@/components/ui/loader";
 
 interface Product {
   id: number;
@@ -110,7 +112,70 @@ export default function ProductsPage() {
   }, []);
 
   if (loading) {
-    return <Loader />;
+    return (
+      <Container maxW="container.xl" py={{ base: 8, md: 12, lg: 16 }}>
+        <Box py={{ base: 8, md: 12, lg: 10 }} borderRadius="md">
+          <Flex
+            direction={{ base: "row", md: "row" }}
+            justify="space-between"
+            align="center"
+            border="1px solid #e2e8f0"
+            borderRadius="md"
+            p={4}
+            mb={4}
+            shadow={"md"}
+          >
+            <Skeleton height="40px" width="200px" />
+            <Flex gap={4} align="right">
+              <Skeleton height="30px" width="80px" />
+              <Skeleton height="30px" width="80px" />
+            </Flex>
+          </Flex>
+
+          <Grid
+            templateColumns={{
+              base: "1fr",
+              md: "repeat(2, 1fr)",
+              lg: "repeat(4, 1fr)",
+            }}
+            gap={6}
+            templateRows={{ base: "auto", lg: "1fr" }}
+            alignItems="start"
+            display={viewMode === "grid" ? "grid" : "flex"}
+            flexDirection={viewMode === "list" ? "column" : "row"}
+          >
+            {Array.from({ length: 8 }).map((_, index) => (
+              <Box
+                key={index}
+                bg="white"
+                borderRadius="md"
+                boxShadow="md"
+                overflow="hidden"
+                width={viewMode === "list" ? "100%" : "auto"}
+                height={viewMode === "list" ? "auto" : "100%"}
+                display="flex"
+                flexDirection={viewMode === "list" ? "row" : "column"}
+              >
+                <SkeletonCircle size="200px" />
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  textAlign={viewMode === "list" ? "left" : "center"}
+                  flex={1}
+                >
+                  <Skeleton height="200px" width="100%" />
+                  <Box p={4}>
+                    <Skeleton height="20px" width="150px" mb={2} />
+                    <Skeleton height="15px" width="100px" mb={2} />
+                    <Skeleton height="20px" width="80px" />
+                  </Box>
+                </Box>
+              </Box>
+            ))}
+          </Grid>
+        </Box>
+      </Container>
+    );
   }
 
   if (error) {
@@ -122,6 +187,7 @@ export default function ProductsPage() {
       </Container>
     );
   }
+
   const applyFilters = (products: Product[]) => {
     let filteredProducts = products;
 

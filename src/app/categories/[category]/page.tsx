@@ -12,6 +12,8 @@ import {
   Image,
   Heading,
   Text,
+  Skeleton,
+  SkeletonText
 } from "@chakra-ui/react";
 import {
   DropdownMenu,
@@ -23,7 +25,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LayoutGridIcon } from "@/components/ui/icons";
 import { LayoutListIcon } from "lucide-react";
-import Loader from "@/components/ui/loader";
 
 interface Product {
   id: number; // Use _id for MongoDB documents
@@ -62,6 +63,7 @@ export default function CategoryPage() {
         }
       } catch (err) {
         if (isMounted) {
+          setError("An error occurred while fetching products.");
         }
       } finally {
         if (isMounted) {
@@ -80,7 +82,83 @@ export default function CategoryPage() {
   }, [category]);
 
   if (loading) {
-    return <Loader />;
+    return (
+      <Container maxW="container.xl" py={20}>
+        <Flex direction="column" mb={8}>
+          <Flex justify="space-between" align="center" mb={8}>
+            <Heading as="h2" size="lg">
+              {category}
+            </Heading>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  colorScheme="teal"
+                  size="sm"
+                  rightIcon={
+                    viewMode === "grid" ? <LayoutGridIcon /> : <LayoutListIcon />
+                  }
+                >
+                  View
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>View as</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem
+                  onClick={() => setViewMode("grid")}
+                  checked={viewMode === "grid"}
+                >
+                  <LayoutGridIcon />
+                  Grid
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  onClick={() => setViewMode("list")}
+                  checked={viewMode === "list"}
+                >
+                  <LayoutListIcon />
+                  List
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </Flex>
+          <Grid
+            templateColumns={
+              viewMode === "grid"
+                ? {
+                    base: "repeat(2, 1fr)",
+                    sm: "repeat(3, 1fr)",
+                    md: "repeat(4, 1fr)",
+                    lg: "repeat(5, 1fr)",
+                  }
+                : "1fr"
+            }
+            gap={6}
+          >
+            {[...Array(10).keys()].map((_, index) => (
+              <Box
+                key={index}
+                bg="white"
+                borderRadius="md"
+                boxShadow="md"
+                display={viewMode === "list" ? "flex" : "block"}
+                flexDirection={viewMode === "list" ? "row" : "column"}
+                overflow="hidden"
+              >
+                <Skeleton
+                  height={viewMode === "list" ? 150 : 300}
+                  width={viewMode === "list" ? 150 : 300}
+                />
+                <Box p={4} flex="1">
+                  <SkeletonText noOfLines={2} spacing="4" />
+                  <Skeleton height="20px" mt={4} />
+                </Box>
+              </Box>
+            ))}
+          </Grid>
+        </Flex>
+      </Container>
+    );
   }
 
   if (error) {
