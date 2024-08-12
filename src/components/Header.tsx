@@ -51,14 +51,22 @@ export default function Header() {
       boxShadow="md"
       position="fixed"
       width="100%"
-      top="0"
       zIndex="1000"
       px={{ base: 4, lg: 6 }}
       py={3}
     >
       <Flex align="center" justify="space-between" wrap="wrap">
         {/* Title and Burger Menu */}
-        <Flex align="center" gap={2} display={{ base: "flex", md: "none" }}>
+        <Flex
+          align="center"
+          gap={0}
+          display={{ base: "flex", md: "none" }}
+          sx={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
           <Link href="/" passHref>
             <Flex align="center" gap={2}>
               <ShoppingBag size={24} />
@@ -79,7 +87,11 @@ export default function Header() {
         </Flex>
 
         {/* Full Menu for larger screens */}
-        <Flex align="center" gap={4} display={{ base: "none", md: "flex" }}>
+        <Flex align="center" gap={4} display={{ base: "none", md: "flex" }} sx={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "100%",
+        }}>
           <Link href="/" passHref>
             <Flex align="center" gap={2}>
               <ShoppingBag size={24} />
@@ -88,16 +100,22 @@ export default function Header() {
               </Box>
             </Flex>
           </Link>
-          <Link href="/" passHref>
-            <Button
-              variant="link"
-              fontSize="md"
-              _hover={{ textDecoration: "underline" }}
-              colorScheme="gray.800"
-            >
-              Home
-            </Button>
-          </Link>
+          <Flex
+            align="center"
+            gap={4}
+            display={{ base: "none", md: "none", lg: "flex" }} // Hide on small screens
+          >
+            <Link href="/" passHref>
+              <Button
+                variant="link"
+                fontSize="md"
+                _hover={{ textDecoration: "underline" }}
+                colorScheme="gray.800"
+              >
+                Home
+              </Button>
+            </Link>
+          </Flex>
           <Link href="/products" passHref>
             <Button
               variant="link"
@@ -138,13 +156,6 @@ export default function Header() {
               Account
             </Button>
           </Link>
-        </Flex>
-
-        <Flex
-          align="center"
-          gap={4}
-          display={{ base: "none", md: "flex" }} // Hide on small screens
-        >
           <CartButton />
           <SearchBar />
 
@@ -292,10 +303,12 @@ export default function Header() {
                   leftIcon={<ShoppingCartIcon />}
                 >
                   Cart &nbsp;
-                  <span style={{
-                    fontSize: "sm",
-                    color: "teal",
-                  }}>
+                  <span
+                    style={{
+                      fontSize: "sm",
+                      color: "teal",
+                    }}
+                  >
                     {cart.length}
                   </span>
                 </Button>

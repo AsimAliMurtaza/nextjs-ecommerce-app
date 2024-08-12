@@ -80,7 +80,7 @@ export default function QuickOrder() {
   };
 
   return (
-    <Box as="section" py={{ base: 12, md: 16, lg: 20 }} width="100%">
+    <Box as="section" py={{ base: 4, md: 8, lg: 20 }} width="100%">
       <Container maxW="container.xl">
         <Box
           mb={8}
@@ -116,6 +116,7 @@ export default function QuickOrder() {
               bg="white"
               borderRadius="lg"
               shadow="md"
+              border="1px solid #e2e8f0"
               overflow="hidden"
               p={4}
               display="flex"

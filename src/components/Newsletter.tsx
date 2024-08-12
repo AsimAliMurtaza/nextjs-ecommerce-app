@@ -47,14 +47,14 @@ export default function Newsletter() {
 
   return (
     <Container
-      maxW="container.xl"
+      maxW="container.lg"
       display="flex"
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
       padding="40px"
-      marginTop="40px" 
-      marginBottom="40px" 
+      marginTop="20px"
+      marginBottom="20px"
     >
       <FormControl as="form" onSubmit={handleSubmit}>
         <FormLabel fontSize="20px" textAlign="center" marginBottom="10px">

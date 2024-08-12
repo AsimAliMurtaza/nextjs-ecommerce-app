@@ -13,7 +13,7 @@ const SearchBar: React.FC = () => {
     }
   };
 
-  const inputWidth = useBreakpointValue({ base: "120px", sm: "150px" });
+  const inputWidth = useBreakpointValue({ base: "100px", sm: "80px", md: "80px", lg: "360px" });
 
   return (
     <Flex align="center" gap={2}>

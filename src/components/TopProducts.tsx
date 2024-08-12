@@ -93,7 +93,7 @@ export default function TopProducts() {
   };
 
   return (
-    <Box as="section" py={{ base: 24, md: 20, lg: 20 }} width="100%">
+    <Box as="section"  width="100%">
       <Container maxW="container.xl" px={{ base: 4, md: 6 }}>
         <Flex direction="row" align="center" justify="space-between" mb={8}>
           <Heading as="h2" size={{ base: "lg", md: "xl" }} fontWeight="bold">
@@ -122,6 +122,7 @@ export default function TopProducts() {
               display="flex"
               flexDirection="column"
               justifyContent="space-between"
+              border="1px solid #e2e8f0"
               p={4}
               _hover={{ shadow: "md", cursor: "pointer", transform: "scale(1.04)", transition: "all 0.2s ease-in-out" }}
             >

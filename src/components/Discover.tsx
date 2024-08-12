@@ -3,6 +3,7 @@ import { Button, Box, Container, Flex, Heading, Text } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { Carousel } from "antd";
 import Image from "next/image";
+import { FaCartArrowDown, FaCartPlus } from "react-icons/fa";
 
 export default function Discover() {
   const router = useRouter();
@@ -31,7 +32,7 @@ export default function Discover() {
   };
 
   return (
-    <Box as="section" py={{ base: 24, md: 20, lg: 20 }} width="100%">
+    <Box as="section" py={{ base: 20, md: 20, lg: 20 }} width="100%">
       <Container maxW="container.xl">
         <Flex
           direction={{ base: "column", md: "row" }}
@@ -52,10 +53,11 @@ export default function Discover() {
                 type="submit"
                 size="lg"
                 colorScheme="teal"
-                variant="ghost"
+                variant="outline"
                 onClick={handleShopClick}
               >
                 Shop Now
+                <FaCartPlus style={{ marginLeft: "0.5rem" }} />
               </Button>
               <Button variant="outline" size="lg" onClick={handleClick}>
                 Explore Categories
@@ -63,20 +65,17 @@ export default function Discover() {
             </Flex>
           </Box>
           <Box
-            flex="1"
-            display="flex"
             justifyContent="center"
             alignItems="center"
-            overflow="hidden"
-            marginTop={{ base: 8, md: 0, lg: 0 }}
+            marginTop={{ base: 8, md: 8, lg: 0 }}
           >
             <Carousel
               autoplay
               style={{
                 borderRadius: "1rem",
                 overflow: "hidden",
-                width: "400px",
-                maxHeight: "400px",
+                width: "300px",
+                height: "300px",
               }}
             >
               {images.map((image, index) => (
