@@ -13,6 +13,7 @@ import {
   Text,
   Flex,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -21,6 +22,7 @@ import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 export default function AccountPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const toast = useToast();
 
   const [selectedOption, setSelectedOption] = useState<string>("account");
   const [formData, setFormData] = useState({
@@ -61,13 +63,31 @@ export default function AccountPage() {
       });
 
       if (response.ok) {
-        alert("Profile updated successfully!");
+        toast({
+          title: "Profile Updated",
+          description: "Your profile has been updated successfully.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
       } else {
-        alert("Failed to update profile.");
+        toast({
+          title: "Profile Update Failed",
+          description: "An error occurred. Please try again.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
       }
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("An error occurred. Please try again.");
+      toast({
+        title: "Profile Update Failed",
+        description: "An error occurred. Please try again.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -79,7 +99,7 @@ export default function AccountPage() {
             <Heading size="md" mb={4}>
               Settings
             </Heading>
-            <Text>Settings content goes here.</Text>
+            <Text>Settings pages coming soon XD</Text>
           </Box>
         );
       case "account":
@@ -203,15 +223,6 @@ export default function AccountPage() {
             </Box>
           </Box>
         );
-      case "moreOptions":
-        return (
-          <Box borderWidth="1px" borderRadius="lg" p={8} shadow="md">
-            <Heading size="md" mb={4}>
-              More Options
-            </Heading>
-            <Text>More options content goes here.</Text>
-          </Box>
-        );
       default:
         return null;
     }
@@ -248,14 +259,6 @@ export default function AccountPage() {
             onClick={() => setSelectedOption("settings")}
           >
             Settings
-          </Button>
-          <Button
-            variant={selectedOption === "moreOptions" ? "solid" : "ghost"}
-            colorScheme="teal"
-            w="full"
-            onClick={() => setSelectedOption("moreOptions")}
-          >
-            More Options
           </Button>
         </VStack>
 
