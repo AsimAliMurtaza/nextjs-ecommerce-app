@@ -1,32 +1,18 @@
-import { Schema, model, models, Document } from "mongoose";
+// src/models/User.ts
 
-interface IUser extends Document {
-  name: string;
-  email: string;
-  password: string;
-  image?: string; // Make image optional
-}
+import { Schema, model, models } from "mongoose";
 
-const userSchema = new Schema<IUser>({
-  email: {
-    type: String,
-    required: [true, "Please provide an email"],
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: [true, "Please provide a password"],
-  },
-  name: {
-    type: String,
-    required: [true, "Please provide a name"],
-  },
-  image: {
-    type: String,
-    required: false, // Make image optional
-  },
-});
+const UserSchema = new Schema({
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  name: { type: String, required: true },
+  image: { type: String },
+  address: { type: String, required: true },
+  gender: { type: String, required: true },
+  country: { type: String, required: true },
+  dob: { type: Date, required: true },
+}, { timestamps: true });
 
-const User = models.User || model<IUser>("User", userSchema);
+const User = models.User || model("User", UserSchema);
 
 export default User;
