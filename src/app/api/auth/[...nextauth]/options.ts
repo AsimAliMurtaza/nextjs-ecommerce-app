@@ -29,12 +29,17 @@ export const authOptions: NextAuthOptions = {
         await dbConnect();
 
         const user = await User.findOne({ email: credentials.email });
-        if (
-          user.email === credentials.email &&
-          user.password === credentials.password
-        ) {
-          console.log(user.image);
-          return { id: user.id, email: user.email, name: user.name, image: user.image };
+        if (user && user.password === credentials.password) {
+          return {
+            id: user.id,
+            email: user.email,
+            image: user.image,
+            name: user.name,
+            address: user.address,
+            gender: user.gender,
+            country: user.country,
+            dob: user.dob,
+          };
         } else {
           throw new Error("Invalid credentials");
         }

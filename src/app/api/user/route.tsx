@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
     // Update user fields
     user.name = username || user.name;
     user.email = email || user.email;
+    user.password = newPassword || user.password;
     user.gender = gender || user.gender;
     user.country = country || user.country;
     user.address = address || user.address;

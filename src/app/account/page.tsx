@@ -24,14 +24,14 @@ export default function AccountPage() {
 
   const [selectedOption, setSelectedOption] = useState<string>("account");
   const [formData, setFormData] = useState({
-    username: session?.user?.name || "",
+    name: session?.user?.name || "",
     email: session?.user?.email || "",
     password: "",
     newPassword: "",
-    gender: session?.user?.gender || "",
-    country: session?.user?.country || "",
-    address: session?.user?.address || "",
-    dob: session?.user?.dob || "",
+    address: "",
+    gender: "",
+    country: "",
+    dob: "",
   });
 
   useEffect(() => {
@@ -109,7 +109,7 @@ export default function AccountPage() {
                       <Input
                         type="text"
                         name="username"
-                        value={formData.username}
+                        value={formData.name}
                         onChange={handleChange}
                       />
                     </FormControl>
@@ -147,16 +147,6 @@ export default function AccountPage() {
                         type="text"
                         name="address"
                         value={formData.address}
-                        onChange={handleChange}
-                      />
-                    </FormControl>
-                    <FormControl>
-                      <FormLabel>Date of Birth</FormLabel>
-                      <Input
-                        type="date"
-                        name="dob"
-                        disabled
-                        value={session?.user?.dob}
                         onChange={handleChange}
                       />
                     </FormControl>
