@@ -119,7 +119,7 @@ export default function AccountPage() {
                         type="email"
                         name="email"
                         disabled
-                        value={session?.user?.email}
+                        value={session?.user?.email || ""}
                         onChange={handleChange}
                       />
                     </FormControl>
