@@ -175,7 +175,7 @@ export default function Header() {
                   <Image
                     src={session?.user?.image || ""}
                     alt="user"
-                    boxSize="auto"
+                    boxSize="35px"
                     borderRadius="full"
                     width="35px"
                     _hover={{ cursor: "pointer" }}
