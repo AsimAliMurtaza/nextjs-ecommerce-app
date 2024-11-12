@@ -123,7 +123,7 @@ export default function Header() {
               <Button
                 variant="link"
                 fontSize="xl"
-                _hover={{ textDecoration: "underline" }}
+                _hover={{ textDecoration: "none", color: "white" }}
                 colorScheme="gray.800"
               >
                 Home
@@ -134,7 +134,7 @@ export default function Header() {
             <Button
               variant="link"
               fontSize="xl"
-              _hover={{ textDecoration: "underline" }}
+              _hover={{ textDecoration: "none", color: "white" }}
               colorScheme="gray.800"
             >
               Products
@@ -144,7 +144,7 @@ export default function Header() {
             <Button
               fontSize="xl"
               variant="link"
-              _hover={{ textDecoration: "underline" }}
+              _hover={{ textDecoration: "none", color: "white" }}
               colorScheme="gray.800"
             >
               Categories
@@ -154,7 +154,7 @@ export default function Header() {
             <Button
               variant="link"
               fontSize="xl"
-              _hover={{ textDecoration: "underline" }}
+              _hover={{ textDecoration: "none", color: "white" }}
               colorScheme="gray.800"
             >
               Cart
@@ -211,9 +211,11 @@ export default function Header() {
             </Menu>
           ) : (
             <Button
-              variant="outline"
-              colorScheme="teal"
+              type="submit"
               size="sm"
+              color="white"
+              variant="outline"
+              _hover={{ bg: "white", color: "#59B9B7" }}
               onClick={handleSignIn}
             >
               Sign In
@@ -287,17 +289,26 @@ export default function Header() {
                 </Button>
               ) : (
                 <Button
-                  variant="ghost"
-                  fontSize="lg"
-                  colorScheme="teal"
-                  w="full"
-                  borderRadius="lg"
+                  type="submit"
+                  size="lg"
+                  color="#59B9B7"
+                  variant="outline"
+                  _hover={{ bg: "#59B9B7", color: "white" }}
                   leftIcon={<FaSignInAlt />}
                   onClick={handleSignIn}
                 >
                   Sign In
                 </Button>
               )}
+              <Box sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: 4,
+                padding: 4,
+              }}>
+                <SearchBar />
+              </Box>
               <Link href="/" passHref>
                 <Button
                   variant="ghost"

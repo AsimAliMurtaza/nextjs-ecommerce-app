@@ -99,11 +99,7 @@ export default function TopProducts() {
           <Heading as="h2" size={{ base: "lg", md: "xl" }} fontWeight="bold">
             Top Products
           </Heading>
-          <Link
-            href="/products"
-            color="#59B9B7"
-            _hover={{ textDecoration: "underline" }}
-          >
+          <Link href="/products" color="#59B9B7">
             View All
           </Link>
         </Flex>
@@ -135,7 +131,11 @@ export default function TopProducts() {
                 transition: "all 0.2s ease-in-out",
               }}
             >
-              <Link href={`/products/${product.id}`}>
+              <Link
+                _hover={{ textDecoration: "none" }}
+                href={`/products/${product.id}`}
+                textAlign="center"
+              >
                 <Image
                   src={product.imageUrl}
                   alt={product.name}

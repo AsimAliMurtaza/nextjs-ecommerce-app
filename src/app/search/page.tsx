@@ -9,10 +9,12 @@ import {
   Flex,
   Spinner,
   Image,
+  Link as LinkOverlay,
 } from "@chakra-ui/react";
+import NextLink from "next/link";
 
 interface Product {
-  id: number;
+  id: string;
   name: string;
   description: string;
   imageUrl: string;
@@ -52,29 +54,48 @@ const SearchResults = () => {
           {products.map((product: Product) => (
             <Box
               key={product.id}
-              borderWidth="1px"
+              bg="white"
               borderRadius="lg"
+              shadow="md"
+              border="1px solid #e2e8f0"
+              overflow="hidden"
               p={4}
-              backgroundColor="white"
-              boxShadow="md"
-              _hover={{ boxShadow: "lg" }}
-              transition="box-shadow 0.2s"
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="space-between"
+              _hover={{
+                shadow: "md",
+                cursor: "pointer",
+                transform: "scale(1.04)",
+                transition: "all 0.2s ease-in-out",
+              }}
             >
-              <Image
-                src={product.imageUrl}
-                alt={product.name}
-                mb={4}
-                borderRadius="md"
-                objectFit="cover"
-                height="200px"
-                width="100%"
-              />
-              <Heading as="h2" size="md" mb={2}>
-                {product.name}
-              </Heading>
-              <Text color="gray.600" noOfLines={2}>
-                {product.description}
-              </Text>
+              <NextLink href={`/products/${product.id}`} passHref>
+                <LinkOverlay
+                  sx={{
+                    "&:hover": {
+                      textDecoration: "none",
+                    },
+                  }}
+                >
+                  <Image
+                    src={product.imageUrl}
+                    alt={product.name}
+                    mb={4}
+                    borderRadius="md"
+                    objectFit="cover"
+                    height="200px"
+                    width="100%"
+                  />
+                  <Heading as="h2" size="md" mb={2}>
+                    {product.name}
+                  </Heading>
+                  <Text color="gray.600" noOfLines={2}>
+                    {product.description}
+                  </Text>
+                </LinkOverlay>
+              </NextLink>
             </Box>
           ))}
         </SimpleGrid>
