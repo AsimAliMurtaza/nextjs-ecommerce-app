@@ -14,11 +14,18 @@ const SearchBar: React.FC = () => {
   };
 
   const inputWidth = useBreakpointValue({
-    base: "100px",
+    base: "180px",
     sm: "200px",
     md: "100px",
     lg: "200px",
   });
+  const inputColor = useBreakpointValue({
+    base:"teal",
+    sm: "teal",
+    md: "white",
+    lg: "white",
+  });
+
 
   return (
     <Flex align="center" gap={2}>
@@ -39,7 +46,7 @@ const SearchBar: React.FC = () => {
       <Button
         type="submit"
         size="sm"
-        color="white"
+        color={inputColor}
         variant="outline"
         _hover={{ bg: "white", color: "#59B9B7" }}
         onClick={handleSearch}

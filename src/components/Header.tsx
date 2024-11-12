@@ -19,6 +19,7 @@ import {
   MenuButton,
   Menu,
 } from "@chakra-ui/react";
+import { Toolbar } from "@mui/material";
 import { useSession, signOut, signIn } from "next-auth/react";
 import CartButton from "./ui/cart-card";
 import SearchBar from "./ui/searchBar";
@@ -94,11 +95,7 @@ export default function Header() {
             <MenuIcon />
           </Button>
         </Flex>
-
-        {/* Full Menu for larger screens */}
         <Flex
-          align="center"
-          gap={4}
           display={{ base: "none", md: "flex" }}
           sx={{
             flexDirection: "row",
@@ -114,10 +111,17 @@ export default function Header() {
               </Box>
             </Flex>
           </Link>
+
+          {/* Full Menu for larger screens */}
           <Flex
             align="center"
             gap={4}
-            display={{ base: "none", md: "none", lg: "flex" }} // Hide on small screens
+            display={{ base: "none", md: "flex" }}
+            sx={{
+              flexDirection: "row",
+              justifyContent: "right",
+              width: "100%",
+            }}
           >
             <Link href="/" passHref>
               <Button
@@ -129,98 +133,96 @@ export default function Header() {
                 Home
               </Button>
             </Link>
-          </Flex>
-          <Link href="/products" passHref>
-            <Button
-              variant="link"
-              fontSize="xl"
-              _hover={{ textDecoration: "none", color: "white" }}
-              colorScheme="gray.800"
-            >
-              Products
-            </Button>
-          </Link>
-          <Link href="/categories" passHref>
-            <Button
-              fontSize="xl"
-              variant="link"
-              _hover={{ textDecoration: "none", color: "white" }}
-              colorScheme="gray.800"
-            >
-              Categories
-            </Button>
-          </Link>
-          <Link href="/cart" passHref>
-            <Button
-              variant="link"
-              fontSize="xl"
-              _hover={{ textDecoration: "none", color: "white" }}
-              colorScheme="gray.800"
-            >
-              Cart
-            </Button>
-          </Link>
-          <CartButton />
-          <SearchBar />
-
-          {session ? (
-            <Menu>
-              <MenuButton
-                sx={{
-                  marginRight: "5px",
-                }}
+            <Link href="/products" passHref>
+              <Button
+                variant="link"
+                fontSize="xl"
+                _hover={{ textDecoration: "none", color: "white" }}
+                colorScheme="gray.800"
               >
-                <Image
-                  src={session?.user?.image || ""}
-                  alt="Pfp"
-                  border="1px solid teal"
-                  boxSize="35px"
-                  borderRadius="full"
-                  width="100%"
-                  _hover={{ cursor: "pointer" }}
-                />
-              </MenuButton>
-              <MenuList>
-                <MenuItem onClick={handleSignOut}>
-                  <Button
-                    colorScheme="teal"
-                    variant="ghost"
-                    w="100%"
-                    sx={{
-                      textAlign: "center",
-                      width: "100%",
-                    }}
-                  >
-                    Sign Out
-                  </Button>
-                </MenuItem>
-                <MenuItem onClick={handleRoute}>
-                  <Button
-                    colorScheme="teal"
-                    variant="ghost"
-                    w="100%"
-                    sx={{
-                      textAlign: "center",
-                      width: "100%",
-                    }}
-                  >
-                    My Account
-                  </Button>
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          ) : (
-            <Button
-              type="submit"
-              size="sm"
-              color="white"
-              variant="outline"
-              _hover={{ bg: "white", color: "#59B9B7" }}
-              onClick={handleSignIn}
-            >
-              Sign In
-            </Button>
-          )}
+                Products
+              </Button>
+            </Link>
+
+            <Link href="/orders" passHref>
+              <Button
+                variant="link"
+                fontSize="xl"
+                _hover={{ textDecoration: "none", color: "white" }}
+                colorScheme="gray.800"
+              >
+                Orders
+              </Button>
+            </Link>
+            <Link href="/cart" passHref>
+              <Button
+                variant="link"
+                fontSize="xl"
+                _hover={{ textDecoration: "none", color: "white" }}
+                colorScheme="gray.800"
+              >
+                Cart
+              </Button>
+            </Link>
+
+            <CartButton />
+
+            <SearchBar />
+
+            {session ? (
+              <Menu>
+                <MenuButton>
+                  <Image
+                    src={session?.user?.image || ""}
+                    alt="user"
+                    boxSize="auto"
+                    borderRadius="full"
+                    width="35px"
+                    _hover={{ cursor: "pointer" }}
+                  />
+                </MenuButton>
+                <MenuList>
+                  <MenuItem onClick={handleSignOut}>
+                    <Button
+                      colorScheme="teal"
+                      variant="ghost"
+                      w="100%"
+                      sx={{
+                        textAlign: "center",
+                        width: "100%",
+                      }}
+                    >
+                      Sign Out
+                    </Button>
+                  </MenuItem>
+                  <MenuItem onClick={handleRoute}>
+                    <Button
+                      colorScheme="teal"
+                      variant="ghost"
+                      w="100%"
+                      sx={{
+                        textAlign: "center",
+                        width: "100%",
+                      }}
+                    >
+                      My Account
+                    </Button>
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            ) : (
+              <Button
+                type="submit"
+                size="sm"
+                color="white"
+                variant="outline"
+                _hover={{ bg: "white", color: "#59B9B7" }}
+                onClick={handleSignIn}
+              >
+                Sign In
+              </Button>
+            )}
+          </Flex>
         </Flex>
       </Flex>
 
@@ -300,13 +302,15 @@ export default function Header() {
                   Sign In
                 </Button>
               )}
-              <Box sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: 4,
-                padding: 4,
-              }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 4,
+                  padding: 4,
+                }}
+              >
                 <SearchBar />
               </Box>
               <Link href="/" passHref>
@@ -320,6 +324,7 @@ export default function Header() {
                   justifyContent="flex-start"
                   _hover={{ bg: "teal.200", cursor: "pointer" }}
                   leftIcon={<HomeIcon />}
+                  onClick={onClose}
                 >
                   Home
                 </Button>
@@ -335,6 +340,7 @@ export default function Header() {
                   justifyContent="flex-start"
                   _hover={{ bg: "teal.200", cursor: "pointer" }}
                   leftIcon={<PackageIcon />}
+                  onClick={onClose}
                 >
                   Products
                 </Button>
@@ -350,6 +356,7 @@ export default function Header() {
                   justifyContent="flex-start"
                   _hover={{ bg: "teal.200", cursor: "pointer" }}
                   leftIcon={<LayoutGridIcon />}
+                  onClick={onClose}
                 >
                   Categories
                 </Button>
@@ -365,6 +372,7 @@ export default function Header() {
                   justifyContent="flex-start"
                   _hover={{ bg: "teal.200", cursor: "pointer" }}
                   leftIcon={<ShoppingCartIcon />}
+                  onClick={onClose}
                 >
                   Cart &nbsp;
                   <span
@@ -388,6 +396,7 @@ export default function Header() {
                   justifyContent="flex-start"
                   _hover={{ bg: "teal.200", cursor: "pointer" }}
                   leftIcon={<UserIcon />}
+                  onClick={onClose}
                 >
                   Account
                 </Button>
