@@ -43,7 +43,7 @@ const SearchPage = () => {
   return (
     <Box p={4} maxW="800px" mx="auto">
       <Heading as="h1" size="lg" mb={4} textAlign="center">
-        Search Results for "{query}"
+        Search Results for &quot;{query}&quot;
       </Heading>
 
       {loading ? (
