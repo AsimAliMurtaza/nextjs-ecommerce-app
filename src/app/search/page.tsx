@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 interface Product {
-  _id: string;
+  id: number;
   name: string;
   description: string;
   imageUrl: string;
@@ -40,7 +40,7 @@ const SearchResults = () => {
   return (
     <Box p={4} maxW="800px" mx="auto">
       <Heading as="h1" size="lg" mb={4} textAlign="center">
-        Search Results for "{query}"
+        Search Results for &quot;{query}&quot;
       </Heading>
 
       {loading ? (
@@ -51,7 +51,7 @@ const SearchResults = () => {
         <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={6}>
           {products.map((product: Product) => (
             <Box
-              key={product._id}
+              key={product.id}
               borderWidth="1px"
               borderRadius="lg"
               p={4}
