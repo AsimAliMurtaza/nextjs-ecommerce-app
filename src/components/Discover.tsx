@@ -52,8 +52,9 @@ export default function Discover() {
               <Button
                 type="submit"
                 size="lg"
-                colorScheme="teal"
+                color="#59B9B7"
                 variant="outline"
+                _hover={{ bg : "#59B9B7", color: "white" }}
                 onClick={handleShopClick}
               >
                 Shop Now

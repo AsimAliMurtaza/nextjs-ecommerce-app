@@ -13,7 +13,7 @@ const SearchBar: React.FC = () => {
     }
   };
 
-  const inputWidth = useBreakpointValue({ base: "100px", sm: "80px", md: "80px", lg: "360px" });
+  const inputWidth = useBreakpointValue({ base: "100px", sm: "150px", md: "200px", lg: "360px" });
 
   return (
     <Flex align="center" gap={2}>
@@ -24,20 +24,20 @@ const SearchBar: React.FC = () => {
         width={inputWidth}
         height="30px"
         borderRadius="md"
-        borderColor="white"
+        borderColor="black"
         backgroundColor="white"
         fontSize="sm"
         fontWeight="normal"
         _placeholder={{ color: "gray.500" }}
-        _focus={{ borderColor: "teal.500", boxShadow: "outline" }}
+        _focus={{ borderColor: "white", boxShadow: "outline" }}
       />
       <Button
         onClick={handleSearch}
         variant="outline"
-        colorScheme="teal"
         size="sm"
         height="30px"
         borderRadius="md"
+        borderColor="black"
       >
         Search
       </Button>

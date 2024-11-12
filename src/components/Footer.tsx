@@ -28,7 +28,7 @@ export default function Footer() {
         >
           {/* About Section */}
           <GridItem>
-            <Heading as="h3" size="lg" color="green.600" mb={4}>
+            <Heading as="h3" size="lg" color="#59B9B7" mb={4}>
               Ecommerce
             </Heading>
             <Text color="gray.700" mb={4}>

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { use } from "react";
 import { useCart } from "@/contexts/cart-context";
 import { Separator } from "@/components/ui/separator";
 import {

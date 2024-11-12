@@ -93,7 +93,7 @@ export default function QuickOrder() {
           </Heading>
           <Link href="/cart">
             <Text
-              color="teal.500"
+              color="#59B9B7"
               fontWeight="medium"
               _hover={{ textDecoration: "underline" }}
             >
@@ -156,7 +156,8 @@ export default function QuickOrder() {
 
                 <Button
                   type="submit"
-                  colorScheme="teal"
+                  color="#59B9B7"
+                  _hover={{ bg : "#59B9B7", color: "white" }}
                   variant="outline"
                   onClick={() => handleAddToCart(product)}
                 >

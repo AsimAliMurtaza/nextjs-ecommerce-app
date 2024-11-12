@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "./ui/button";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -11,6 +10,7 @@ import {
   Heading,
   Image,
   Text,
+  Link,
 } from "@chakra-ui/react";
 
 interface Product {
@@ -93,13 +93,17 @@ export default function TopProducts() {
   };
 
   return (
-    <Box as="section"  width="100%">
+    <Box as="section" width="100%">
       <Container maxW="container.xl" px={{ base: 4, md: 6 }}>
         <Flex direction="row" align="center" justify="space-between" mb={8}>
           <Heading as="h2" size={{ base: "lg", md: "xl" }} fontWeight="bold">
             Top Products
           </Heading>
-          <Link href="/products" color="teal.500">
+          <Link
+            href="/products"
+            color="#59B9B7"
+            _hover={{ textDecoration: "underline" }}
+          >
             View All
           </Link>
         </Flex>
@@ -124,7 +128,12 @@ export default function TopProducts() {
               justifyContent="space-between"
               border="1px solid #e2e8f0"
               p={4}
-              _hover={{ shadow: "md", cursor: "pointer", transform: "scale(1.04)", transition: "all 0.2s ease-in-out" }}
+              _hover={{
+                shadow: "md",
+                cursor: "pointer",
+                transform: "scale(1.04)",
+                transition: "all 0.2s ease-in-out",
+              }}
             >
               <Link href={`/products/${product.id}`}>
                 <Image

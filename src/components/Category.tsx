@@ -17,6 +17,40 @@ import {
   HomeIcon,
 } from "./ui/icons";
 
+// Example of category data
+const categories = [
+  {
+    name: "Clothing",
+    href: "/categories/Clothing",
+    icon: ShirtIcon,
+  },
+  {
+    name: "Electronics",
+    href: "/categories/Electronics",
+    icon: LaptopIcon,
+  },
+  {
+    name: "Home",
+    href: "/categories/Home",
+    icon: HomeIcon,
+  },
+  {
+    name: "Beauty",
+    href: "/categories/Beauty",
+    icon: PaintbrushIcon,
+  },
+  {
+    name: "Sports",
+    href: "/categories/Sports",
+    icon: ClubIcon,
+  },
+  {
+    name: "Outdoor",
+    href: "/categories/Outdoor",
+    icon: CaravanIcon,
+  },
+];
+
 export default function Category() {
   return (
     <Box as="section" py={{ base: 12, md: 16, lg: 20 }} width="100%">
@@ -27,7 +61,7 @@ export default function Category() {
           </Heading>
           <Link
             href="/categories"
-            color="teal.500"
+            color="#59B9B7"
             fontWeight="medium"
             _hover={{ textDecoration: "underline" }}
           >
@@ -43,114 +77,27 @@ export default function Category() {
           }}
           gap={6}
         >
-          <Link
-            href="/categories/Clothing"
-            bg="white"
-            borderRadius="lg"
-            shadow="sm"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            p={4}
-            _hover={{ bg: "teal.100", color: "teal.800" }}
-            transition="background-color 0.2s ease, color 0.2s ease"
-          >
-            <ShirtIcon />
-            <Text fontWeight="medium" mt={2}>
-              Clothing
-            </Text>
-          </Link>
-          <Link
-            href="/categories/Electronics"
-            bg="white"
-            borderRadius="lg"
-            shadow="sm"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            p={4}
-            _hover={{ bg: "teal.100", color: "teal.800" }}
-            transition="background-color 0.2s ease, color 0.2s ease"
-          >
-            <LaptopIcon />
-            <Text fontWeight="medium" mt={2}>
-              Electronics
-            </Text>
-          </Link>
-          <Link
-            href="/categories/Home"
-            bg="white"
-            borderRadius="lg"
-            shadow="sm"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            p={4}
-            _hover={{ bg: "teal.100", color: "teal.800" }}
-            transition="background-color 0.2s ease, color 0.2s ease"
-          >
-            <HomeIcon />
-            <Text fontWeight="medium" mt={2}>
-              Home
-            </Text>
-          </Link>
-          <Link
-            href="/categories/Beauty"
-            bg="white"
-            borderRadius="lg"
-            shadow="sm"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            p={4}
-            _hover={{ bg: "teal.100", color: "teal.800" }}
-            transition="background-color 0.2s ease, color 0.2s ease"
-          >
-            <PaintbrushIcon />
-            <Text fontWeight="medium" mt={2}>
-              Beauty
-            </Text>
-          </Link>
-          <Link
-            href="/categories/Sports"
-            bg="white"
-            borderRadius="lg"
-            shadow="sm"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            p={4}
-            _hover={{ bg: "teal.100", color: "teal.800" }}
-            transition="background-color 0.2s ease, color 0.2s ease"
-          >
-            <ClubIcon />
-            <Text fontWeight="medium" mt={2}>
-              Sports
-            </Text>
-          </Link>
-          <Link
-            href="/categories/Outdoor"
-            bg="white"
-            borderRadius="lg"
-            shadow="sm"
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            p={4}
-            _hover={{ bg: "teal.100", color: "teal.800" }}
-            transition="background-color 0.2s ease, color 0.2s ease"
-          >
-            <CaravanIcon />
-            <Text fontWeight="medium" mt={2}>
-              Outdoor
-            </Text>
-          </Link>
+          {categories.map((category) => (
+            <Link
+              key={category.name}
+              href={category.href}
+              bg="white"
+              borderRadius="lg"
+              shadow="sm"
+              display="flex"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              p={4}
+              _hover={{ bg: "#59B9B7", color: "white" }}
+              transition="background-color 0.2s ease, color 0.2s ease"
+            >
+              <category.icon />
+              <Text fontWeight="medium" mt={2}>
+                {category.name}
+              </Text>
+            </Link>
+          ))}
         </Grid>
       </Container>
     </Box>

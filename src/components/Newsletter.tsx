@@ -74,7 +74,8 @@ export default function Newsletter() {
         </FormHelperText>
         <Button
           type="submit"
-          colorScheme="teal"
+          color="#59B9B7"
+          _hover={{ bg: "#59B9B7", color: "white" }}
           variant="ghost"
           marginTop="10px"
         >
