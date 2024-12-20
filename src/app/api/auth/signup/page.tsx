@@ -63,19 +63,14 @@ export default function SignUpForm() {
     if (
       !email ||
       !password ||
-      !name ||
-      !imageFile ||
-      !address ||
-      !gender ||
-      !country ||
-      !dob
+      !name
     ) {
       setError("All fields are required");
       return;
     }
 
     try {
-      const imageUrl = await uploadImage(imageFile);
+      // const imageUrl = await uploadImage(imageFile);
 
       const response = await fetch("/api/auth/signup/new-user", {
         method: "POST",
@@ -86,11 +81,6 @@ export default function SignUpForm() {
           email,
           password,
           name,
-          imageUrl,
-          address,
-          gender,
-          country,
-          dob,
         }),
       });
 
@@ -137,7 +127,7 @@ export default function SignUpForm() {
               handleSubmit(e);
             }}
           >
-            <Flex direction={{ base: "column", md: "row" }} wrap="wrap" gap={4}>
+            <Flex direction={{ base: "column"}} wrap="wrap" gap={4}>
               <Box flex="1">
                 <FormControl id="signUp-email" isRequired>
                   <FormLabel>Email</FormLabel>
@@ -195,7 +185,7 @@ export default function SignUpForm() {
                 </FormControl>
               </Box>
 
-              <Box flex="1">
+              {/* <Box flex="1">
                 <FormControl id="signUp-address" isRequired>
                   <FormLabel>Address</FormLabel>
                   <InputGroup>
@@ -279,8 +269,8 @@ export default function SignUpForm() {
                     variant="filled"
                     onChange={handleImageChange}
                   />
-                </FormControl>
-              </Box>
+                </FormControl> */}
+              {/* </Box> */}
             </Flex>
 
             {error && (

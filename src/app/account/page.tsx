@@ -25,10 +25,12 @@ export default function AccountPage() {
   const toast = useToast();
 
   const [selectedOption, setSelectedOption] = useState<string>("account");
+
   const [formData, setFormData] = useState({
-    name: session?.user?.name || "",
     email: session?.user?.email || "",
     password: "",
+    name: "",
+    imageUrl: "",
     newPassword: "",
     address: "",
     gender: "",
@@ -42,52 +44,78 @@ export default function AccountPage() {
     }
   }, [status, router]);
 
-  if (status === "loading") {
-    return <Text>Loading...</Text>;
-  }
+  // Fetch user data based on email
+  useEffect(() => {
+    const fetchUser = async (email: string) => {
+      try {
+        const response = await fetch("/api/get-user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        });
 
+        if (response.ok) {
+          const user = await response.json();
+          setFormData({
+            email: user.email || "",
+            password: "",
+            name: user.name || "",
+            imageUrl: user.image || "",
+            newPassword: "",
+            address: user.address || "",
+            gender: user.gender || "",
+            country: user.country || "",
+            dob: user.dob || "",
+          });
+        } else {
+          showToast("Error", "Failed to fetch user data. Please try again.", "error");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        showToast("Error", "Failed to fetch user data. Please try again.", "error");
+      }
+    };
+
+    if (status === "authenticated" && session?.user?.email) {
+      fetchUser(session.user.email);
+    }
+  }, [status, session]);
+
+  // Toast helper
+  const showToast = (title: string, description: string, status: "success" | "error") => {
+    toast({
+      title,
+      description,
+      status,
+      duration: 5000,
+      isClosable: true,
+    });
+  };
+
+  // Input change handler
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Form submission handler
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const response = await fetch("/api/user", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        toast({
-          title: "Profile Updated",
-          description: "Your profile has been updated successfully.",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-        });
+        showToast("Profile Updated", "Your profile has been updated successfully.", "success");
       } else {
-        toast({
-          title: "Profile Update Failed",
-          description: "An error occurred. Please try again.",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
+        showToast("Update Failed", "An error occurred. Please try again.", "error");
       }
     } catch (error) {
       console.error("Error updating profile:", error);
-      toast({
-        title: "Profile Update Failed",
-        description: "An error occurred. Please try again.",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-      });
+      showToast("Update Failed", "An error occurred. Please try again.", "error");
     }
   };
 
