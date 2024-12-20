@@ -19,6 +19,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEffect, useState, ChangeEvent, FormEvent } from "react";
+import Email from "next-auth/providers/email";
 
 export default function AccountPage() {
   const { data: session, status } = useSession();
@@ -27,6 +28,7 @@ export default function AccountPage() {
   const [selectedOption, setSelectedOption] = useState<string>("account");
   const [formData, setFormData] = useState({
     username: session?.user?.name || "",
+    email: session?.user?.email || "",
     gender: "",
     country: "",
     address: "",
@@ -55,6 +57,7 @@ export default function AccountPage() {
           const user = await response.json();
           setFormData({
             username: user.name || "",
+            email: user.email || "",
             gender: user.gender || "",
             country: user.country || "",
             address: user.address || "",
@@ -103,13 +106,31 @@ export default function AccountPage() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+  
+    // Ensure that formData contains the email and at least one field to update
+    if (!formData.email) {
+      showToast("Update Failed", "Email is required to update the profile.", "error");
+      return;
+    }
+  
+    const { email, ...updates } = formData;
+  
+    if (Object.keys(updates).length === 0) {
+      showToast(
+        "Update Failed",
+        "No updates provided. Please modify at least one field.",
+        "error"
+      );
+      return;
+    }
+  
     try {
       const response = await fetch("/api/update-user", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ email, updates }),
       });
-
+  
       if (response.ok) {
         showToast(
           "Profile Updated",
@@ -117,9 +138,10 @@ export default function AccountPage() {
           "success"
         );
       } else {
+        const errorData = await response.json();
         showToast(
           "Update Failed",
-          "An error occurred. Please try again.",
+          errorData.message || "An error occurred. Please try again.",
           "error"
         );
       }
@@ -127,12 +149,12 @@ export default function AccountPage() {
       console.error("Error updating profile:", error);
       showToast(
         "Update Failed",
-        "An error occurred. Please try again.",
+        "An unexpected error occurred. Please try again.",
         "error"
       );
     }
   };
-
+  
   const renderContent = () => {
     switch (selectedOption) {
       case "settings":

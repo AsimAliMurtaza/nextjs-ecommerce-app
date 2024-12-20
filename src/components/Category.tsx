@@ -20,33 +20,33 @@ import {
 // Example of category data
 const categories = [
   {
-    name: "Clothing",
-    href: "/categories/Clothing",
+    name: "Shoes",
+    href: "/categories/Shoes",
     icon: ShirtIcon,
   },
   {
-    name: "Electronics",
-    href: "/categories/Electronics",
+    name: "Hats",
+    href: "/categories/Hats",
     icon: LaptopIcon,
   },
   {
     name: "Home",
-    href: "/categories/Home",
+    href: "/categories/home",
     icon: HomeIcon,
   },
   {
     name: "Beauty",
-    href: "/categories/Beauty",
+    href: "/categories/beauty",
     icon: PaintbrushIcon,
   },
   {
     name: "Sports",
-    href: "/categories/Sports",
+    href: "/categories/sports",
     icon: ClubIcon,
   },
   {
     name: "Outdoor",
-    href: "/categories/Outdoor",
+    href: "/categories/outdoor",
     icon: CaravanIcon,
   },
 ];

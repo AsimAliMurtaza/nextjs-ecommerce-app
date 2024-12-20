@@ -144,16 +144,6 @@ export default function Header() {
               </Button>
             </Link>
 
-            <Link href="/orders" passHref>
-              <Button
-                variant="link"
-                fontSize="xl"
-                _hover={{ textDecoration: "none", color: "white" }}
-                colorScheme="gray.800"
-              >
-                Orders
-              </Button>
-            </Link>
             <Link href="/cart" passHref>
               <Button
                 variant="link"

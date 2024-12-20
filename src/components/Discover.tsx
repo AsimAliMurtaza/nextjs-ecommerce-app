@@ -21,6 +21,18 @@ export default function Discover() {
       width: 400,
       height: 400,
     },
+    {
+      src: "https://i.ibb.co/ypkgK0X/blue-beanie.png",
+      alt: "Product Image 2",
+      width: 400,
+      height: 400,
+    },
+    {
+      src: "https://i.ibb.co/YTjW3vF/green-beanie.png",
+      alt: "Product Image 2",
+      width: 400,
+      height: 400,
+    },
   ];
 
   const handleClick = () => {
