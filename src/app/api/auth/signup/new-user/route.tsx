@@ -4,7 +4,7 @@ import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password, name } = await req.json();
+    const { email, password, name, imageUrl } = await req.json();
 
     console.log("Creating user with email:", email, "name:", name);
 
@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
       email,
       password,
       name,
+      image: imageUrl,
     });
 
     return NextResponse.json({ user });

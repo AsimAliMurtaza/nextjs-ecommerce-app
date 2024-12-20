@@ -2,7 +2,7 @@ import dbConnect from "@/lib/db";
 import User from "@/models/User";
 import { NextResponse, NextRequest } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     const { email } = await req.json();
 
@@ -16,6 +16,8 @@ export async function GET(req: NextRequest) {
     await dbConnect();
 
     const user = await User.findOne({ email });
+
+    console.log("User data:", user);
 
     return NextResponse.json({ user });
   } catch (error) {

@@ -14,6 +14,7 @@ import {
   Flex,
   VStack,
   useToast,
+  Select,
 } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -23,29 +24,25 @@ export default function AccountPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const toast = useToast();
-
   const [selectedOption, setSelectedOption] = useState<string>("account");
-
   const [formData, setFormData] = useState({
-    email: session?.user?.email || "",
-    password: "",
-    name: "",
-    imageUrl: "",
-    newPassword: "",
-    address: "",
+    username: session?.user?.name || "",
     gender: "",
     country: "",
-    dob: "",
+    address: "",
+    password: "",
+    newPassword: "",
   });
 
   useEffect(() => {
+    // Redirect if unauthenticated
     if (status === "unauthenticated") {
       router.push("/auth/signin");
     }
   }, [status, router]);
 
-  // Fetch user data based on email
   useEffect(() => {
+    // Fetch user data and set form fields
     const fetchUser = async (email: string) => {
       try {
         const response = await fetch("/api/get-user", {
@@ -57,22 +54,27 @@ export default function AccountPage() {
         if (response.ok) {
           const user = await response.json();
           setFormData({
-            email: user.email || "",
-            password: "",
-            name: user.name || "",
-            imageUrl: user.image || "",
-            newPassword: "",
-            address: user.address || "",
+            username: user.name || "",
             gender: user.gender || "",
             country: user.country || "",
-            dob: user.dob || "",
+            address: user.address || "",
+            password: "",
+            newPassword: "",
           });
         } else {
-          showToast("Error", "Failed to fetch user data. Please try again.", "error");
+          showToast(
+            "Error",
+            "Failed to fetch user data. Please try again.",
+            "error"
+          );
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        showToast("Error", "Failed to fetch user data. Please try again.", "error");
+        showToast(
+          "Error",
+          "Failed to fetch user data. Please try again.",
+          "error"
+        );
       }
     };
 
@@ -81,8 +83,11 @@ export default function AccountPage() {
     }
   }, [status, session]);
 
-  // Toast helper
-  const showToast = (title: string, description: string, status: "success" | "error") => {
+  const showToast = (
+    title: string,
+    description: string,
+    status: "success" | "error"
+  ) => {
     toast({
       title,
       description,
@@ -92,30 +97,39 @@ export default function AccountPage() {
     });
   };
 
-  // Input change handler
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Form submission handler
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
-      const response = await fetch("/api/user", {
-        method: "POST",
+      const response = await fetch("/api/update-user", {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        showToast("Profile Updated", "Your profile has been updated successfully.", "success");
+        showToast(
+          "Profile Updated",
+          "Your profile has been updated successfully.",
+          "success"
+        );
       } else {
-        showToast("Update Failed", "An error occurred. Please try again.", "error");
+        showToast(
+          "Update Failed",
+          "An error occurred. Please try again.",
+          "error"
+        );
       }
     } catch (error) {
       console.error("Error updating profile:", error);
-      showToast("Update Failed", "An error occurred. Please try again.", "error");
+      showToast(
+        "Update Failed",
+        "An error occurred. Please try again.",
+        "error"
+      );
     }
   };
 
@@ -130,6 +144,7 @@ export default function AccountPage() {
             <Text>Settings pages coming soon XD</Text>
           </Box>
         );
+
       case "account":
         return (
           <Box borderWidth="1px" borderRadius="lg" p={8} shadow="md">
@@ -153,11 +168,11 @@ export default function AccountPage() {
                 <form onSubmit={handleSubmit}>
                   <Stack spacing={4}>
                     <FormControl>
-                      <FormLabel>Username</FormLabel>
+                      <FormLabel>Name</FormLabel>
                       <Input
                         type="text"
                         name="username"
-                        value={formData.name}
+                        value={formData.username}
                         onChange={handleChange}
                       />
                     </FormControl>
@@ -166,20 +181,24 @@ export default function AccountPage() {
                       <Input
                         type="email"
                         name="email"
-                        disabled
                         value={session?.user?.email || ""}
-                        onChange={handleChange}
+                        disabled
                       />
                     </FormControl>
                     <FormControl>
                       <FormLabel>Gender</FormLabel>
-                      <Input
-                        type="text"
+                      <Select
                         name="gender"
                         value={formData.gender}
                         onChange={handleChange}
-                      />
+                        placeholder="Select your gender"
+                      >
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </Select>
                     </FormControl>
+
                     <FormControl>
                       <FormLabel>Country</FormLabel>
                       <Input
@@ -223,32 +242,6 @@ export default function AccountPage() {
                 </form>
               </Box>
             </Flex>
-            <Box
-              borderWidth="1px"
-              borderRadius="lg"
-              p={8}
-              shadow="md"
-              mt={8}
-              bg="red.50"
-              borderColor="red.300"
-            >
-              <Stack spacing={4}>
-                <Heading size="md" color="red.600">
-                  Delete Your Account
-                </Heading>
-                <Text color="red.500">
-                  This action is irreversible. All your data will be permanently
-                  deleted.
-                </Text>
-                <Button
-                  colorScheme="red"
-                  size="lg"
-                  onClick={() => console.log("Delete Account")}
-                >
-                  Delete Account
-                </Button>
-              </Stack>
-            </Box>
           </Box>
         );
       default:

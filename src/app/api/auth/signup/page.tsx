@@ -15,22 +15,19 @@ import {
   InputLeftElement,
   Divider,
   VStack,
+  Image,
+  Center,
 } from "@chakra-ui/react";
-import { uploadImage } from "@/lib/uploadImage"; // Ensure this path is correct
-import { useRouter } from "next/navigation";
 import { AiOutlineMail, AiOutlineUser, AiOutlineLock } from "react-icons/ai";
-import { FaMapMarkedAlt, FaGlobe, FaCalendarAlt } from "react-icons/fa";
-import { BiMaleFemale as BiGender } from "react-icons/bi";
+import { useRouter } from "next/navigation";
+import { uploadImage } from "@/lib/uploadImage"; // Import the uploadImage function
 
 export default function SignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [gender, setGender] = useState("");
-  const [country, setCountry] = useState("");
-  const [dob, setDob] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageURL, setImageURL] = useState<string | null>(null); // To store the uploaded image URL
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -51,27 +48,26 @@ export default function SignUpForm() {
     setEmail("");
     setPassword("");
     setName("");
-    setAddress("");
-    setGender("");
-    setCountry("");
-    setDob("");
     setImageFile(null);
+    setImageURL(null); // Clear the uploaded image URL
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (
-      !email ||
-      !password ||
-      !name
-    ) {
+    if (!email || !password || !name) {
       setError("All fields are required");
       return;
     }
 
     try {
-      // const imageUrl = await uploadImage(imageFile);
+      let imageUrl = imageURL;
+      if (imageFile) {
+        // Upload the image to Firebase Storage and get the URL
+        imageUrl = await uploadImage(imageFile);
+        setImageURL(imageUrl); // Update the state with the uploaded image URL
+      }
 
+      // Send the data to your API
       const response = await fetch("/api/auth/signup/new-user", {
         method: "POST",
         headers: {
@@ -81,6 +77,7 @@ export default function SignUpForm() {
           email,
           password,
           name,
+          imageUrl, // Include the uploaded image URL in the request
         }),
       });
 
@@ -120,174 +117,117 @@ export default function SignUpForm() {
             Sign Up
           </Text>
           <Divider />
-          <Box
-            as="form"
-            w="100%"
-            onSubmit={(e) => {
-              handleSubmit(e);
-            }}
-          >
-            <Flex direction={{ base: "column"}} wrap="wrap" gap={4}>
-              <Box flex="1">
-                <FormControl id="signUp-email" isRequired>
-                  <FormLabel>Email</FormLabel>
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <AiOutlineMail color="gray.500" />
-                    </InputLeftElement>
-                    <Input
-                      type="email"
-                      variant="filled"
-                      value={email}
-                      onChange={handleInputChange(setEmail)}
-                      placeholder="Enter your email address"
-                      isInvalid={!!error}
+          <Box as="form" w="100%" onSubmit={(e) => handleSubmit(e)}>
+            <Flex direction={{ base: "column", md: "row" }} wrap="wrap" gap={6}>
+              {/* Left side - Image Upload */}
+              <Box flex="1" minW="200px">
+                <FormControl id="image-upload" isRequired>
+                  <FormLabel>Profile Image</FormLabel>
+                  <Center
+                    w="full"
+                    h="200px"
+                    borderWidth={1}
+                    borderStyle="dashed"
+                    borderRadius="md"
+                    bg="gray.100"
+                    cursor="pointer"
+                    onClick={() =>
+                      document.getElementById("image-upload-input")?.click()
+                    }
+                  >
+                    {imageFile ? (
+                      <Image
+                        src={URL.createObjectURL(imageFile)}
+                        alt="Uploaded Image"
+                        objectFit="cover"
+                        w="full"
+                        h="full"
+                        borderRadius="md"
+                      />
+                    ) : (
+                      <Text color="gray.500">Click to upload image</Text>
+                    )}
+                    <input
+                      id="image-upload-input"
+                      type="file"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      onChange={handleImageChange}
                     />
-                  </InputGroup>
+                  </Center>
                 </FormControl>
               </Box>
 
-              <Box flex="1">
-                <FormControl id="signUp-name" isRequired>
-                  <FormLabel>Name</FormLabel>
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <AiOutlineUser color="gray.500" />
-                    </InputLeftElement>
-                    <Input
-                      type="text"
-                      variant="filled"
-                      value={name}
-                      onChange={handleInputChange(setName)}
-                      placeholder="Enter your name"
-                    />
-                  </InputGroup>
-                </FormControl>
-              </Box>
-            </Flex>
+              {/* Right side - Input Fields */}
+              <Box flex="2">
+                <Flex direction="column" gap={4}>
+                  <FormControl id="signUp-email" isRequired>
+                    <FormLabel>Email</FormLabel>
+                    <InputGroup>
+                      <InputLeftElement pointerEvents="none">
+                        <AiOutlineMail color="gray.500" />
+                      </InputLeftElement>
+                      <Input
+                        type="email"
+                        variant="filled"
+                        value={email}
+                        onChange={handleInputChange(setEmail)}
+                        placeholder="Enter your email address"
+                        isInvalid={!!error}
+                      />
+                    </InputGroup>
+                  </FormControl>
 
-            <Flex direction={{ base: "column", md: "row" }} wrap="wrap" gap={4} mt={4}>
-              <Box flex="1">
-                <FormControl id="signUp-password" isRequired>
-                  <FormLabel>Password</FormLabel>
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <AiOutlineLock color="gray.500" />
-                    </InputLeftElement>
-                    <Input
-                      type="password"
-                      variant="filled"
-                      value={password}
-                      onChange={handleInputChange(setPassword)}
-                      placeholder="Enter your password"
-                    />
-                  </InputGroup>
-                </FormControl>
-              </Box>
+                  <FormControl id="signUp-name" isRequired>
+                    <FormLabel>Name</FormLabel>
+                    <InputGroup>
+                      <InputLeftElement pointerEvents="none">
+                        <AiOutlineUser color="gray.500" />
+                      </InputLeftElement>
+                      <Input
+                        type="text"
+                        variant="filled"
+                        value={name}
+                        onChange={handleInputChange(setName)}
+                        placeholder="Enter your name"
+                      />
+                    </InputGroup>
+                  </FormControl>
 
-              {/* <Box flex="1">
-                <FormControl id="signUp-address" isRequired>
-                  <FormLabel>Address</FormLabel>
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <FaMapMarkedAlt color="gray.500" />
-                    </InputLeftElement>
-                    <Input
-                      type="text"
-                      variant="filled"
-                      value={address}
-                      onChange={handleInputChange(setAddress)}
-                      placeholder="Enter your address"
-                    />
-                  </InputGroup>
-                </FormControl>
-              </Box>
-            </Flex>
+                  <FormControl id="signUp-password" isRequired>
+                    <FormLabel>Password</FormLabel>
+                    <InputGroup>
+                      <InputLeftElement pointerEvents="none">
+                        <AiOutlineLock color="gray.500" />
+                      </InputLeftElement>
+                      <Input
+                        type="password"
+                        variant="filled"
+                        value={password}
+                        onChange={handleInputChange(setPassword)}
+                        placeholder="Enter your password"
+                      />
+                    </InputGroup>
+                  </FormControl>
 
-            <Flex direction={{ base: "column", md: "row" }} wrap="wrap" gap={4} mt={4}>
-              <Box flex="1">
-                <FormControl id="signUp-gender" isRequired>
-                  <FormLabel>Gender</FormLabel>
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <BiGender color="gray.500" />
-                    </InputLeftElement>
-                    <Input
-                      type="text"
-                      variant="filled"
-                      value={gender}
-                      onChange={handleInputChange(setGender)}
-                      placeholder="Enter your gender"
-                    />
-                  </InputGroup>
-                </FormControl>
-              </Box>
+                  {error && (
+                    <FormHelperText textAlign="center" color="red.500" mt={4}>
+                      {error}
+                    </FormHelperText>
+                  )}
 
-              <Box flex="1">
-                <FormControl id="signUp-country" isRequired>
-                  <FormLabel>Country</FormLabel>
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <FaGlobe color="gray.500" />
-                    </InputLeftElement>
-                    <Input
-                      type="text"
-                      variant="filled"
-                      value={country}
-                      onChange={handleInputChange(setCountry)}
-                      placeholder="Enter your country"
-                    />
-                  </InputGroup>
-                </FormControl>
+                  <Button
+                    type="submit"
+                    colorScheme="teal"
+                    variant="solid"
+                    w="100%"
+                    mt={4}
+                  >
+                    Sign Up
+                  </Button>
+                </Flex>
               </Box>
             </Flex>
-
-            <Flex direction={{ base: "column", md: "row" }} wrap="wrap" gap={4} mt={4}>
-              <Box flex="1">
-                <FormControl id="signUp-dob" isRequired>
-                  <FormLabel>Date of Birth</FormLabel>
-                  <InputGroup>
-                    <InputLeftElement pointerEvents="none">
-                      <FaCalendarAlt color="gray.500" />
-                    </InputLeftElement>
-                    <Input
-                      type="date"
-                      variant="filled"
-                      value={dob}
-                      onChange={handleInputChange(setDob)}
-                    />
-                  </InputGroup>
-                </FormControl>
-              </Box>
-
-              <Box flex="1">
-                <FormControl id="signUp-image" isRequired>
-                  <FormLabel>Profile Picture</FormLabel>
-                  <Input
-                    type="file"
-                    accept="image/*"
-                    variant="filled"
-                    onChange={handleImageChange}
-                  />
-                </FormControl> */}
-              {/* </Box> */}
-            </Flex>
-
-            {error && (
-              <FormHelperText textAlign="center" color="red.500" mt={4}>
-                {error}
-              </FormHelperText>
-            )}
-
-            <Button
-              type="submit"
-              colorScheme="teal"
-              variant="solid"
-              w="100%"
-              mt={4}
-            >
-              Sign Up
-            </Button>
           </Box>
 
           <Text fontSize="sm" mt={6} textAlign="center">
