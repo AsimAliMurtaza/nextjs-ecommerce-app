@@ -38,12 +38,12 @@ const CheckoutPage: React.FC = () => {
   const router = useRouter();
 
   const increaseQuantity = (product: CartProduct) => {
-    addToCart(product, 1 / 2);
+    addToCart(product, 1);
   };
 
   const decreaseQuantity = (product: CartProduct) => {
     if (product.quantity > 1) {
-      addToCart(product, -1 / 2);
+      addToCart(product, -1);
     } else {
       removeFromCart(product.id);
     }
