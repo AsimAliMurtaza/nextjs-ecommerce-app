@@ -36,8 +36,8 @@ export async function POST(req: NextRequest) {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: "http://localhost:3000//success?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "http://localhost:3000/cancel",
+      success_url: "https://ecommerce-app-one-lovat.vercel.app/success",
+      cancel_url: "https://ecommerce-app-one-lovat.vercel.app/cancel",
     });
 
 
