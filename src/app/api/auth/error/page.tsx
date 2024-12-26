@@ -1,7 +1,6 @@
 'use client';
 import {
   Container,
-  Box,
   Heading,
   Text,
   Alert,
@@ -27,7 +26,7 @@ const errors = {
   default: "Unable to sign in. Please try again later.",
 };
 
-const Error = () => {
+export default function ErrorPage() {
   
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
@@ -61,5 +60,3 @@ const Error = () => {
     </Container>
   );
 };
-
-export default Error;
