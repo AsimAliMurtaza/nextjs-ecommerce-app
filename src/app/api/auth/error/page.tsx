@@ -43,47 +43,52 @@ const ErrorPage = () => {
 
   return (
     <Container maxW="container.md" py={32}>
-      <Suspense fallback={<Text>Loading...</Text>}>
-        <VStack spacing={8} align="center">
-          <Alert status="error" variant="subtle" width="100%">
-            <AlertIcon boxSize={5} />
-            <Heading as="h2" size="md" color="red.600">
-              Uh oh, something went wrong!
-            </Heading>
-            <Text mt={2} fontSize="lg" color="red.500">
-              {errorMessage}
-            </Text>
-          </Alert>
-
-          <Text fontSize="md" color="gray.600">
-            Here are some things you can try:
+      <VStack spacing={8} align="center">
+        <Alert status="error" variant="subtle" width="100%">
+          <AlertIcon boxSize={5} />
+          <Heading as="h2" size="md" color="red.600">
+            Uh oh, something went wrong!
+          </Heading>
+          <Text mt={2} fontSize="lg" color="red.500">
+            {errorMessage}
           </Text>
-          <Stack spacing={2} direction={["column", "row"]}>
-            <Link href="/" color="teal.500" fontWeight="bold">
-              Forgot your password?
-            </Link>
-            {error !== "OAuthAccountNotLinked" && (
-              <Link href="/auth/signup" color="teal.500" fontWeight="bold">
-                Create a new account
-              </Link>
-            )}
-          </Stack>
+        </Alert>
 
-          <Button
-            as="a"
-            href="/"
-            variant="solid"
-            colorScheme="teal"
-            size="lg"
-            mt={6}
-            _hover={{ bg: "teal.600" }}
-          >
-            Go Back to Homepage
-          </Button>
-        </VStack>
-      </Suspense>
+        <Text fontSize="md" color="gray.600">
+          Here are some things you can try:
+        </Text>
+        <Stack spacing={2} direction={["column", "row"]}>
+          <Link href="/" color="teal.500" fontWeight="bold">
+            Forgot your password?
+          </Link>
+          {error !== "OAuthAccountNotLinked" && (
+            <Link href="/auth/signup" color="teal.500" fontWeight="bold">
+              Create a new account
+            </Link>
+          )}
+        </Stack>
+
+        <Button
+          as="a"
+          href="/"
+          variant="solid"
+          colorScheme="teal"
+          size="lg"
+          mt={6}
+          _hover={{ bg: "teal.600" }}
+        >
+          Go Back to Homepage
+        </Button>
+      </VStack>
     </Container>
   );
 };
 
-export default ErrorPage;
+// Wrap the ErrorPage component with Suspense in case useSearchParams is used inside SSR
+export default function SuspenseWrapper() {
+  return (
+    <Suspense fallback={<Text>Loading...</Text>}>
+      <ErrorPage />
+    </Suspense>
+  );
+}
