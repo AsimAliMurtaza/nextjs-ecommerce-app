@@ -20,10 +20,10 @@ const SearchBar: React.FC = () => {
     lg: "200px",
   });
   const inputColor = useBreakpointValue({
-    base:"teal",
-    sm: "teal",
-    md: "white",
-    lg: "white",
+    base:"black",
+    sm: "black",
+    md: "black",
+    lg: "black",
   });
 
 

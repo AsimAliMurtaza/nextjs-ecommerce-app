@@ -1,26 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Input,
-  Button,
-  Container,
-  FormControl,
-  FormLabel,
-  FormHelperText,
-  Flex,
-  Box,
-  Text,
-  InputGroup,
-  InputLeftElement,
-  Divider,
-  VStack,
-  Image,
-  Center,
-} from "@chakra-ui/react";
-import { AiOutlineMail, AiOutlineUser, AiOutlineLock } from "react-icons/ai";
 import { useRouter } from "next/navigation";
-import { uploadImage } from "@/lib/uploadImage"; // Import the uploadImage function
+import { uploadImage } from "@/lib/uploadImage";
 import SignUpForm from "@/components/SignUpForm";
 
 export default function SignUpPage() {
@@ -28,7 +10,7 @@ export default function SignUpPage() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imageURL, setImageURL] = useState<string | null>(null); // To store the uploaded image URL
+  const [imageURL, setImageURL] = useState<string | null>(null); 
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -50,7 +32,7 @@ export default function SignUpPage() {
     setPassword("");
     setName("");
     setImageFile(null);
-    setImageURL(null); // Clear the uploaded image URL
+    setImageURL(null); 
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -63,12 +45,10 @@ export default function SignUpPage() {
     try {
       let imageUrl = imageURL;
       if (imageFile) {
-        // Upload the image to Firebase Storage and get the URL
         imageUrl = await uploadImage(imageFile);
-        setImageURL(imageUrl); // Update the state with the uploaded image URL
+        setImageURL(imageUrl); 
       }
 
-      // Send the data to your API
       const response = await fetch("/api/auth/signup/new-user", {
         method: "POST",
         headers: {
@@ -78,7 +58,7 @@ export default function SignUpPage() {
           email,
           password,
           name,
-          imageUrl, // Include the uploaded image URL in the request
+          imageUrl, 
         }),
       });
 
@@ -94,7 +74,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <SignUpForm // Pass the props to the SignUpForm component
+    <SignUpForm 
       email={email}
       password={password}
       name={name}

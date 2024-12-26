@@ -57,7 +57,7 @@ export default function Header() {
   return (
     <Box
       as="header"
-      bg="#59B9B7"
+      bg="#ffffff"
       boxShadow="md"
       position="fixed"
       width="100%"
@@ -204,7 +204,7 @@ export default function Header() {
               <Button
                 type="submit"
                 size="sm"
-                color="white"
+                color="black"
                 variant="outline"
                 _hover={{ bg: "white", color: "#59B9B7" }}
                 onClick={handleSignIn}
