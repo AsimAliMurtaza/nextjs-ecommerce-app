@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { Input, Button, Flex, useBreakpointValue } from "@chakra-ui/react";
+import { Input, Flex, useBreakpointValue } from "@chakra-ui/react";
+import { Button } from "antd";
 import { useRouter } from "next/navigation";
 
 const SearchBar: React.FC = () => {
@@ -20,12 +21,11 @@ const SearchBar: React.FC = () => {
     lg: "200px",
   });
   const inputColor = useBreakpointValue({
-    base:"black",
+    base: "black",
     sm: "black",
     md: "black",
     lg: "black",
   });
-
 
   return (
     <Flex align="center" gap={2}>
@@ -44,11 +44,14 @@ const SearchBar: React.FC = () => {
       />
 
       <Button
-        type="submit"
-        size="sm"
-        color={inputColor}
-        variant="outline"
-        _hover={{ bg: "white", color: "#59B9B7" }}
+        htmlType="submit"
+        size="small"
+        style={{
+          color: "#000000",
+          backgroundColor: "#ffffff",
+          height: "30px",
+          fontSize: "normal",
+        }}
         onClick={handleSearch}
       >
         Search

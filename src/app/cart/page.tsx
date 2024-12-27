@@ -1,10 +1,10 @@
 "use client";
 
-import React, { use } from "react";
+import React, { useState, useEffect } from "react";
 import { useCart } from "@/contexts/cart-context";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 import { Separator } from "@/components/ui/separator";
+import { useSession } from "next-auth/react";
 import {
   Container,
   Box,
@@ -17,10 +17,10 @@ import {
   useBreakpointValue,
   IconButton,
   Divider,
-  Badge,
 } from "@chakra-ui/react";
 import { MinusIcon, PlusIcon } from "@/components/ui/icons";
 import { useRouter } from "next/navigation";
+
 interface CartProduct {
   id: number;
   name: string;
@@ -29,13 +29,14 @@ interface CartProduct {
   imageUrl?: string;
   description?: string;
 }
-// Make sure to load the Stripe public key
 
 const CheckoutPage: React.FC = () => {
   const { cart, addToCart, removeFromCart } = useCart();
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
+  const session = useSession();
+  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
 
   const increaseQuantity = (product: CartProduct) => {
     addToCart(product, 1);
@@ -69,30 +70,51 @@ const CheckoutPage: React.FC = () => {
   const orderSummary = calculateOrderSummary();
 
   const handleCheckout = async () => {
-    // Send the cart data to your backend to create a session
-    const response = await fetch('/api/stripe', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ cart }),
-    });
+    if (!user) {
+      console.error("User data not available");
+      return;
+    }
 
-    const { sessionId } = await response.json();
-
-    console.log(sessionId);
-
-    if (stripe && elements) {
-      // Redirect to Stripe Checkout
-      const { error } = await stripe.redirectToCheckout({
-        sessionId
+    try {
+      // Send the cart data to your backend to create a session
+      const response = await fetch("/api/stripe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cart,
+          username: user.name,
+          email: user.email,
+        }),
       });
 
-      if (error) {
-        console.error('Error:', error);
+      const { sessionId } = await response.json();
+
+      console.log(sessionId);
+
+      if (stripe && elements) {
+        // Redirect to Stripe Checkout
+        const { error } = await stripe.redirectToCheckout({
+          sessionId,
+        });
+
+        if (error) {
+          console.error("Error:", error);
+        }
       }
+    } catch (error) {
+      console.error("Checkout error:", error);
     }
   };
+
+  useEffect(() => {
+    if (session.data) {
+      const { name, email } = session.data.user as { name: string; email: string };
+      console.log("User data:", name, email);
+      setUser({ name, email });
+    }
+  }, [session]);
 
   return (
     <Container maxW="container.lg" py={32}>

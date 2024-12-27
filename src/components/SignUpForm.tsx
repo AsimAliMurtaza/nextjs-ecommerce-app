@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Input,
-  Button,
   Container,
   FormControl,
   FormLabel,
@@ -16,6 +15,7 @@ import {
   Image,
   Center,
 } from "@chakra-ui/react";
+import { Button } from "antd";
 import { AiOutlineMail, AiOutlineUser, AiOutlineLock } from "react-icons/ai";
 
 interface SignUpFormProps {
@@ -176,11 +176,13 @@ function SignUpForm({
                   )}
 
                   <Button
-                    type="submit"
-                    colorScheme="teal"
-                    variant="solid"
-                    w="100%"
-                    mt={4}
+                    htmlType="submit"
+                    size="large"
+                    type="primary"
+                    style={{
+                      color: "#ffffff",
+                      width: "100%",
+                    }}
                   >
                     Sign Up
                   </Button>

@@ -2,8 +2,8 @@
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
-  Button,
   Text,
+  Button as ChakraButton,
   Box,
   Flex,
   useDisclosure,
@@ -33,6 +33,7 @@ import {
 } from "./ui/icons";
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import { useCart } from "@/contexts/cart-context";
+import { Button } from "antd";
 
 export default function Header() {
   const { data: session } = useSession();
@@ -51,6 +52,10 @@ export default function Header() {
 
   const handleRoute = () => {
     router.push("/account");
+  };
+
+  const handleBillingRoute = () => {
+    router.push("/payments");
   };
 
   return (
@@ -84,7 +89,7 @@ export default function Header() {
               </Box>
             </Flex>
           </Link>
-          <Button
+          <ChakraButton
             onClick={onOpen}
             variant="outline"
             colorScheme="teal"
@@ -92,7 +97,7 @@ export default function Header() {
             aria-label="Menu"
           >
             <MenuIcon />
-          </Button>
+          </ChakraButton>
         </Flex>
         <Flex
           display={{ base: "none", md: "flex" }}
@@ -123,45 +128,45 @@ export default function Header() {
             }}
           >
             <Link href="/" passHref>
-              <Button
+              <ChakraButton
                 variant="link"
                 fontSize="xl"
                 _hover={{ textDecoration: "none", color: "white" }}
                 colorScheme="gray.800"
               >
                 Home
-              </Button>
+              </ChakraButton>
             </Link>
             <Link href="/products" passHref>
-              <Button
+              <ChakraButton
                 variant="link"
                 fontSize="xl"
                 _hover={{ textDecoration: "none", color: "white" }}
                 colorScheme="gray.800"
               >
                 Products
-              </Button>
+              </ChakraButton>
             </Link>
             <Link href="/categories" passHref>
-              <Button
+              <ChakraButton
                 variant="link"
                 fontSize="xl"
                 _hover={{ textDecoration: "none", color: "white" }}
                 colorScheme="gray.800"
               >
                 Categories
-              </Button>
+              </ChakraButton>
             </Link>
 
             <Link href="/cart" passHref>
-              <Button
+              <ChakraButton
                 variant="link"
                 fontSize="xl"
                 _hover={{ textDecoration: "none", color: "white" }}
                 colorScheme="gray.800"
               >
                 Cart
-              </Button>
+              </ChakraButton>
             </Link>
 
             <CartButton />
@@ -182,7 +187,7 @@ export default function Header() {
                 </MenuButton>
                 <MenuList>
                   <MenuItem onClick={handleSignOut}>
-                    <Button
+                    <ChakraButton
                       colorScheme="teal"
                       variant="ghost"
                       w="100%"
@@ -192,10 +197,10 @@ export default function Header() {
                       }}
                     >
                       Sign Out
-                    </Button>
+                    </ChakraButton>
                   </MenuItem>
                   <MenuItem onClick={handleRoute}>
-                    <Button
+                    <ChakraButton
                       colorScheme="teal"
                       variant="ghost"
                       w="100%"
@@ -205,17 +210,33 @@ export default function Header() {
                       }}
                     >
                       My Account
-                    </Button>
+                    </ChakraButton>
+                  </MenuItem>
+                  <MenuItem onClick={handleBillingRoute}>
+                    <ChakraButton
+                      colorScheme="teal"
+                      variant="ghost"
+                      w="100%"
+                      sx={{
+                        textAlign: "center",
+                        width: "100%",
+                      }}
+                    >
+                      Billing &amp; Payments
+                    </ChakraButton>
                   </MenuItem>
                 </MenuList>
               </Menu>
             ) : (
               <Button
-                type="submit"
-                size="sm"
-                color="black"
-                variant="outline"
-                _hover={{ bg: "white", color: "#59B9B7" }}
+                htmlType="submit"
+                size="small"
+                style={{
+                  color: "#000000",
+                  backgroundColor: "#ffffff",
+                  height: "30px",
+                  fontSize: "normal",
+                }}
                 onClick={handleSignIn}
               >
                 Sign In
@@ -280,16 +301,16 @@ export default function Header() {
           <DrawerBody>
             <Flex direction="column" gap={2}>
               {session ? (
-                <Button
+                <ChakraButton
                   fontSize="lg"
                   colorScheme="teal"
                   leftIcon={<FaSignOutAlt />}
                   onClick={handleSignOut}
                 >
                   Sign Out
-                </Button>
+                </ChakraButton>
               ) : (
-                <Button
+                <ChakraButton
                   type="submit"
                   size="lg"
                   color="#59B9B7"
@@ -299,7 +320,7 @@ export default function Header() {
                   onClick={handleSignIn}
                 >
                   Sign In
-                </Button>
+                </ChakraButton>
               )}
               <Box
                 sx={{
@@ -313,7 +334,7 @@ export default function Header() {
                 <SearchBar />
               </Box>
               <Link href="/" passHref>
-                <Button
+                <ChakraButton
                   variant="ghost"
                   fontSize="lg"
                   colorScheme="teal"
@@ -326,10 +347,10 @@ export default function Header() {
                   onClick={onClose}
                 >
                   Home
-                </Button>
+                </ChakraButton>
               </Link>
               <Link href="/products" passHref>
-                <Button
+                <ChakraButton
                   variant="ghost"
                   fontSize="lg"
                   colorScheme="teal"
@@ -342,10 +363,10 @@ export default function Header() {
                   onClick={onClose}
                 >
                   Products
-                </Button>
+                </ChakraButton>
               </Link>
               <Link href="/categories" passHref>
-                <Button
+                <ChakraButton
                   variant="ghost"
                   fontSize="lg"
                   colorScheme="teal"
@@ -358,10 +379,10 @@ export default function Header() {
                   onClick={onClose}
                 >
                   Categories
-                </Button>
+                </ChakraButton>
               </Link>
               <Link href="/cart" passHref>
-                <Button
+                <ChakraButton
                   variant="ghost"
                   fontSize="lg"
                   colorScheme="teal"
@@ -382,10 +403,10 @@ export default function Header() {
                   >
                     {cart.length > 0 ? `(${cart.length})` : ""}
                   </span>
-                </Button>
+                </ChakraButton>
               </Link>
               <Link href="/account" passHref>
-                <Button
+                <ChakraButton
                   variant="ghost"
                   fontSize="lg"
                   colorScheme="teal"
@@ -398,7 +419,23 @@ export default function Header() {
                   onClick={onClose}
                 >
                   Account
-                </Button>
+                </ChakraButton>
+              </Link>
+              <Link href="/payments" passHref>
+                <ChakraButton
+                  variant="ghost"
+                  fontSize="lg"
+                  colorScheme="teal"
+                  w="full"
+                  p="0.5rem"
+                  borderRadius="lg"
+                  justifyContent="flex-start"
+                  _hover={{ bg: "teal.200", cursor: "pointer" }}
+                  leftIcon={<UserIcon />}
+                  onClick={onClose}
+                >
+                  Payments
+                </ChakraButton>
               </Link>
             </Flex>
           </DrawerBody>

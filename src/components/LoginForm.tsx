@@ -88,12 +88,11 @@ function LoginForm({
             )}
             <Button
               htmlType="submit"
-              type="primary"
               size="large"
               style={{
+                backgroundColor: "#fff",
+                color: "#333",
                 width: "100%",
-                backgroundColor: "#3182ce",
-                borderColor: "#3182ce",
               }}
             >
               Sign In
@@ -102,9 +101,9 @@ function LoginForm({
               <Text fontSize="sm">Or sign in with</Text>
               <Button
                 onClick={() => signIn("google", { callbackUrl: "/" })}
+                type="primary"
                 style={{
-                  backgroundColor: "#fff",
-                  color: "#333",
+                  width: "100%",
                 }}
                 icon={<FaGoogle />}
               >
@@ -115,6 +114,7 @@ function LoginForm({
                 style={{
                   backgroundColor: "#333",
                   color: "#fff",
+                  width: "100%",
                 }}
                 icon={<FaGithub />}
               >
