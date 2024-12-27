@@ -19,7 +19,6 @@ import {
   MenuButton,
   Menu,
 } from "@chakra-ui/react";
-import { Toolbar } from "@mui/material";
 import { useSession, signOut, signIn } from "next-auth/react";
 import CartButton from "./ui/cart-card";
 import SearchBar from "./ui/searchBar";

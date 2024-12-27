@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Input,
-  Button,
   Container,
   FormControl,
   FormLabel,
@@ -11,6 +10,7 @@ import {
   Heading,
   Text,
 } from "@chakra-ui/react";
+import { Button } from "antd";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 
 interface LoginFormProps {
@@ -87,11 +87,14 @@ function LoginForm({
               </FormHelperText>
             )}
             <Button
-              type="submit"
-              colorScheme="teal"
-              variant="solid"
-              w="full"
-              mt={2}
+              htmlType="submit"
+              type="primary"
+              size="large"
+              style={{
+                width: "100%",
+                backgroundColor: "#3182ce",
+                borderColor: "#3182ce",
+              }}
             >
               Sign In
             </Button>
@@ -99,19 +102,21 @@ function LoginForm({
               <Text fontSize="sm">Or sign in with</Text>
               <Button
                 onClick={() => signIn("google", { callbackUrl: "/" })}
-                colorScheme="blue"
-                size="lg"
-                w="full"
-                leftIcon={<FaGoogle />}
+                style={{
+                  backgroundColor: "#fff",
+                  color: "#333",
+                }}
+                icon={<FaGoogle />}
               >
                 Google
               </Button>
               <Button
                 onClick={() => signIn("github", { callbackUrl: "/" })}
-                colorScheme="gray"
-                size="lg"
-                w="full"
-                leftIcon={<FaGithub />}
+                style={{
+                  backgroundColor: "#333",
+                  color: "#fff",
+                }}
+                icon={<FaGithub />}
               >
                 GitHub
               </Button>
