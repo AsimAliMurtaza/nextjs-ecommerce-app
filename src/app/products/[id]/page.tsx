@@ -26,7 +26,7 @@ import {
   SkeletonText,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import SHOP_DATA from "@/shop_data";
+import SHOP_DATA from "@/transformed_data.json";
 import { StarIcon } from "@/components/ui/icons";
 import { useCart } from "@/contexts/cart-context";
 import Footer from "@/components/Footer";
@@ -68,23 +68,45 @@ const ProductDetail: React.FC<Params> = ({ params }) => {
   const { addToCart } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     setLoading(true);
-    // Simulate fetching data
     setTimeout(() => {
       setLoading(false);
-    }, 500); // Adjust the delay as needed
+    }, 500); 
+  }, [id]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const productId = parseInt(id, 10);
+        const response = await fetch(`/api/get-product`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ productId }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          setProduct(data);
+        } else {
+          console.error("Failed to fetch product");
+        }
+      } catch (error) {
+        console.error("An error occurred while fetching the product:", error);
+      }
+    };
+
+    fetchProduct();
   }, [id]);
 
   const handleQuantityChange = (value: number) => {
     setQuantity(value);
   };
-
-  const productId = parseInt(id, 10);
-  const product = SHOP_DATA.find(
-    (product: Product) => product.id === productId
-  );
 
   if (!product) {
     return <div>Product not found</div>;

@@ -13,12 +13,11 @@ import {
   Icon,
   useToast,
 } from "@chakra-ui/react";
-import { FaCheckCircle } from "react-icons/fa"; // Success checkmark icon for visual impact
+import { FaCheckCircle } from "react-icons/fa";
 
 interface Transaction {
   receiptId: string;
   totalAmount: number;
-  // Add other properties as needed
 }
 
 const SuccessPage = () => {
