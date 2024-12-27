@@ -143,6 +143,16 @@ export default function Header() {
                 Products
               </Button>
             </Link>
+            <Link href="/categories" passHref>
+              <Button
+                variant="link"
+                fontSize="xl"
+                _hover={{ textDecoration: "none", color: "white" }}
+                colorScheme="gray.800"
+              >
+                Categories
+              </Button>
+            </Link>
 
             <Link href="/cart" passHref>
               <Button
