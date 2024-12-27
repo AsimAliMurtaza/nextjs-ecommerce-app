@@ -8,50 +8,65 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
-import {
-  LaptopIcon,
-  ClubIcon,
-  CaravanIcon,
-  PaintbrushIcon,
-  ShirtIcon,
-  HomeIcon,
-} from "./ui/icons";
+import React, { useState, useEffect } from "react";
 
-// Example of category data
-const categories = [
-  {
-    name: "Shoes",
-    href: "/categories/Shoes",
-    icon: ShirtIcon,
-  },
-  {
-    name: "Hats",
-    href: "/categories/Hats",
-    icon: LaptopIcon,
-  },
-  {
-    name: "Home",
-    href: "/categories/home",
-    icon: HomeIcon,
-  },
-  {
-    name: "Beauty",
-    href: "/categories/beauty",
-    icon: PaintbrushIcon,
-  },
-  {
-    name: "Sports",
-    href: "/categories/sports",
-    icon: ClubIcon,
-  },
-  {
-    name: "Outdoor",
-    href: "/categories/outdoor",
-    icon: CaravanIcon,
-  },
-];
+interface CategoryDetail {
+  imageUrl: string;
+  description: string;
+}
+
+interface CategoryData {
+  name: string;
+  href: string;
+  imageUrl: string;
+  description: string;
+}
 
 export default function Category() {
+  const [categories, setCategories] = useState<CategoryData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("/api/categories");
+        if (!response.ok) {
+          throw new Error("Failed to fetch categories");
+        }
+        const data = await response.json();
+
+        const combinedCategories = data.categories.map(
+          (categoryName: string) => {
+            const details: CategoryDetail = data.categoryDetails[categoryName];
+            return {
+              name: categoryName,
+              href: `/categories/${categoryName}`, 
+              imageUrl: details.imageUrl,
+              description: details.description,
+            };
+          }
+        );
+
+        setCategories(combinedCategories);
+      } catch (error) {
+        setError("An error occurred while fetching categories.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text color="red.500">{error}</Text>;
+  }
+
   return (
     <Box as="section" py={{ base: 12, md: 16, lg: 20 }} width="100%">
       <Container maxW="container.xl">
@@ -92,7 +107,15 @@ export default function Category() {
               _hover={{ bg: "#59B9B7", color: "white" }}
               transition="background-color 0.2s ease, color 0.2s ease"
             >
-              <category.icon />
+              <img
+                src={category.imageUrl}
+                alt={category.name}
+                style={{
+                  maxWidth: "60px",
+                  height: "auto",
+                  marginBottom: "10px",
+                }}
+              />
               <Text fontWeight="medium" mt={2}>
                 {category.name}
               </Text>

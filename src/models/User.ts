@@ -42,7 +42,7 @@ const UserSchema: Schema = new Schema({
     default: "",
   },
   dob: {
-    type: String, // Consider using Date if you prefer date type
+    type: String, 
     default: "",
   },
 });

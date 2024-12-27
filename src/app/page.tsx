@@ -10,7 +10,7 @@ import { Container } from "@chakra-ui/react";
 export default function Home() {
   return (
     <div>
-      <Container maxW="container.xl">
+      <Container maxW="container.2xl">
         <Discover />
         <TopProducts />
         <Category />

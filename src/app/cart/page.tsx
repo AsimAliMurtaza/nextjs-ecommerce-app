@@ -85,7 +85,7 @@ const CheckoutPage: React.FC = () => {
     if (stripe && elements) {
       // Redirect to Stripe Checkout
       const { error } = await stripe.redirectToCheckout({
-        sessionId,
+        sessionId
       });
 
       if (error) {
